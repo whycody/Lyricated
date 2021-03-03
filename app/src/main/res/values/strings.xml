@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Words Life</string>
+    <string name="english">Angielski</string>
+    <string name="polish">Polski</string>
+    <string name="spanish">Hiszpański</string>
+    <string name="german">Niemiecki</string>
+    <string name="italian">Włoski</string>
+    <string name="french">Francuski</string>
+    <string name="search">Szukaj</string>
+    <string name="library">Biblioteka</string>
+    <string name="previous_words">Wróć do wcześniejszych słówek</string>
+    <string name="choose_main_language">Wybierz język, którego się uczysz</string>
+    <string name="choose_translation_language">Wybierz język tłumaczenia</string>
 </resources>
