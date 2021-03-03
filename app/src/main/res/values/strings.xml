@@ -11,4 +11,6 @@
     <string name="previous_words">Wróć do wcześniejszych słówek</string>
     <string name="choose_main_language">Wybierz język, którego się uczysz</string>
     <string name="choose_translation_language">Wybierz język tłumaczenia</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
