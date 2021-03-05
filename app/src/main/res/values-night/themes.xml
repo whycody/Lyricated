@@ -1,15 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Theme.WordsLife" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/light_blue</item>
         <item name="colorPrimaryVariant">@color/dark_blue</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimarySurface">@color/light_gray</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/light_blue</item>
+        <item name="colorSecondary">@color/background_gray</item>
         <item name="colorSecondaryVariant">@color/dark_blue</item>
         <item name="colorOnSecondary">@color/black</item>
+
         <item name="android:statusBarColor" tools:targetApi="l">@color/light_gray</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="fontFamily">@font/montserrat</item>
     </style>
 </resources>

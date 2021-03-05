@@ -1,14 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".current.language.CurrentLanguageFragment">
+    android:layout_height="wrap_content"
+    tools:context=".current.language.CurrentLanguageFragment"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/app_padding"
+    android:paddingEnd="@dimen/app_padding">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="@dimen/current_fragment_height"
+        android:layout_weight="1"
+        android:background="@drawable/s_language_rectangle">
 
-</FrameLayout>
+        <TextView
+            style="@style/LanguageTextStyle"
+            android:text="angielski" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:paddingStart="2dp"
+            android:paddingEnd="6dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_unitedkingdom"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/current_fragment_height"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:padding="6dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_swap"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="@dimen/current_fragment_height"
+        android:layout_weight="1"
+        android:background="@drawable/s_language_rectangle">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="2dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_poland"/>
+
+        <TextView
+            style="@style/LanguageTextStyle"
+            android:text="polski" />
+
+    </LinearLayout>
+
+</LinearLayout>
