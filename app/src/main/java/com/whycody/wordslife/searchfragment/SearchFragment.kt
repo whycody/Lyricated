@@ -6,69 +6,73 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
+import android.view.inputmethod.EditorInfo
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
-import com.whycody.wordslife.data.HistoryItem
+import com.whycody.wordslife.data.LastSearch
 import com.whycody.wordslife.data.language.LanguageDao
-import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.databinding.FragmentSearchBinding
 import com.whycody.wordslife.searchfragment.history.HistoryAdapter
 import kotlinx.android.synthetic.main.fragment_search.view.*
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
 
-    private lateinit var bannerStarsOne: ImageView
-    private lateinit var bannerStarsTwo: ImageView
-    private lateinit var bannerStarsThree: ImageView
-    private lateinit var bannerStarsFour: ImageView
+    private lateinit var layoutView: View
     private val languageDao: LanguageDao by inject()
+    private val searchViewModel: SearchViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         val binding: FragmentSearchBinding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_search, container, false)
-        val view = binding.root
-        bannerStarsOne = view.bannerStarsOne
-        bannerStarsTwo = view.bannerStarsTwo
-        bannerStarsThree = view.bannerStarsThree
-        bannerStarsFour = view.bannerStarsFour
+        layoutView = binding.root
+        setupSearchWordInput()
         setupRecycler(binding)
         startAnimations()
-        return view
+        return layoutView
     }
+
+    private fun setupSearchWordInput() =
+        layoutView.searchWordInput.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_SEARCH)
+                searchViewModel.insertHistoryItem(getCurrentLastSearchItem())
+            true
+        }
+
+    private fun getCurrentLastSearchItem() = LastSearch(
+            mainLanguageId = languageDao.getCurrentMainLanguage().id,
+            translationLanguageId = languageDao.getCurrentTranslationLanguage().id,
+            text = layoutView.searchWordInput.text.toString())
 
     private fun setupRecycler(binding: FragmentSearchBinding) {
         val historyAdapter = HistoryAdapter()
+        observeHistoryItems(binding, historyAdapter)
+        binding.historyDisponible = true
         with(binding.root.historyRecycler) {
             layoutManager = LinearLayoutManager(activity?.applicationContext)
             adapter = historyAdapter
         }
-        putExampleDataToHistoryAdapter(historyAdapter)
-        binding.historyDisponible = true
     }
 
-    private fun putExampleDataToHistoryAdapter(historyAdapter: HistoryAdapter) {
-        historyAdapter.submitList(listOf(
-                HistoryItem(0, "jabłko", languageDao.getLanguage(LanguageDaoImpl.PL)!!.drawable,
-                        languageDao.getLanguage(LanguageDaoImpl.ENG)!!.drawable, true),
-                HistoryItem(1, "apple", languageDao.getLanguage(LanguageDaoImpl.ENG)!!.drawable,
-                        languageDao.getLanguage(LanguageDaoImpl.PL)!!.drawable),
-                HistoryItem(2, "manzana", languageDao.getLanguage(LanguageDaoImpl.ESP)!!.drawable,
-                        languageDao.getLanguage(LanguageDaoImpl.ENG)!!.drawable)))
-    }
+    private fun observeHistoryItems(binding: FragmentSearchBinding, historyAdapter: HistoryAdapter) =
+        searchViewModel.getHistoryItems().observe(activity as MainActivity, {
+            binding.historyDisponible = it.isNotEmpty()
+            historyAdapter.submitList(it)
+        })
 
     private fun startAnimations() {
         val animationOne = AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.fade_stars_one)
         val animationTwo = AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.fade_stars_two)
         val animationThree = AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.fade_stars_three)
         val animationFour = AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.fade_stars_four)
-        bannerStarsOne.startAnimation(animationOne)
-        bannerStarsTwo.startAnimation(animationTwo)
-        bannerStarsThree.startAnimation(animationThree)
-        bannerStarsFour.startAnimation(animationFour)
+        layoutView.bannerStarsOne.startAnimation(animationOne)
+        layoutView.bannerStarsTwo.startAnimation(animationTwo)
+        layoutView.bannerStarsThree.startAnimation(animationThree)
+        layoutView.bannerStarsFour.startAnimation(animationFour)
     }
 
 }

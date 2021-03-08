@@ -12,6 +12,10 @@ interface LanguageDao {
 
     fun setCurrentLanguages(mainLanguageId: String, translationLanguageId: String)
 
+    fun getCurrentMainLanguage(): Language
+
+    fun getCurrentTranslationLanguage(): Language
+
     fun setCurrentMainLanguage(id: String)
 
     fun setCurrentTranslationLanguage(id: String)

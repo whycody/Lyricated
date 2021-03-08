@@ -40,10 +40,10 @@ class LanguageDaoImpl(private val context: Context): LanguageDao {
             mainLangId != getCurrentMainLanguage().id ||
                     translationLangId != getCurrentTranslationLanguage().id
 
-    private fun getCurrentMainLanguage() =
+    override fun getCurrentMainLanguage() =
             getLanguage(sharedPrefs.getString(MAIN_LANGUAGE, DEFAULT_MAIN_LANGUAGE)!!)!!
 
-    private fun getCurrentTranslationLanguage() =
+    override fun getCurrentTranslationLanguage() =
             getLanguage(sharedPrefs.getString(TRANSLATION_LANGUAGE, DEFAULT_TRANSLATION_LANGUAGE)!!)!!
 
     override fun setCurrentMainLanguage(id: String) {
