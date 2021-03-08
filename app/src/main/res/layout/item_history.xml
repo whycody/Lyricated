@@ -3,8 +3,8 @@
     <data>
         <import type="android.view.View"/>
         <variable
-            name="saved"
-            type="boolean" />
+            name="historyItem"
+            type="com.whycody.wordslife.data.HistoryItem" />
         <variable
             name="position"
             type="int" />
@@ -27,36 +27,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:paddingStart="@dimen/app_padding"
             android:paddingEnd="@dimen/app_padding">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="36dp"
                 android:background="@drawable/s_language_rectangle">
 
                 <ImageView
-                    android:layout_width="40dp"
+                    android:layout_width="30dp"
                     android:layout_height="match_parent"
-                    android:padding="6dp"
-                    android:paddingEnd="0dp"
-                    android:src="@drawable/ic_unitedkingdom"/>
+                    android:paddingTop="6dp"
+                    android:paddingStart="6dp"
+                    android:paddingBottom="6dp"
+                    android:src="@{historyItem.mainLanguage}"/>
 
                 <ImageView
-                    android:layout_width="40dp"
+                    android:layout_width="30dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_arrowright"
-                    android:paddingTop="9dp"
-                    android:paddingBottom="9dp"/>
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"/>
 
                 <ImageView
-                    android:layout_width="40dp"
+                    android:layout_width="30dp"
                     android:layout_height="match_parent"
-                    android:padding="6dp"
-                    android:paddingStart="0dp"
-                    android:src="@drawable/ic_poland"/>
+                    android:paddingTop="6dp"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="6dp"
+                    android:src="@{historyItem.translationLanguage}"/>
 
             </LinearLayout>
 
@@ -64,16 +66,18 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:gravity="center|left"
-                android:text="apple"
+                android:text="@{historyItem.text}"
                 android:layout_marginStart="@dimen/app_padding"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/paragraph_gray"/>
 
             <ImageView
-                android:layout_width="40dp"
+                android:layout_width="35dp"
                 android:layout_height="match_parent"
-                android:src='@{saved ? @drawable/ic_star_filled : @drawable/ic_star_stroke, default=@drawable/ic_star_stroke}'
+                android:src='@{historyItem.saved ? @drawable/ic_star_filled : @drawable/ic_star_stroke, default=@drawable/ic_star_stroke}'
                 android:padding="6dp"/>
 
         </LinearLayout>

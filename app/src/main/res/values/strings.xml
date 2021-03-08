@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Words Life</string>
-    <string name="english">Angielski</string>
-    <string name="polish">Polski</string>
-    <string name="spanish">Hiszpański</string>
-    <string name="portugal">Portgalski</string>
-    <string name="german">Niemiecki</string>
-    <string name="italian">Włoski</string>
-    <string name="french">Francuski</string>
+    <string name="english">angielski</string>
+    <string name="polish">polski</string>
+    <string name="spanish">hiszpański</string>
+    <string name="portugal">portugalski</string>
+    <string name="german">niemiecki</string>
+    <string name="italian">włoski</string>
+    <string name="french">francuski</string>
     <string name="search">Szukaj</string>
     <string name="library">Biblioteka</string>
     <string name="previous_words">Wróć do wcześniejszych słówek</string>

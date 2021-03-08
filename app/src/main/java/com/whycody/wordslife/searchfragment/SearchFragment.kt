@@ -7,8 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.whycody.wordslife.R
+import com.whycody.wordslife.data.HistoryItem
+import com.whycody.wordslife.data.language.LanguageDao
+import com.whycody.wordslife.data.language.LanguageDaoImpl
+import com.whycody.wordslife.databinding.FragmentSearchBinding
+import com.whycody.wordslife.searchfragment.history.HistoryAdapter
 import kotlinx.android.synthetic.main.fragment_search.view.*
+import org.koin.android.ext.android.inject
 
 class SearchFragment : Fragment() {
 
@@ -16,16 +24,40 @@ class SearchFragment : Fragment() {
     private lateinit var bannerStarsTwo: ImageView
     private lateinit var bannerStarsThree: ImageView
     private lateinit var bannerStarsFour: ImageView
+    private val languageDao: LanguageDao by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_search, container, false)
+        val binding: FragmentSearchBinding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_search, container, false)
+        val view = binding.root
         bannerStarsOne = view.bannerStarsOne
         bannerStarsTwo = view.bannerStarsTwo
         bannerStarsThree = view.bannerStarsThree
         bannerStarsFour = view.bannerStarsFour
+        setupRecycler(binding)
         startAnimations()
         return view
+    }
+
+    private fun setupRecycler(binding: FragmentSearchBinding) {
+        val historyAdapter = HistoryAdapter()
+        with(binding.root.historyRecycler) {
+            layoutManager = LinearLayoutManager(activity?.applicationContext)
+            adapter = historyAdapter
+        }
+        putExampleDataToHistoryAdapter(historyAdapter)
+        binding.historyDisponible = true
+    }
+
+    private fun putExampleDataToHistoryAdapter(historyAdapter: HistoryAdapter) {
+        historyAdapter.submitList(listOf(
+                HistoryItem(0, "jabłko", languageDao.getLanguage(LanguageDaoImpl.PL)!!.drawable,
+                        languageDao.getLanguage(LanguageDaoImpl.ENG)!!.drawable, true),
+                HistoryItem(1, "apple", languageDao.getLanguage(LanguageDaoImpl.ENG)!!.drawable,
+                        languageDao.getLanguage(LanguageDaoImpl.PL)!!.drawable),
+                HistoryItem(2, "manzana", languageDao.getLanguage(LanguageDaoImpl.ESP)!!.drawable,
+                        languageDao.getLanguage(LanguageDaoImpl.ENG)!!.drawable)))
     }
 
     private fun startAnimations() {
