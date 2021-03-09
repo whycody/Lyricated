@@ -2,6 +2,8 @@ package com.whycody.wordslife.data
 
 import android.app.Application
 import androidx.room.Room
+import com.whycody.wordslife.choose.language.ChooseLanguageViewModel
+import com.whycody.wordslife.data.language.ChooseLanguageRepository
 import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.data.last.searches.LastSearchDao
@@ -29,6 +31,7 @@ val dataModule = module {
 
 val repositoryModule = module {
     single { LastSearchRepository(get(), get())}
+    single { ChooseLanguageRepository(get()) }
 }
 
 val languageModule = module {
@@ -37,4 +40,5 @@ val languageModule = module {
 
 val viewModelsModule = module {
     viewModel { SearchViewModel(get()) }
+    viewModel { ChooseLanguageViewModel(get()) }
 }

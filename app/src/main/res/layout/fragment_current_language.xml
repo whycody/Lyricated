@@ -43,6 +43,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/switchLangsArrows"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/current_fragment_height"
             android:layout_marginStart="12dp"
@@ -52,6 +53,7 @@
             android:src="@drawable/ic_swap"/>
 
         <LinearLayout
+            android:id="@+id/translationLanguageLayout"
             android:layout_width="0dp"
             android:layout_height="@dimen/current_fragment_height"
             android:layout_weight="1"

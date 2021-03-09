@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="language"
+            type="com.whycody.wordslife.data.Language" />
+        <variable
+            name="position"
+            type="int" />
+        <variable
+            name="chooseLanguageInteractor"
+            type="com.whycody.wordslife.choose.language.ChooseLanguageInteractor" />
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@drawable/ripple_language_item"
+        android:onClick="@{()->chooseLanguageInteractor.onLanguageClick(language.id)}">
+
+        <View
+            android:id="@+id/underline"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?attr/colorPrimarySurface"
+            android:visibility="@{position==0 ? View.INVISIBLE : View.VISIBLE}"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/app_padding"
+            android:paddingEnd="@dimen/app_padding"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp">
+
+            <ImageView
+                android:layout_width="34dp"
+                android:layout_height="match_parent"
+                android:src="@{language.drawable}"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="?attr/colorPrimaryDark"
+                android:text="@{language.name}"
+                android:paddingStart="25dp"
+                android:textSize="17sp"
+                android:gravity="center|start"
+                android:ellipsize="end"/>
+
+            <View
+                android:id="@+id/dot"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/circle"
+                android:layout_gravity="center"
+                android:visibility="@{language.id==chooseLanguageInteractor.currentLanguageID ? View.VISIBLE : View.INVISIBLE}"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>
