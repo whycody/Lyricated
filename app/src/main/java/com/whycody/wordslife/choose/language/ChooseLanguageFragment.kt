@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.choose.language.recycler.ChooseLanguageAdapter
@@ -44,6 +46,7 @@ class ChooseLanguageFragment : Fragment() {
     private fun setupRecycler() {
         val adapter = ChooseLanguageAdapter(viewModel)
         observeLanguagesList(adapter)
+        loadLayoutAnimation(layoutView.chooseLanguageRecycler)
         layoutView.chooseLanguageRecycler.layoutManager = LinearLayoutManager(context)
         layoutView.chooseLanguageRecycler.adapter = adapter
     }
@@ -52,7 +55,14 @@ class ChooseLanguageFragment : Fragment() {
         viewModel.getLanguages().observe(activity as MainActivity, {
             if(adapter.currentList.size != 0) activity?.onBackPressed()
             adapter.submitList(it)
+            layoutView.chooseLanguageRecycler.scheduleLayoutAnimation()
         })
+    }
+
+    private fun loadLayoutAnimation(recyclerView: RecyclerView) {
+        val layoutAnimationController =
+                AnimationUtils.loadLayoutAnimation(recyclerView.context, R.anim.layout_fall_down)
+        recyclerView.layoutAnimation = layoutAnimationController
     }
 
 }

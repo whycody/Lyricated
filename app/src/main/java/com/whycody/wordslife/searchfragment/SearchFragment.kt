@@ -61,6 +61,8 @@ class SearchFragment : Fragment() {
     private fun observeHistoryItems(binding: FragmentSearchBinding, historyAdapter: HistoryAdapter) =
         searchViewModel.getHistoryItems().observe(activity as MainActivity, {
             binding.historyDisponible = it.isNotEmpty()
+            if(historyAdapter.currentList.isEmpty())
+                layoutView.historyRecycler.scheduleLayoutAnimation()
             historyAdapter.submitList(it)
         })
 
