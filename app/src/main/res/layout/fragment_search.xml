@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="searchWord"
+            type="java.lang.String" />
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".search.SearchFragment"
+        android:orientation="vertical"
+        android:background="?attr/colorSecondary"
+        android:paddingTop="40dp">
+
+        <fragment
+            android:id="@+id/currentLanguageFragment"
+            android:name="com.whycody.wordslife.current.language.CurrentLanguageFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/searchWordInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search"
+            android:imeOptions="actionSearch"
+            android:background="@drawable/s_search_button"
+            android:padding="14dp"
+            android:inputType="text"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            android:textSize="16sp"
+            android:maxLines="1"
+            android:text="@{searchWord}"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="@dimen/app_padding"
+            android:layout_marginEnd="@dimen/app_padding" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchResultRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="21dp"/>
+
+    </LinearLayout>
+
+</layout>
