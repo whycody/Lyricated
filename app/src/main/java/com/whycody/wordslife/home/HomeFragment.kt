@@ -1,4 +1,4 @@
-package com.whycody.wordslife.searchfragment
+package com.whycody.wordslife.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,27 +8,26 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.LastSearch
 import com.whycody.wordslife.data.language.LanguageDao
-import com.whycody.wordslife.databinding.FragmentSearchBinding
-import com.whycody.wordslife.searchfragment.history.HistoryAdapter
-import kotlinx.android.synthetic.main.fragment_search.view.*
+import com.whycody.wordslife.databinding.FragmentHomeBinding
+import com.whycody.wordslife.home.history.HistoryAdapter
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class SearchFragment : Fragment() {
+class HomeFragment : Fragment() {
 
     private lateinit var layoutView: View
     private val languageDao: LanguageDao by inject()
-    private val searchViewModel: SearchViewModel by viewModel()
+    private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding: FragmentSearchBinding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_search, container, false)
+        val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_home, container, false)
         layoutView = binding.root
         setupSearchWordInput()
         setupRecycler(binding)
@@ -39,7 +38,7 @@ class SearchFragment : Fragment() {
     private fun setupSearchWordInput() =
         layoutView.searchWordInput.setOnEditorActionListener { _, actionId, _ ->
             if(actionId == EditorInfo.IME_ACTION_SEARCH)
-                searchViewModel.insertHistoryItem(getCurrentLastSearchItem())
+                homeViewModel.insertHistoryItem(getCurrentLastSearchItem())
             true
         }
 
@@ -48,7 +47,7 @@ class SearchFragment : Fragment() {
             translationLanguageId = languageDao.getCurrentTranslationLanguage().id,
             text = layoutView.searchWordInput.text.toString())
 
-    private fun setupRecycler(binding: FragmentSearchBinding) {
+    private fun setupRecycler(binding: FragmentHomeBinding) {
         val historyAdapter = HistoryAdapter()
         observeHistoryItems(binding, historyAdapter)
         binding.historyDisponible = true
@@ -58,8 +57,8 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun observeHistoryItems(binding: FragmentSearchBinding, historyAdapter: HistoryAdapter) =
-        searchViewModel.getHistoryItems().observe(activity as MainActivity, {
+    private fun observeHistoryItems(binding: FragmentHomeBinding, historyAdapter: HistoryAdapter) =
+        homeViewModel.getHistoryItems().observe(activity as MainActivity, {
             binding.historyDisponible = it.isNotEmpty()
             if(historyAdapter.currentList.isEmpty())
                 layoutView.historyRecycler.scheduleLayoutAnimation()

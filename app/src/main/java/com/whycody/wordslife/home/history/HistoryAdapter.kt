@@ -1,4 +1,4 @@
-package com.whycody.wordslife.searchfragment.history
+package com.whycody.wordslife.home.history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

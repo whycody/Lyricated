@@ -1,4 +1,4 @@
-package com.whycody.wordslife.searchfragment.history
+package com.whycody.wordslife.home.history
 
 import androidx.recyclerview.widget.DiffUtil
 import com.whycody.wordslife.data.HistoryItem

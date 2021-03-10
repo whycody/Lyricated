@@ -1,4 +1,4 @@
-package com.whycody.wordslife.searchfragment
+package com.whycody.wordslife.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -6,7 +6,7 @@ import com.whycody.wordslife.data.HistoryItem
 import com.whycody.wordslife.data.LastSearch
 import com.whycody.wordslife.data.last.searches.LastSearchRepository
 
-class SearchViewModel(private val lastSearchRepository: LastSearchRepository): ViewModel() {
+class HomeViewModel(private val lastSearchRepository: LastSearchRepository): ViewModel() {
 
     private val historyItems = MutableLiveData<List<HistoryItem>>()
 
