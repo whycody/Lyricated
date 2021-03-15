@@ -6,6 +6,7 @@ import com.whycody.wordslife.data.HistoryItem
 import com.whycody.wordslife.data.LastSearch
 import com.whycody.wordslife.data.language.ChooseLanguageRepository
 import com.whycody.wordslife.data.last.searches.LastSearchRepository
+import java.util.*
 
 class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
                     private val chooseLanguageRepository: ChooseLanguageRepository):
@@ -31,14 +32,27 @@ class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
 
     override fun onHistoryItemClick(historyItem: HistoryItem) {
         val lastSearch = lastSearchRepository.getLastSearchById(historyItem.id)
+        updateCurrentLanguages(lastSearch)
+        refreshTimeInLastSearch(lastSearch)
+        postNewValues(lastSearch)
+    }
+
+    private fun updateCurrentLanguages(lastSearch: LastSearch) {
         chooseLanguageRepository.setCurrentMainLanguage(lastSearch.mainLanguageId)
         chooseLanguageRepository.setCurrentTranslationLanguage(lastSearch.translationLanguageId)
+    }
+
+    private fun refreshTimeInLastSearch(lastSearch: LastSearch) {
+        lastSearchRepository.refreshTime(Calendar.getInstance().timeInMillis, lastSearch.id)
+    }
+
+    private fun postNewValues(lastSearch: LastSearch) {
         searchedWord.postValue(lastSearch.text)
+        historyItems.postValue(lastSearchRepository.getHistoryItems())
     }
 
     override fun onStarClick(historyItem: HistoryItem) {
-        historyItem.saved = !historyItem.saved
-        lastSearchRepository.updateLastSearchSaved(historyItem)
+        lastSearchRepository.updateLastSearchSaved(historyItem.id, !historyItem.saved)
         historyItems.value = lastSearchRepository.getHistoryItems()
     }
 }

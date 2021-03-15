@@ -43,6 +43,7 @@ class HomeFragment : Fragment() {
 
     private fun observeSearchedWord() = homeViewModel.getSearchedWord().observe(activity as MainActivity, {
         if(it != "") {
+            hideKeyboard()
             searchWordFromHistoryItem(it)
             homeViewModel.resetWord()
         }

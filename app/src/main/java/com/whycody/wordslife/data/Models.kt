@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.jetbrains.annotations.NotNull
+import java.util.*
 
 data class Language(
         var id: String,
@@ -24,4 +25,5 @@ data class LastSearch(
         @NotNull @ColumnInfo(name = "main_language_id") val mainLanguageId: String,
         @NotNull @ColumnInfo(name = "translation_language_id") val translationLanguageId: String,
         @NotNull val text: String,
-        @NotNull val saved: Boolean = false)
+        @NotNull val saved: Boolean = false,
+        @NotNull val time: Long = Calendar.getInstance().timeInMillis)

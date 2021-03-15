@@ -11,8 +11,9 @@ class LastSearchRepository(private val lastSearchDao: LastSearchDao,
 
     private fun getFourLastSearches() = lastSearchDao.getFourLastSearches()
 
-    fun updateLastSearchSaved(historyItem: HistoryItem) =
-            lastSearchDao.updateLastSearchSaved(historyItem.saved, historyItem.id)
+    fun updateLastSearchSaved(id: Int, saved: Boolean) = lastSearchDao.updateLastSearchSaved(saved, id)
+
+    fun refreshTime(time: Long, id: Int) = lastSearchDao.refreshTime(time, id)
 
     fun insertLastSearch(lastSearch: LastSearch) = lastSearchDao.insertLastSearch(lastSearch)
 
