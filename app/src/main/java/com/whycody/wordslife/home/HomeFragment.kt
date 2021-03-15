@@ -23,36 +23,44 @@ import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
-
 class HomeFragment : Fragment() {
 
     private lateinit var layoutView: View
     private val languageDao: LanguageDao by inject()
     private val homeViewModel: HomeViewModel by viewModel()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val binding: FragmentHomeBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_home, container, false
-        )
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
+        val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater,
+                R.layout.fragment_home, container, false)
         layoutView = binding.root
+        observeSearchedWord()
         setupSearchWordInput()
         setupRecycler(binding)
         startAnimations()
         return layoutView
     }
 
-    private fun setupSearchWordInput() =
-        layoutView.searchWordInput.setOnEditorActionListener { _, actionId, _ ->
-            if(actionId == EditorInfo.IME_ACTION_SEARCH)
-                searchWord()
-            true
+    private fun observeSearchedWord() = homeViewModel.getSearchedWord().observe(activity as MainActivity, {
+        if(it != "") {
+            searchWordFromHistoryItem(it)
+            homeViewModel.resetWord()
         }
+    })
 
-    private fun searchWord() {
+    private fun setupSearchWordInput() =
+            layoutView.searchWordInput.setOnEditorActionListener { _, actionId, _ ->
+                if(actionId == EditorInfo.IME_ACTION_SEARCH)
+                    searchTypedWord()
+                true
+            }
+
+    private fun searchWordFromHistoryItem(text: String) {
+        (activity as MainNavigation).navigateTo(SearchFragment().newInstance(text))
+        layoutView.searchWordInput.setText("")
+    }
+
+    private fun searchTypedWord() {
         hideKeyboard()
         val currentLastSearchItem = getCurrentLastSearchItem()
         (activity as MainNavigation).navigateTo(SearchFragment().newInstance(currentLastSearchItem.text))
@@ -72,10 +80,11 @@ class HomeFragment : Fragment() {
     )
 
     private fun setupRecycler(binding: FragmentHomeBinding) {
-        val historyAdapter = HistoryAdapter()
+        val historyAdapter = HistoryAdapter(homeViewModel)
         observeHistoryItems(binding, historyAdapter)
         binding.historyDisponible = true
         with(binding.root.historyRecycler) {
+            itemAnimator?.changeDuration = 0
             layoutManager = LinearLayoutManager(activity?.applicationContext)
             adapter = historyAdapter
         }
@@ -90,26 +99,16 @@ class HomeFragment : Fragment() {
         })
 
     private fun startAnimations() {
-        val animationOne = AnimationUtils.loadAnimation(
-            activity?.applicationContext,
-            R.anim.fade_stars_one
-        )
-        val animationTwo = AnimationUtils.loadAnimation(
-            activity?.applicationContext,
-            R.anim.fade_stars_two
-        )
-        val animationThree = AnimationUtils.loadAnimation(
-            activity?.applicationContext,
-            R.anim.fade_stars_three
-        )
-        val animationFour = AnimationUtils.loadAnimation(
-            activity?.applicationContext,
-            R.anim.fade_stars_four
-        )
-        layoutView.bannerStarsOne.startAnimation(animationOne)
-        layoutView.bannerStarsTwo.startAnimation(animationTwo)
-        layoutView.bannerStarsThree.startAnimation(animationThree)
-        layoutView.bannerStarsFour.startAnimation(animationFour)
+        with(layoutView) {
+            bannerStarsOne.startAnimation(AnimationUtils
+                    .loadAnimation(activity?.applicationContext, R.anim.fade_stars_one))
+            bannerStarsTwo.startAnimation(AnimationUtils
+                    .loadAnimation(activity?.applicationContext, R.anim.fade_stars_two))
+            bannerStarsThree.startAnimation(AnimationUtils
+                    .loadAnimation(activity?.applicationContext, R.anim.fade_stars_three))
+            bannerStarsFour.startAnimation(AnimationUtils
+                    .loadAnimation(activity?.applicationContext, R.anim.fade_stars_four))
+        }
     }
 
 }

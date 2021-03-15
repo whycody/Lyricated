@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.whycody.wordslife.BR
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.HistoryItem
+import com.whycody.wordslife.home.HistoryInteractor
 
-class HistoryAdapter: ListAdapter<HistoryItem, HistoryAdapter.HistoryHolder>(HistoryDiffCallback()) {
+class HistoryAdapter(private val historyInteractor: HistoryInteractor):
+        ListAdapter<HistoryItem, HistoryAdapter.HistoryHolder>(HistoryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -28,6 +30,7 @@ class HistoryAdapter: ListAdapter<HistoryItem, HistoryAdapter.HistoryHolder>(His
         fun setupData(historyItem: HistoryItem) {
             binding.setVariable(BR.historyItem, historyItem)
             binding.setVariable(BR.position, layoutPosition)
+            binding.setVariable(BR.interactor, historyInteractor)
             binding.executePendingBindings()
         }
     }

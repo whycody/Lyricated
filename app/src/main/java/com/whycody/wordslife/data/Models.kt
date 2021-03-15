@@ -23,4 +23,5 @@ data class LastSearch(
         @PrimaryKey(autoGenerate = true) @NotNull val id: Int = 0,
         @NotNull @ColumnInfo(name = "main_language_id") val mainLanguageId: String,
         @NotNull @ColumnInfo(name = "translation_language_id") val translationLanguageId: String,
-        @NotNull val text: String)
+        @NotNull val text: String,
+        @NotNull val saved: Boolean = false)

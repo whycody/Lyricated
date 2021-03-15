@@ -11,7 +11,12 @@ class LastSearchRepository(private val lastSearchDao: LastSearchDao,
 
     private fun getFourLastSearches() = lastSearchDao.getFourLastSearches()
 
+    fun updateLastSearchSaved(historyItem: HistoryItem) =
+            lastSearchDao.updateLastSearchSaved(historyItem.saved, historyItem.id)
+
     fun insertLastSearch(lastSearch: LastSearch) = lastSearchDao.insertLastSearch(lastSearch)
+
+    fun getLastSearchById(id: Int) = lastSearchDao.getLastSearchById(id)
 
     fun getHistoryItems() = getFourLastSearches().map {
         lastSearch ->  getHistoryItemFromLastSearch(lastSearch)}
@@ -19,6 +24,7 @@ class LastSearchRepository(private val lastSearchDao: LastSearchDao,
     private fun getHistoryItemFromLastSearch(lastSearch: LastSearch) =
         HistoryItem(lastSearch.id, lastSearch.text,
                 languageDao.getLanguage(lastSearch.mainLanguageId)!!.drawable,
-                languageDao.getLanguage(lastSearch.translationLanguageId)!!.drawable)
+                languageDao.getLanguage(lastSearch.translationLanguageId)!!.drawable,
+                lastSearch.saved)
 
 }
