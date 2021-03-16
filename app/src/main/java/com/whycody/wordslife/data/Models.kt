@@ -18,6 +18,11 @@ data class HistoryItem(
         var translationLanguage: Drawable,
         var saved: Boolean = false)
 
+data class LyricItem(
+        val lyricId: Int,
+        val mainLangSentence: String,
+        val translatedSentence: String)
+
 @Entity(tableName = "lyrics")
 data class Lyric(
         @ColumnInfo(name = "lyric_id") @PrimaryKey val lyricId: Int,

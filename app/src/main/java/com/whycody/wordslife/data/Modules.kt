@@ -6,9 +6,10 @@ import com.whycody.wordslife.choose.language.ChooseLanguageViewModel
 import com.whycody.wordslife.data.language.ChooseLanguageRepository
 import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.language.LanguageDaoImpl
-import com.whycody.wordslife.data.last.searches.LastSearchDao
 import com.whycody.wordslife.data.last.searches.LastSearchRepository
+import com.whycody.wordslife.data.lyrics.LyricsRepository
 import com.whycody.wordslife.home.HomeViewModel
+import com.whycody.wordslife.search.SearchViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -21,17 +22,19 @@ val dataModule = module {
                 .build()
     }
 
-    fun provideLastSearchDao(database: MyDatabase): LastSearchDao {
-        return  database.lastSearchDao()
-    }
+    fun provideLastSearchDao(database: MyDatabase) = database.lastSearchDao()
+
+    fun provideLyricsDao(database: MyDatabase) = database.lyricsDao()
 
     single { provideDatabase(androidApplication()) }
     single { provideLastSearchDao(get()) }
+    single { provideLyricsDao(get()) }
 }
 
 val repositoryModule = module {
     single { LastSearchRepository(get(), get())}
     single { ChooseLanguageRepository(get()) }
+    single { LyricsRepository(get()) }
 }
 
 val languageModule = module {
@@ -41,4 +44,5 @@ val languageModule = module {
 val viewModelsModule = module {
     viewModel { HomeViewModel(get(), get()) }
     viewModel { ChooseLanguageViewModel(get()) }
+    viewModel { SearchViewModel(get(), get()) }
 }
