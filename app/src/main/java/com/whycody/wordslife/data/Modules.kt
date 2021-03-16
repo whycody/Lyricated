@@ -17,7 +17,7 @@ val dataModule = module {
     fun provideDatabase(application: Application): MyDatabase {
         return Room.databaseBuilder(application, MyDatabase::class.java, "MyDatabase")
                 .allowMainThreadQueries()
-                .fallbackToDestructiveMigration()
+                .createFromAsset("wordslife.db")
                 .build()
     }
 
