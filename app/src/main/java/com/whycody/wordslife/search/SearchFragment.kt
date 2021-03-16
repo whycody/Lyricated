@@ -1,14 +1,22 @@
 package com.whycody.wordslife.search
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentSearchBinding
+import com.whycody.wordslife.search.recycler.SearchAdapter
+import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.fragment_home.view.searchWordInput
+import kotlinx.android.synthetic.main.fragment_search.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
@@ -23,15 +31,42 @@ class SearchFragment : Fragment() {
         val searchWord = arguments?.getString(SEARCH_WORD, "")!!
         binding.searchWord = searchWord
         layoutView = binding.root
-        observeLyrics()
         searchViewModel.searchWord(searchWord.toLowerCase())
+        setupSearchWordInput()
+        setupRecycler()
         return layoutView
     }
 
-    private fun observeLyrics() {
-        searchViewModel.getLyricsItems().observe(activity as MainActivity, {
+    private fun setupSearchWordInput() =
+            layoutView.searchWordInput.setOnEditorActionListener { _, actionId, _ ->
+                if(actionId == EditorInfo.IME_ACTION_SEARCH)
+                    searchTypedWord()
+                true
+            }
 
+    private fun searchTypedWord() {
+        hideKeyboard()
+        searchViewModel.searchWord(layoutView.searchWordInput.text.toString().toLowerCase())
+    }
+
+    private fun setupRecycler() {
+        val adapter = SearchAdapter()
+        layoutView.searchResultRecycler.layoutManager = LinearLayoutManager(activity?.applicationContext)
+        layoutView.searchResultRecycler.adapter = adapter
+        observeLyrics(adapter)
+    }
+
+    private fun observeLyrics(adapter: SearchAdapter) {
+        searchViewModel.getLyricsItems().observe(activity as MainActivity, {
+            if(adapter.currentList.isEmpty())
+                layoutView.searchResultRecycler.scheduleLayoutAnimation()
+            adapter.submitList(it)
         })
+    }
+
+    private fun hideKeyboard() {
+        val imm = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
     }
 
     fun newInstance(searchWord: String): SearchFragment {
