@@ -14,7 +14,6 @@ import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentSearchBinding
 import com.whycody.wordslife.search.recycler.SearchAdapter
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_home.view.searchWordInput
 import kotlinx.android.synthetic.main.fragment_search.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -31,7 +30,7 @@ class SearchFragment : Fragment() {
         val searchWord = arguments?.getString(SEARCH_WORD, "")!!
         binding.searchWord = searchWord
         layoutView = binding.root
-        searchViewModel.searchWord(searchWord.toLowerCase())
+        searchViewModel.searchWord(getFormattedWord(searchWord))
         setupSearchWordInput()
         setupRecycler()
         return layoutView
@@ -46,8 +45,11 @@ class SearchFragment : Fragment() {
 
     private fun searchTypedWord() {
         hideKeyboard()
-        searchViewModel.searchWord(layoutView.searchWordInput.text.toString().toLowerCase())
+        searchViewModel.searchWord(getFormattedWord(layoutView.searchWordInput.text.toString()))
     }
+
+    private fun getFormattedWord(word: String) = word.toLowerCase()
+            .replace("*","").replace("?", "")
 
     private fun setupRecycler() {
         val adapter = SearchAdapter()
@@ -58,8 +60,7 @@ class SearchFragment : Fragment() {
 
     private fun observeLyrics(adapter: SearchAdapter) {
         searchViewModel.getLyricsItems().observe(activity as MainActivity, {
-            if(adapter.currentList.isEmpty())
-                layoutView.searchResultRecycler.scheduleLayoutAnimation()
+            layoutView.searchResultRecycler.scheduleLayoutAnimation()
             adapter.submitList(it)
         })
     }
