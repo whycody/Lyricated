@@ -11,6 +11,7 @@ class LyricsRepository (private val lyricsDao: LyricsDao) {
                     lyric.lyricId,
                     getSentenceFromLang(mainLangId, lyric)!!.replace("\n", ""),
                     getSentenceFromLang(transLangId, lyric)!!.replace("\n", "")) }
+                    .distinctBy { it.mainLangSentence }
 
     private fun getLyricsWithWordIncluded(mainLangId: String, transLangId: String, word: String) =
         getLyricsWithWordIncludedInLanguage(mainLangId, word).filter {

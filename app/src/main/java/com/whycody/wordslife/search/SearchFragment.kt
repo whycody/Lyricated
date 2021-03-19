@@ -49,7 +49,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun getFormattedWord(word: String) = word.toLowerCase()
-            .replace("*","").replace("?", "")
+            .replace("*","[*]").replace("?", "[?]")
 
     private fun setupRecycler() {
         val adapter = SearchAdapter()
