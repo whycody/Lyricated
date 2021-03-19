@@ -65,6 +65,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chooseLanguageRecycler"
             android:layout_width="match_parent"
+            android:overScrollMode="never"
             android:layout_height="wrap_content"
             android:layoutAnimation="@anim/layout_fall_down"/>
 

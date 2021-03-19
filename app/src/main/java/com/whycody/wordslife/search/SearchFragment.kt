@@ -21,20 +21,34 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SearchFragment : Fragment() {
 
     private lateinit var layoutView: View
+    private lateinit var binding: FragmentSearchBinding
     private val searchViewModel: SearchViewModel by viewModel()
+    private var searchWord = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val binding: FragmentSearchBinding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_search, container, false)
-        val searchWord = arguments?.getString(SEARCH_WORD, "")!!
-        binding.searchWord = searchWord
+        searchWord = arguments?.getString(SEARCH_WORD, "")!!
+        this.binding = binding
         layoutView = binding.root
-        searchViewModel.searchWord(getFormattedWord(searchWord))
+        binding.resultsAvailable = true
+        binding.searchWord = searchWord
+        binding.searchInteractor = searchViewModel
+        binding.lifecycleOwner = activity as MainActivity
+        searchViewModel.searchWord(searchWord)
+        observeThereAreMoreResults()
         setupSearchWordInput()
         setupRecycler()
         return layoutView
     }
+
+    private fun observeThereAreMoreResults() =
+            searchViewModel.thereAreMoreResults().observe(activity as MainActivity, {
+                layoutView.showMoreResults.visibility =
+                        if(it) View.VISIBLE
+                        else View.GONE
+            })
 
     private fun setupSearchWordInput() =
             layoutView.searchWordInput.setOnEditorActionListener { _, actionId, _ ->
@@ -45,14 +59,13 @@ class SearchFragment : Fragment() {
 
     private fun searchTypedWord() {
         hideKeyboard()
-        searchViewModel.searchWord(getFormattedWord(layoutView.searchWordInput.text.toString()))
+        searchWord = layoutView.searchWordInput.text.toString()
+        binding.searchWord = searchWord
+        searchViewModel.searchWord(searchWord)
     }
 
-    private fun getFormattedWord(word: String) = word.toLowerCase()
-            .replace("*","[*]").replace("?", "[?]")
-
     private fun setupRecycler() {
-        val adapter = SearchAdapter()
+        val adapter = SearchAdapter(searchViewModel)
         layoutView.searchResultRecycler.layoutManager = LinearLayoutManager(activity?.applicationContext)
         layoutView.searchResultRecycler.adapter = adapter
         observeLyrics(adapter)
@@ -60,7 +73,9 @@ class SearchFragment : Fragment() {
 
     private fun observeLyrics(adapter: SearchAdapter) {
         searchViewModel.getLyricsItems().observe(activity as MainActivity, {
-            layoutView.searchResultRecycler.scheduleLayoutAnimation()
+            if(it.isEmpty())
+                layoutView.searchResultRecycler.scheduleLayoutAnimation()
+            binding.resultsAvailable = it.isNotEmpty()
             adapter.submitList(it)
         })
     }

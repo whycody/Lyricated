@@ -2,9 +2,16 @@
 <layout>
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="searchWord"
             type="java.lang.String" />
+        <variable
+            name="searchInteractor"
+            type="com.whycody.wordslife.search.SearchInteractor" />
+        <variable
+            name="resultsAvailable"
+            type="boolean" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -45,12 +52,50 @@
                 android:layout_marginStart="@dimen/app_padding"
                 android:layout_marginEnd="@dimen/app_padding" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="?attr/colorPrimaryVariant"
+                android:background="@drawable/s_header_backgr"
+                android:padding="10dp"
+                android:visibility="@{resultsAvailable ? View.VISIBLE : View.GONE}"
+                android:layout_marginTop="26dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="@dimen/app_padding"
+                android:paddingStart="@dimen/app_padding"
+                android:paddingEnd="@dimen/app_padding"
+                android:textSize="15sp"
+                android:text="@{@string/word_search_results(searchWord)}"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{resultsAvailable ? View.GONE : View.VISIBLE}"
+                android:padding="@dimen/app_padding"
+                android:layout_marginTop="50dp"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:text="@{@string/no_word_search_results(searchWord)}"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResultRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="21dp"
+                android:visibility="@{resultsAvailable ? View.VISIBLE : View.GONE}"
+                android:overScrollMode="never"
                 android:layoutAnimation="@anim/layout_fall_down"/>
+
+            <TextView
+                android:id="@+id/showMoreResults"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/show_more_results"
+                android:padding="@dimen/app_padding"
+                android:onClick="@{()->searchInteractor.showMoreResults()}"
+                android:visibility="invisible"
+                android:textColor="?attr/colorPrimary"
+                android:gravity="center"/>
 
         </LinearLayout>
 

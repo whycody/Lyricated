@@ -6,12 +6,16 @@ import com.whycody.wordslife.data.language.LanguageDaoImpl
 
 class LyricsRepository (private val lyricsDao: LyricsDao) {
 
-    fun getLyricItemsWithWordIncluded(mainLangId: String, transLangId: String, word: String) =
-            getLyricsWithWordIncluded(mainLangId, transLangId, word).map { lyric -> LyricItem(
+    fun getLyricItemsWithWordIncluded(mainLangId: String, transLangId: String, word: String, numberOfLyrics: Int = 250) =
+            getLyricsWithWordIncluded(mainLangId, transLangId, getFormattedWord(word)).map { lyric -> LyricItem(
                     lyric.lyricId,
                     getSentenceFromLang(mainLangId, lyric)!!.replace("\n", ""),
                     getSentenceFromLang(transLangId, lyric)!!.replace("\n", "")) }
                     .distinctBy { it.mainLangSentence }
+                    .take(numberOfLyrics)
+
+    private fun getFormattedWord(word: String) = word.toLowerCase()
+        .replace("*","[*]").replace("?", "[?]")
 
     private fun getLyricsWithWordIncluded(mainLangId: String, transLangId: String, word: String) =
         getLyricsWithWordIncludedInLanguage(mainLangId, word).filter {
