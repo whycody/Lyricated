@@ -1,6 +1,7 @@
 package com.whycody.wordslife.data
 
 import android.graphics.drawable.Drawable
+import android.text.SpannableStringBuilder
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -20,7 +21,7 @@ data class HistoryItem(
 
 data class LyricItem(
         val lyricId: Int,
-        val mainLangSentence: String,
+        val mainLangSentence: SpannableStringBuilder,
         val translatedSentence: String)
 
 @Entity(tableName = "lyrics")

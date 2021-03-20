@@ -8,7 +8,7 @@
             type="int" />
         <variable
             name="mainText"
-            type="java.lang.String" />
+            type="android.text.SpannableStringBuilder" />
         <variable
             name="translation"
             type="java.lang.String" />
@@ -43,6 +43,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{mainText}"
                     android:textSize="15sp"
+                    android:alpha="0.9"
                     android:textColor="?attr/colorPrimaryDark"/>
 
                 <LinearLayout
@@ -53,9 +54,9 @@
 
                     <View
                         android:id="@+id/dot"
-                        android:layout_width="8dp"
-                        android:layout_height="8dp"
-                        android:background="@drawable/circle"
+                        android:layout_width="12dp"
+                        android:layout_height="10dp"
+                        android:background="@drawable/ic_light_arrowright"
                         android:layout_gravity="center"
                         android:layout_marginStart="8dp"/>
 

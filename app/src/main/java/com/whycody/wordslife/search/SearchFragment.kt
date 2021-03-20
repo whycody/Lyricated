@@ -47,7 +47,7 @@ class SearchFragment : Fragment() {
             searchViewModel.thereAreMoreResults().observe(activity as MainActivity, {
                 layoutView.showMoreResults.visibility =
                         if(it) View.VISIBLE
-                        else View.GONE
+                        else View.INVISIBLE
             })
 
     private fun setupSearchWordInput() =

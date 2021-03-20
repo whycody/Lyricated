@@ -1,21 +1,40 @@
 package com.whycody.wordslife.data.lyrics
 
+import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import com.whycody.wordslife.data.Lyric
 import com.whycody.wordslife.data.LyricItem
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 
-class LyricsRepository (private val lyricsDao: LyricsDao) {
+
+class LyricsRepository(private val lyricsDao: LyricsDao) {
 
     fun getLyricItemsWithWordIncluded(mainLangId: String, transLangId: String, word: String, numberOfLyrics: Int = 250) =
-            getLyricsWithWordIncluded(mainLangId, transLangId, getFormattedWord(word)).map { lyric -> LyricItem(
-                    lyric.lyricId,
-                    getSentenceFromLang(mainLangId, lyric)!!.replace("\n", ""),
-                    getSentenceFromLang(transLangId, lyric)!!.replace("\n", "")) }
-                    .distinctBy { it.mainLangSentence }
-                    .take(numberOfLyrics)
+            getLyricsWithWordIncluded(mainLangId, transLangId, getFormattedWord(word)).map {
+                getLyricItemFromLyric(mainLangId, transLangId, word, it)
+            }.distinctBy { it.mainLangSentence }.take(numberOfLyrics)
+
+    private fun getLyricItemFromLyric(mainLangId: String, transLangId: String,
+                                      word: String, lyric: Lyric): LyricItem {
+        val mainSentence = getSentenceFromLang(mainLangId, lyric)!!
+        val translatedSentence = getSentenceFromLang(transLangId, lyric)!!
+        return LyricItem(lyric.lyricId, getMainSentenceSpan(mainSentence, word), translatedSentence)
+    }
+
+    private fun getMainSentenceSpan(mainSentence: String, word: String): SpannableStringBuilder {
+        val stb = SpannableStringBuilder(mainSentence)
+        val regex = word.toLowerCase().toRegex()
+        regex.findAll(mainSentence.toLowerCase()).forEach{
+            stb.setSpan(StyleSpan(Typeface.BOLD), it.range.first,
+                    it.range.last+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+        return stb
+    }
 
     private fun getFormattedWord(word: String) = word.toLowerCase()
-        .replace("*","[*]").replace("?", "[?]")
+        .replace("*", "[*]").replace("?", "[?]")
 
     private fun getLyricsWithWordIncluded(mainLangId: String, transLangId: String, word: String) =
         getLyricsWithWordIncludedInLanguage(mainLangId, word).filter {
