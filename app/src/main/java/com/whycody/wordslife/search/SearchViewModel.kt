@@ -10,31 +10,34 @@ class SearchViewModel(private val lyricsRepository: LyricsRepository,
                       private val languageDao: LanguageDao): ViewModel(), SearchInteractor {
 
     private val lyricsItems = MutableLiveData<List<LyricItem>>()
-    private var thereAreMoreResults = MutableLiveData<Boolean>()
-    private var searchWord: String = ""
-    private var numberOfLyrics = 30
+    var resultsAvailable = MutableLiveData(true)
+    var thereAreMoreResults = MutableLiveData(true)
+    var resultsHidden = MutableLiveData(false)
+    var searchWord = MutableLiveData("")
+    private var numberOfLyrics = 10
 
     fun getLyricsItems() = lyricsItems
 
-    fun thereAreMoreResults() = thereAreMoreResults
+    override fun mainResultsHeaderClicked() = resultsHidden.postValue(!resultsHidden.value!!)
 
-    override fun showMoreResults() {
-        numberOfLyrics += 30
-        updateLyricsItems(searchWord)
+    override fun showMoreResultsClicked() {
+        numberOfLyrics += 10
+        updateLyricsItems(searchWord.value!!)
     }
 
     fun searchWord(word: String) {
-        numberOfLyrics = 30
+        numberOfLyrics = 10
         updateLyricsItems(word)
     }
 
     private fun updateLyricsItems(word: String) {
-        searchWord = word
         val newLyricsItems = lyricsRepository.getLyricItemsWithWordIncluded(
                 languageDao.getCurrentMainLanguage().id,
                 languageDao.getCurrentTranslationLanguage().id,
                 word, numberOfLyrics)
+        searchWord.postValue(word)
         lyricsItems.postValue(newLyricsItems)
+        resultsAvailable.postValue(newLyricsItems.isNotEmpty())
         thereAreMoreResults.postValue(numberOfLyrics <= newLyricsItems.size)
     }
 }

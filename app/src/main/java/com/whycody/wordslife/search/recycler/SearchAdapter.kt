@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.whycody.wordslife.data.LyricItem
 import com.whycody.wordslife.BR
 import com.whycody.wordslife.R
-import com.whycody.wordslife.search.SearchInteractor
 
-class SearchAdapter(private val searchInteractor: SearchInteractor):
-    ListAdapter<LyricItem, SearchAdapter.SearchHolder>(SearchDiffCallback()) {
+class SearchAdapter: ListAdapter<LyricItem, SearchAdapter.SearchHolder>(SearchDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -31,7 +29,6 @@ class SearchAdapter(private val searchInteractor: SearchInteractor):
             binding.setVariable(BR.position, layoutPosition)
             binding.setVariable(BR.mainText, lyricItem.mainLangSentence)
             binding.setVariable(BR.translation, lyricItem.translatedSentence)
-            binding.setVariable(BR.searchInteractor, searchInteractor)
             binding.executePendingBindings()
         }
     }

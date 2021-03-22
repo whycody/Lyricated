@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentSearchBinding
@@ -32,23 +31,13 @@ class SearchFragment : Fragment() {
         searchWord = arguments?.getString(SEARCH_WORD, "")!!
         this.binding = binding
         layoutView = binding.root
-        binding.resultsAvailable = true
-        binding.searchWord = searchWord
-        binding.searchInteractor = searchViewModel
+        binding.searchViewModel = searchViewModel
         binding.lifecycleOwner = activity as MainActivity
         searchViewModel.searchWord(searchWord)
-        observeThereAreMoreResults()
         setupSearchWordInput()
         setupRecycler()
         return layoutView
     }
-
-    private fun observeThereAreMoreResults() =
-            searchViewModel.thereAreMoreResults().observe(activity as MainActivity, {
-                layoutView.showMoreResults.visibility =
-                        if(it) View.VISIBLE
-                        else View.INVISIBLE
-            })
 
     private fun setupSearchWordInput() =
             layoutView.searchWordInput.setOnEditorActionListener { _, actionId, _ ->
@@ -60,22 +49,20 @@ class SearchFragment : Fragment() {
     private fun searchTypedWord() {
         hideKeyboard()
         searchWord = layoutView.searchWordInput.text.toString()
-        binding.searchWord = searchWord
         searchViewModel.searchWord(searchWord)
     }
 
     private fun setupRecycler() {
-        val adapter = SearchAdapter(searchViewModel)
-        layoutView.searchResultRecycler.layoutManager = LinearLayoutManager(activity?.applicationContext)
-        layoutView.searchResultRecycler.adapter = adapter
-        observeLyrics(adapter)
+        with(SearchAdapter()) {
+            layoutView.searchResultRecycler.adapter = this
+            observeLyrics(this)
+        }
     }
 
     private fun observeLyrics(adapter: SearchAdapter) {
         searchViewModel.getLyricsItems().observe(activity as MainActivity, {
             if(it.isEmpty())
                 layoutView.searchResultRecycler.scheduleLayoutAnimation()
-            binding.resultsAvailable = it.isNotEmpty()
             adapter.submitList(it)
         })
     }
