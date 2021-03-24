@@ -10,7 +10,6 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.MainNavigation
 import com.whycody.wordslife.R
@@ -40,7 +39,7 @@ class HomeFragment : Fragment() {
     private fun observeSearchedWord() = homeViewModel.getSearchedWord().observe(activity as MainActivity, {
         if(it != "") {
             hideKeyboard()
-            searchWordFromHistoryItem(it)
+            searchWord(it)
             homeViewModel.resetWord()
         }
     })
@@ -48,18 +47,12 @@ class HomeFragment : Fragment() {
     private fun setupSearchWordInput() =
             layoutView.searchWordInput.setOnEditorActionListener { _, actionId, _ ->
                 if(actionId == EditorInfo.IME_ACTION_SEARCH)
-                    searchTypedWord()
+                    searchWord()
                 true
             }
 
-    private fun searchWordFromHistoryItem(text: String) {
-        (activity as MainNavigation).navigateTo(SearchFragment().newInstance(text))
-        layoutView.searchWordInput.setText("")
-    }
-
-    private fun searchTypedWord() {
+    private fun searchWord(word: String = layoutView.searchWordInput.text.toString()) {
         hideKeyboard()
-        val word = layoutView.searchWordInput.text.toString()
         (activity as MainNavigation).navigateTo(SearchFragment().newInstance(word))
         layoutView.searchWordInput.setText("")
     }
@@ -75,7 +68,6 @@ class HomeFragment : Fragment() {
         binding.historyDisponible = true
         with(binding.root.historyRecycler) {
             itemAnimator?.changeDuration = 0
-            layoutManager = LinearLayoutManager(activity?.applicationContext)
             adapter = historyAdapter
         }
     }

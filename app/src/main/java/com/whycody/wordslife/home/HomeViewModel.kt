@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import java.util.*
 
 class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
                     private val chooseLanguageRepository: ChooseLanguageRepository,
@@ -33,10 +32,9 @@ class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
         historyItems -> this.historyItems.postValue(historyItems)
     }
 
-    private fun flowHistoryItems(): Flow<List<HistoryItem>> =
-            historyItemsFlow.map { list ->
-                list.map { getHistoryItemFromLastSearch(it) }
-            }
+    private fun flowHistoryItems(): Flow<List<HistoryItem>> = historyItemsFlow.map { list ->
+        list.map { getHistoryItemFromLastSearch(it) }
+    }
 
     private fun getHistoryItemFromLastSearch(lastSearch: LastSearch) =
             HistoryItem(lastSearch.id, lastSearch.text,
@@ -54,17 +52,12 @@ class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
         val lastSearch = lastSearchRepository.getLastSearchById(historyItem.id)
         searchedWord.postValue(lastSearch.text)
         updateCurrentLanguages(lastSearch)
-        refreshTimeInLastSearch(lastSearch)
         postNewValues(lastSearch)
     }
 
     private fun updateCurrentLanguages(lastSearch: LastSearch) {
         chooseLanguageRepository.setCurrentMainLanguage(lastSearch.mainLanguageId)
         chooseLanguageRepository.setCurrentTranslationLanguage(lastSearch.translationLanguageId)
-    }
-
-    private fun refreshTimeInLastSearch(lastSearch: LastSearch) {
-        lastSearchRepository.refreshTime(Calendar.getInstance().timeInMillis, lastSearch.id)
     }
 
     private fun postNewValues(lastSearch: LastSearch) {

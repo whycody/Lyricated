@@ -149,6 +149,7 @@
                         android:id="@+id/historyRecycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         android:overScrollMode="never"
                         android:layoutAnimation="@anim/layout_fall_down"
                         android:visibility="@{historyDisponible ? View.VISIBLE : View.GONE}"/>
