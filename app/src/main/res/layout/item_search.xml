@@ -73,10 +73,10 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="46dp"
                 android:src="@drawable/ic_information"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
+                android:layout_gravity="center"
+                android:padding="10dp"
                 android:paddingStart="@dimen/app_padding" />
 
         </LinearLayout>

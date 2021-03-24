@@ -9,33 +9,31 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
-import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentSearchBinding
-import com.whycody.wordslife.search.recycler.SearchAdapter
+import com.whycody.wordslife.search.result.SearchResultFragment
 import kotlinx.android.synthetic.main.fragment_home.view.searchWordInput
-import kotlinx.android.synthetic.main.fragment_search.view.*
-import org.koin.android.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
 
     private lateinit var layoutView: View
-    private lateinit var binding: FragmentSearchBinding
-    private val searchViewModel: SearchViewModel by viewModel()
     private var searchWord = ""
+
+    private val mainLyricsSearchResultFragment =
+        SearchResultFragment().newInstance(SearchResultFragment.MAIN_LYRICS)
+    private val similarLyricsSearchResultFragment =
+        SearchResultFragment().newInstance(SearchResultFragment.SIMILAR_LYRICS)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val binding: FragmentSearchBinding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_search, container, false)
         searchWord = arguments?.getString(SEARCH_WORD, "")!!
-        this.binding = binding
+        if(savedInstanceState == null) addFragments()
+        binding.searchWord = searchWord
         layoutView = binding.root
-        binding.searchViewModel = searchViewModel
-        binding.lifecycleOwner = activity as MainActivity
-        searchViewModel.searchWord(searchWord)
         setupSearchWordInput()
-        setupRecycler()
+        searchTypedWord(searchWord)
         return layoutView
     }
 
@@ -45,28 +43,20 @@ class SearchFragment : Fragment() {
                     searchTypedWord()
                 true
             }
+    
+    private fun addFragments() {
+        val fragmentTransaction = childFragmentManager.beginTransaction()
+        fragmentTransaction.add(R.id.searchContainer, mainLyricsSearchResultFragment)
+        fragmentTransaction.add(R.id.searchContainer, similarLyricsSearchResultFragment)
+        fragmentTransaction.commit()
+    }
 
-    private fun searchTypedWord() {
+    private fun searchTypedWord(searchWord: String = layoutView.searchWordInput.text.toString()) {
         hideKeyboard()
-        searchWord = layoutView.searchWordInput.text.toString()
-        searchViewModel.searchWord(searchWord)
+        mainLyricsSearchResultFragment.searchWord(searchWord, SearchResultFragment.MAIN_LYRICS)
+        similarLyricsSearchResultFragment.searchWord(searchWord, SearchResultFragment.SIMILAR_LYRICS)
     }
-
-    private fun setupRecycler() {
-        with(SearchAdapter()) {
-            layoutView.searchResultRecycler.adapter = this
-            observeLyrics(this)
-        }
-    }
-
-    private fun observeLyrics(adapter: SearchAdapter) {
-        searchViewModel.getLyricsItems().observe(activity as MainActivity, {
-            if(it.isEmpty())
-                layoutView.searchResultRecycler.scheduleLayoutAnimation()
-            adapter.submitList(it)
-        })
-    }
-
+    
     private fun hideKeyboard() {
         val imm = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)

@@ -7,24 +7,24 @@ import com.whycody.wordslife.data.Lyric
 @Dao
 interface LyricsDao {
 
-    @Query("SELECT * FROM lyrics WHERE LOWER(pl) GLOB '*[!-?[-`{-~| ]' || :word || '[!-?[-`{-~| ]*' OR LOWER(pl) GLOB :word || '[!-?[-`{-~| ]*'")
+    @Query("SELECT * FROM lyrics WHERE pl LIKE '%' || :word || '%'")
     fun getPlLyricsWithWordIncluded(word: String): List<Lyric>
 
-    @Query("SELECT * FROM lyrics WHERE LOWER(eng) GLOB '*[!-?[-`{-~| ]' || :word || '[!-?[-`{-~| ]*' OR LOWER(eng) GLOB :word || '[!-?[-`{-~| ]*'")
+    @Query("SELECT * FROM lyrics WHERE eng LIKE '%' || :word || '%'")
     fun getEngLyricsWithWordIncluded(word: String): List<Lyric>
 
-    @Query("SELECT * FROM lyrics WHERE LOWER(esp) GLOB '*[!-?[-`{-~| ]' || :word || '[!-?[-`{-~| ]*' OR LOWER(esp) GLOB :word || '[!-?[-`{-~| ]*'")
+    @Query("SELECT * FROM lyrics WHERE esp LIKE '%' || :word || '%'")
     fun getEspLyricsWithWordIncluded(word: String): List<Lyric>
 
-    @Query("SELECT * FROM lyrics WHERE LOWER(it) GLOB '*[!-?[-`{-~| ]' || :word || '[!-?[-`{-~| ]*' OR LOWER(it) GLOB :word || '[!-?[-`{-~| ]*'")
+    @Query("SELECT * FROM lyrics WHERE it LIKE '%' || :word || '%'")
     fun getItLyricsWithWordIncluded(word: String): List<Lyric>
 
-    @Query("SELECT * FROM lyrics WHERE LOWER(ger) GLOB '*[!-?[-`{-~| ]' || :word || '[!-?[-`{-~| ]*' OR LOWER(ger) GLOB :word || '[!-?[-`{-~| ]*'")
+    @Query("SELECT * FROM lyrics WHERE ger LIKE '%' || :word || '%'")
     fun getGerLyricsWithWordIncluded(word: String): List<Lyric>
 
-    @Query("SELECT * FROM lyrics WHERE LOWER(fr) GLOB '*[!-?[-`{-~| ]' || :word || '[!-?[-`{-~| ]*' OR LOWER(fr) GLOB :word || '[!-?[-`{-~| ]*'")
+    @Query("SELECT * FROM lyrics WHERE fr LIKE '%' || :word || '%'")
     fun getFrLyricsWithWordIncluded(word: String): List<Lyric>
 
-    @Query("SELECT * FROM lyrics WHERE LOWER(pt) GLOB '*[!-?[-`{-~| ]' || :word || '[!-?[-`{-~| ]*' OR LOWER(pt) GLOB :word || '[!-?[-`{-~| ]*'")
+    @Query("SELECT * FROM lyrics WHERE pt LIKE '%' || :word || '%'")
     fun getPtLyricsWithWordIncluded(word: String): List<Lyric>
 }

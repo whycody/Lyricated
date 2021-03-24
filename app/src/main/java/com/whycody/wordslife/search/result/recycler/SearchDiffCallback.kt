@@ -1,4 +1,4 @@
-package com.whycody.wordslife.search.recycler
+package com.whycody.wordslife.search.result.recycler
 
 import androidx.recyclerview.widget.DiffUtil
 import com.whycody.wordslife.data.LyricItem

@@ -1,4 +1,4 @@
-package com.whycody.wordslife.search.recycler
+package com.whycody.wordslife.search.result.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ import com.whycody.wordslife.data.LyricItem
 import com.whycody.wordslife.BR
 import com.whycody.wordslife.R
 
-class SearchAdapter: ListAdapter<LyricItem, SearchAdapter.SearchHolder>(SearchDiffCallback()) {
+class SearchResultAdapter: ListAdapter<LyricItem, SearchResultAdapter.SearchHolder>(SearchDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHolder {
         val inflater = LayoutInflater.from(parent.context)
