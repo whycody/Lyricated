@@ -10,7 +10,7 @@ import com.whycody.wordslife.search.SearchInteractor
 class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
                             private val languageDao: LanguageDao): ViewModel(), SearchInteractor {
 
-    private val lyricsItems = MutableLiveData<List<LyricItem>>()
+    private val lyricItems = MutableLiveData<List<LyricItem>>()
     var resultsAvailable = MutableLiveData(true)
     var thereAreMoreResults = MutableLiveData(true)
     var resultsHidden = MutableLiveData(false)
@@ -19,20 +19,20 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
     private val numberOfShowingLyrics = 5
     private var currentShowedLyrics = numberOfShowingLyrics
 
-    fun getLyricsItems() = lyricsItems
+    fun getLyricItems() = lyricItems
 
     override fun mainResultsHeaderClicked() {
         resultsHidden.postValue(!resultsHidden.value!!)
-        if(!resultsHidden.value!!) {
-            currentShowedLyrics = 0
-            updateNumberOfShowingLyrics(lyricsItems.value!!)
-            lyricsItems.postValue(lyricsItems.value!!.take(currentShowedLyrics))
-        }
+        if(!resultsHidden.value!!) collapseLyricItemsList()
     }
 
-    override fun showMoreResultsClicked() {
-        updateLyricsItems(searchWord.value!!)
+    private fun collapseLyricItemsList() {
+        currentShowedLyrics = 0
+        updateNumberOfShowingLyrics(lyricItems.value!!)
+        lyricItems.postValue(lyricItems.value!!.take(currentShowedLyrics))
     }
+
+    override fun showMoreResultsClicked() = updateLyricsItems(searchWord.value!!)
 
     fun searchWord(word: String, typeOfLyrics: String) {
         this.typeOfLyrics.value = typeOfLyrics
@@ -41,16 +41,20 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
     }
 
     private fun updateLyricsItems(word: String) {
-        var newLyricsItems = getLyricsItems(word)
-        updateNumberOfShowingLyrics(newLyricsItems)
-        newLyricsItems = newLyricsItems.take(currentShowedLyrics)
-        searchWord.postValue(word)
-        lyricsItems.postValue(newLyricsItems)
-        resultsAvailable.postValue(newLyricsItems.isNotEmpty())
-        thereAreMoreResults.postValue(currentShowedLyrics <= newLyricsItems.size)
+        var newLyricItems = getLyricItems(word)
+        updateNumberOfShowingLyrics(newLyricItems)
+        newLyricItems = newLyricItems.take(currentShowedLyrics)
+        postNewValues(word, newLyricItems)
     }
 
-    private fun getLyricsItems(word: String) =
+    private fun postNewValues(word: String, newLyricItems: List<LyricItem>) {
+        searchWord.postValue(word)
+        lyricItems.postValue(newLyricItems)
+        resultsAvailable.postValue(newLyricItems.isNotEmpty())
+        thereAreMoreResults.postValue(currentShowedLyrics <= newLyricItems.size)
+    }
+
+    private fun getLyricItems(word: String) =
             if(typeOfLyrics.value!! == SearchResultFragment.MAIN_LYRICS)
                 lyricsRepository.getMainLyricItemsWithWordIncluded(
                         languageDao.getCurrentMainLanguage().id,

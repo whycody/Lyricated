@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.whycody.wordslife.data.LastSearch
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LastSearchDao {
@@ -15,7 +16,7 @@ interface LastSearchDao {
     fun getAllLastSearches(): List<LastSearch>
 
     @Query("SELECT * FROM last_searches ORDER BY time DESC LIMIT 4")
-    fun getFourLastSearches(): List<LastSearch>
+    fun flowFourLastSearches(): Flow<List<LastSearch>>
 
     @Query("UPDATE last_searches SET saved = :saved WHERE id = :id")
     fun updateLastSearchSaved(saved: Boolean, id: Int)

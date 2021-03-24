@@ -33,7 +33,7 @@ val dataModule = module {
 }
 
 val repositoryModule = module {
-    single { LastSearchRepository(get(), get())}
+    single { LastSearchRepository(get())}
     single { ChooseLanguageRepository(get()) }
     single { LyricsRepository(get()) }
 }
@@ -43,8 +43,8 @@ val languageModule = module {
 }
 
 val viewModelsModule = module {
-    viewModel { HomeViewModel(get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get()) }
     viewModel { ChooseLanguageViewModel(get()) }
-    viewModel { SearchViewModel(get()) }
+    viewModel { SearchViewModel(get(), get()) }
     viewModel { SearchResultViewModel(get(), get()) }
 }

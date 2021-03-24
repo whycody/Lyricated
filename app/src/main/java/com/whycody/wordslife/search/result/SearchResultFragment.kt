@@ -42,7 +42,7 @@ class SearchResultFragment : Fragment() {
     }
 
     private fun observeLyrics(resultAdapter: SearchResultAdapter) {
-        searchResultViewModel.getLyricsItems().observe(activity as MainActivity, {
+        searchResultViewModel.getLyricItems().observe(activity as MainActivity, {
             if(it.isEmpty())
                 layoutView.searchResultRecycler.scheduleLayoutAnimation()
             resultAdapter.submitList(it)
