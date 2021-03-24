@@ -14,13 +14,13 @@ class LyricsRepository(private val lyricsDao: LyricsDao) {
     fun getSimilarLyricItemsWithWordIncluded(mainLangId: String, transLangId: String, word: String, numberOfLyrics: Int = 250) =
             getSimilarLyricsWithWordIncluded(mainLangId, transLangId, getFormattedWord(word)).map {
                getLyricItemFromLyric(mainLangId, transLangId, word, SearchResultFragment.SIMILAR_LYRICS, it)
-           }.distinctBy { it.mainLangSentence }.take(numberOfLyrics)
+           }.distinctBy { it.mainLangSentence.toString() }.take(numberOfLyrics)
 
     private fun getSimilarLyricsWithWordIncluded(mainLangId: String, transLangId: String, word: String): List<Lyric> {
-        val regex = Regex(getSimilarLyricsPattern(word))
+        val regex = Regex(getSimilarLyricsPattern(word), RegexOption.IGNORE_CASE)
         return getLyricsWithWordIncludedInLanguage(mainLangId, word.substring(0, word.length-1)).filter {
-            getSentenceFromLang(transLangId, it) != null &&
-                    regex.find(getSentenceFromLang(mainLangId, it)!!.toLowerCase()) != null
+            val result = regex.find(getSentenceFromLang(mainLangId, it)!!)
+            getSentenceFromLang(transLangId, it) != null && result != null
         }
     }
 
@@ -34,13 +34,13 @@ class LyricsRepository(private val lyricsDao: LyricsDao) {
     fun getMainLyricItemsWithWordIncluded(mainLangId: String, transLangId: String, word: String, numberOfLyrics: Int = 250) =
             getMainLyricsWithWordIncluded(mainLangId, transLangId, getFormattedWord(word)).map {
                 getLyricItemFromLyric(mainLangId, transLangId, word, SearchResultFragment.MAIN_LYRICS, it)
-            }.distinctBy { it.mainLangSentence }.take(numberOfLyrics)
+            }.distinctBy { it.mainLangSentence.toString() }.take(numberOfLyrics)
 
     private fun getMainLyricsWithWordIncluded(mainLangId: String, transLangId: String, word: String): List<Lyric> {
-        val regex = Regex(getMainLyricsPattern(word))
+        val regex = Regex(getMainLyricsPattern(word), RegexOption.IGNORE_CASE)
         return getLyricsWithWordIncludedInLanguage(mainLangId, word).filter {
-            getSentenceFromLang(transLangId, it) != null &&
-                    regex.find(getSentenceFromLang(mainLangId, it)!!.toLowerCase()) != null
+            val result = regex.find(getSentenceFromLang(mainLangId, it)!!)
+            getSentenceFromLang(transLangId, it) != null && result != null
         }
     }
 
@@ -50,15 +50,15 @@ class LyricsRepository(private val lyricsDao: LyricsDao) {
                                       word: String, typeOfLyrics: String, lyric: Lyric): LyricItem {
         val mainSentence = getSentenceFromLang(mainLangId, lyric)!!
         val translatedSentence = getSentenceFromLang(transLangId, lyric)!!
-        return LyricItem(lyric.lyricId, getMainSentenceSpan(mainSentence, word, typeOfLyrics), translatedSentence)
+        return LyricItem(lyric.lyricId, getSentenceSpan(mainSentence, word, typeOfLyrics), translatedSentence)
     }
 
-    private fun getMainSentenceSpan(mainSentence: String, word: String, typeOfLyrics: String): SpannableStringBuilder {
+    private fun getSentenceSpan(mainSentence: String, word: String, typeOfLyrics: String): SpannableStringBuilder {
         val stb = SpannableStringBuilder(mainSentence)
-        val regex = Regex(getPattern(typeOfLyrics, getFormattedWord(word)))
-        regex.findAll(mainSentence.toLowerCase()).forEach{
-            stb.setSpan(StyleSpan(Typeface.BOLD), it.range.first,
-                    it.range.last+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val regex = Regex(getPattern(typeOfLyrics, getFormattedWord(word)), RegexOption.IGNORE_CASE)
+        regex.findAll(mainSentence).forEach{
+            stb.setSpan(StyleSpan(Typeface.BOLD),
+                    it.range.first, it.range.last+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         return stb
     }
@@ -67,9 +67,7 @@ class LyricsRepository(private val lyricsDao: LyricsDao) {
             if(typeOfLyrics == SearchResultFragment.MAIN_LYRICS) getMainLyricsPattern(word)
             else getSimilarLyricsPattern(word)
 
-    private fun getFormattedWord(word: String) = word.toLowerCase().trim()
-            .replace("*", "").replace("?", "")
-            .replace(".", "")
+    private fun getFormattedWord(word: String) = word.trim().replace(Regex("[*.?]"), "")
 
     private fun getLyricsWithWordIncludedInLanguage(langId: String, word: String) =
             when(langId) {

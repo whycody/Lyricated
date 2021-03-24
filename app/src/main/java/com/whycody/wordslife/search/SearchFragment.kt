@@ -13,11 +13,13 @@ import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentSearchBinding
 import com.whycody.wordslife.search.result.SearchResultFragment
 import kotlinx.android.synthetic.main.fragment_home.view.searchWordInput
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
 
     private lateinit var layoutView: View
     private var searchWord = ""
+    private val searchViewModel: SearchViewModel by viewModel()
 
     private val mainLyricsSearchResultFragment =
         SearchResultFragment().newInstance(SearchResultFragment.MAIN_LYRICS)
@@ -53,6 +55,7 @@ class SearchFragment : Fragment() {
 
     private fun searchTypedWord(searchWord: String = layoutView.searchWordInput.text.toString()) {
         hideKeyboard()
+        searchViewModel.searchWord(searchWord)
         mainLyricsSearchResultFragment.searchWord(searchWord, SearchResultFragment.MAIN_LYRICS)
         similarLyricsSearchResultFragment.searchWord(searchWord, SearchResultFragment.SIMILAR_LYRICS)
     }

@@ -9,6 +9,7 @@ import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.data.last.searches.LastSearchRepository
 import com.whycody.wordslife.data.lyrics.LyricsRepository
 import com.whycody.wordslife.home.HomeViewModel
+import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.result.SearchResultViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
@@ -44,5 +45,6 @@ val languageModule = module {
 val viewModelsModule = module {
     viewModel { HomeViewModel(get(), get()) }
     viewModel { ChooseLanguageViewModel(get()) }
+    viewModel { SearchViewModel(get()) }
     viewModel { SearchResultViewModel(get(), get()) }
 }

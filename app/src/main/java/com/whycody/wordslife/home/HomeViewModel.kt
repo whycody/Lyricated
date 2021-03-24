@@ -19,11 +19,6 @@ class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
         historyItems.postValue(lastSearchRepository.getHistoryItems())
     }
 
-    fun insertHistoryItem(lastSearch: LastSearch) {
-        lastSearchRepository.insertLastSearch(lastSearch)
-        historyItems.postValue(lastSearchRepository.getHistoryItems())
-    }
-
     fun getHistoryItems() = historyItems
 
     fun getSearchedWord() = searchedWord
@@ -32,6 +27,7 @@ class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
 
     override fun onHistoryItemClick(historyItem: HistoryItem) {
         val lastSearch = lastSearchRepository.getLastSearchById(historyItem.id)
+        searchedWord.postValue(lastSearch.text)
         updateCurrentLanguages(lastSearch)
         refreshTimeInLastSearch(lastSearch)
         postNewValues(lastSearch)

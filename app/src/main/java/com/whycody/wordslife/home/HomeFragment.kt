@@ -14,19 +14,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.MainNavigation
 import com.whycody.wordslife.R
-import com.whycody.wordslife.data.LastSearch
-import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.databinding.FragmentHomeBinding
 import com.whycody.wordslife.home.history.HistoryAdapter
 import com.whycody.wordslife.search.SearchFragment
 import kotlinx.android.synthetic.main.fragment_home.view.*
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var layoutView: View
-    private val languageDao: LanguageDao by inject()
     private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -63,9 +59,8 @@ class HomeFragment : Fragment() {
 
     private fun searchTypedWord() {
         hideKeyboard()
-        val currentLastSearchItem = getCurrentLastSearchItem()
-        (activity as MainNavigation).navigateTo(SearchFragment().newInstance(currentLastSearchItem.text))
-        homeViewModel.insertHistoryItem(currentLastSearchItem)
+        val word = layoutView.searchWordInput.text.toString()
+        (activity as MainNavigation).navigateTo(SearchFragment().newInstance(word))
         layoutView.searchWordInput.setText("")
     }
 
@@ -73,12 +68,6 @@ class HomeFragment : Fragment() {
         val imm = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
     }
-
-    private fun getCurrentLastSearchItem() = LastSearch(
-        mainLanguageId = languageDao.getCurrentMainLanguage().id,
-        translationLanguageId = languageDao.getCurrentTranslationLanguage().id,
-        text = layoutView.searchWordInput.text.toString()
-    )
 
     private fun setupRecycler(binding: FragmentHomeBinding) {
         val historyAdapter = HistoryAdapter(homeViewModel)
