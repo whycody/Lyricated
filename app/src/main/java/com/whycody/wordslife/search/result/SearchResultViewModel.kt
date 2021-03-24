@@ -23,23 +23,27 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
 
     override fun mainResultsHeaderClicked() {
         resultsHidden.postValue(!resultsHidden.value!!)
-        if(!resultsHidden.value!!)
-            lyricsItems.postValue(lyricsItems.value!!.take(numberOfShowingLyrics))
+        if(!resultsHidden.value!!) {
+            currentShowedLyrics = 0
+            updateNumberOfShowingLyrics(lyricsItems.value!!)
+            lyricsItems.postValue(lyricsItems.value!!.take(currentShowedLyrics))
+        }
     }
 
     override fun showMoreResultsClicked() {
-        currentShowedLyrics += numberOfShowingLyrics
         updateLyricsItems(searchWord.value!!)
     }
 
     fun searchWord(word: String, typeOfLyrics: String) {
         this.typeOfLyrics.value = typeOfLyrics
-        currentShowedLyrics = numberOfShowingLyrics
+        currentShowedLyrics = 0
         updateLyricsItems(word)
     }
 
     private fun updateLyricsItems(word: String) {
-        val newLyricsItems = getLyricsItems(word)
+        var newLyricsItems = getLyricsItems(word)
+        updateNumberOfShowingLyrics(newLyricsItems)
+        newLyricsItems = newLyricsItems.take(currentShowedLyrics)
         searchWord.postValue(word)
         lyricsItems.postValue(newLyricsItems)
         resultsAvailable.postValue(newLyricsItems.isNotEmpty())
@@ -51,10 +55,17 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
                 lyricsRepository.getMainLyricItemsWithWordIncluded(
                         languageDao.getCurrentMainLanguage().id,
                         languageDao.getCurrentTranslationLanguage().id,
-                        word, currentShowedLyrics)
+                        word)
             else lyricsRepository.getSimilarLyricItemsWithWordIncluded(
                     languageDao.getCurrentMainLanguage().id,
                     languageDao.getCurrentTranslationLanguage().id,
-                    word, currentShowedLyrics)
+                    word)
+
+    private fun updateNumberOfShowingLyrics(lyricItems: List<LyricItem>) {
+        val difference = lyricItems.size.minus(currentShowedLyrics)
+        currentShowedLyrics +=
+                if(difference < numberOfShowingLyrics*2) numberOfShowingLyrics*2
+                else numberOfShowingLyrics
+    }
 
 }
