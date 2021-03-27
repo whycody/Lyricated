@@ -73,6 +73,15 @@
                 android:gravity="center"
                 android:text="@{@string/no_word_search_results(searchViewModel.searchWord)}"/>
 
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:indeterminate="true"
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_margin="@dimen/app_padding"
+                android:visibility="@{searchViewModel.searching &amp;&amp; !searchViewModel.resultsHidden ? View.VISIBLE : View.GONE}"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResultRecycler"
                 android:layout_width="match_parent"
