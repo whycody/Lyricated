@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
-                            private val languageDao: LanguageDao): ViewModel(), SearchInteractor {
+                            languageDao: LanguageDao): ViewModel(), SearchInteractor {
 
     private val lyricItems = MutableLiveData<List<LyricItem>>()
     private val allLyricItems = MutableLiveData<List<LyricItem>>()
@@ -54,7 +54,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
     private fun flowLyricItems(): Flow<List<LyricItem>> = searchWordFlow
             .combine(lyricLanguagesFlow) { word, lyricLanguages ->
         searching.postValue(true)
-        val regex = Regex(getPattern(typeOfLyrics.value!!, getFormattedWord(word)), RegexOption.IGNORE_CASE)
+        val regex = Regex(getPattern(typeOfLyrics.value!!, word), RegexOption.IGNORE_CASE)
         val lyricsList = lyricsRepository.getLyricsWithWordIncludedInLanguage(
                 lyricLanguages.mainLanguageId, getSearchingWord(word))
         updateNumberOfShowingLyrics(lyricsList)
@@ -97,7 +97,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
 
     private fun getSentenceSpan(mainSentence: String, word: String, typeOfLyrics: String): SpannableStringBuilder {
         val stb = SpannableStringBuilder(mainSentence)
-        val regex = Regex(getPattern(typeOfLyrics, getFormattedWord(word)), RegexOption.IGNORE_CASE)
+        val regex = Regex(getPattern(typeOfLyrics, word), RegexOption.IGNORE_CASE)
         regex.findAll(mainSentence).forEach{
             stb.setSpan(StyleSpan(Typeface.BOLD),
                     it.range.first, it.range.last+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -117,8 +117,6 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
                 word.length == 4 -> "\\b\\S$word\\S*|\\b\\S?$word?[^${word[word.length - 1]}.,? ]\\S*"
                 else -> "\\b\\S$word\\S?[^\\s]*|\\b\\S?$word[^.,? ][^\\s]*"
             }
-
-    private fun getFormattedWord(word: String) = word.trim().replace(Regex("[*.?]"), "")
 
     override fun mainResultsHeaderClicked() {
         resultsHidden.postValue(!resultsHidden.value!!)
@@ -144,8 +142,16 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
     fun searchWord(word: String, typeOfLyrics: String) {
         currentShowedLyrics = 0
         this.typeOfLyrics.value = typeOfLyrics
-        searchWordFlow.tryEmit(word)
+        emitWordIfIsCorrect(getFormattedWord(word), typeOfLyrics)
         searchWord.postValue(word)
+    }
+
+    private fun getFormattedWord(word: String) = word.trim().replace(Regex("[*.?]"), "")
+
+    private fun emitWordIfIsCorrect(word: String, typeOfLyrics: String) {
+        if(word.length <= 1 && typeOfLyrics == SearchResultFragment.SIMILAR_LYRICS)
+            resultsAvailable.postValue(false)
+        else searchWordFlow.tryEmit(word)
     }
 
     private fun postNewValues(lyrics: List<LyricItem>? = null) {

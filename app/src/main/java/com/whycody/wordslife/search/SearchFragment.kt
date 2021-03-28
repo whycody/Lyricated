@@ -42,7 +42,7 @@ class SearchFragment : Fragment() {
     private fun setupSearchWordInput() =
             layoutView.searchWordInput.setOnEditorActionListener { _, actionId, _ ->
                 if(actionId == EditorInfo.IME_ACTION_SEARCH)
-                    searchTypedWord()
+                    if(layoutView.searchWordInput.text.toString().trim().isNotEmpty()) searchTypedWord()
                 true
             }
     
