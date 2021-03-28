@@ -5,6 +5,7 @@ import android.text.SpannableStringBuilder
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 import java.util.*
 
 data class Language(
@@ -23,6 +24,10 @@ data class LyricItem(
         val lyricId: Int,
         val mainLangSentence: SpannableStringBuilder,
         val translatedSentence: String)
+
+data class LyricLanguages(
+        val mainLanguageId: String,
+        val translationLanguageId: String): Serializable
 
 @Entity(tableName = "lyrics")
 data class Lyric(

@@ -1,5 +1,7 @@
 package com.whycody.wordslife.search.result
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +10,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
+import com.whycody.wordslife.data.LyricLanguages
+import com.whycody.wordslife.data.SharedPreferenceStringLiveData
+import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.databinding.FragmentSearchResultBinding
 import com.whycody.wordslife.search.result.recycler.SearchResultAdapter
 import kotlinx.android.synthetic.main.fragment_search_result.view.*
@@ -29,6 +34,7 @@ class SearchResultFragment : Fragment() {
         binding.searchViewModel = searchResultViewModel
         binding.lifecycleOwner = activity as MainActivity
         setupRecycler()
+        observeCurrentLanguages()
         return layoutView
     }
 
@@ -46,6 +52,31 @@ class SearchResultFragment : Fragment() {
             if(it.isEmpty())
                 layoutView.searchResultRecycler.scheduleLayoutAnimation()
             resultAdapter.submitList(it)
+        })
+    }
+
+    private fun observeCurrentLanguages() {
+        val sharedPrefs: SharedPreferences = activity!!.applicationContext
+                .getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
+        observeMainLanguage(sharedPrefs)
+        observeTranslationLanguage(sharedPrefs)
+    }
+
+    private fun observeMainLanguage(sharedPrefs: SharedPreferences) {
+        SharedPreferenceStringLiveData(sharedPrefs, LanguageDaoImpl.MAIN_LANGUAGE,
+                LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE).observe(activity as MainActivity, {
+            searchResultViewModel.setLyricLanguages(LyricLanguages(it,
+                    sharedPrefs.getString(LanguageDaoImpl.TRANSLATION_LANGUAGE,
+                            LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE)!!))
+        })
+    }
+
+    private fun observeTranslationLanguage(sharedPrefs: SharedPreferences) {
+        SharedPreferenceStringLiveData(sharedPrefs, LanguageDaoImpl.TRANSLATION_LANGUAGE,
+                LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE).observe(activity as MainActivity, {
+            searchResultViewModel.setLyricLanguages(LyricLanguages(
+                    sharedPrefs.getString(LanguageDaoImpl.MAIN_LANGUAGE,
+                            LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE)!!, it))
         })
     }
 

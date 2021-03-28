@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.whycody.wordslife.data.Lyric
 import com.whycody.wordslife.data.LyricItem
+import com.whycody.wordslife.data.LyricLanguages
 import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.data.lyrics.LyricsRepository
@@ -32,6 +33,8 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
 
     private var currentShowedLyrics = numberOfShowingLyrics
     private val searchWordFlow = MutableStateFlow("")
+    private val lyricLanguagesFlow = MutableStateFlow(LyricLanguages(
+            languageDao.getCurrentMainLanguage().id, languageDao.getCurrentTranslationLanguage().id))
 
     fun getLyricItems() = lyricItems
 
@@ -48,11 +51,12 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
         searching.postValue(false)
     }
 
-    private fun flowLyricItems(): Flow<List<LyricItem>> = searchWordFlow.map { word ->
+    private fun flowLyricItems(): Flow<List<LyricItem>> = searchWordFlow
+            .combine(lyricLanguagesFlow) { word, lyricLanguages ->
         searching.postValue(true)
         val regex = Regex(getPattern(typeOfLyrics.value!!, getFormattedWord(word)), RegexOption.IGNORE_CASE)
         val lyricsList = lyricsRepository.getLyricsWithWordIncludedInLanguage(
-                languageDao.getCurrentMainLanguage().id, getSearchingWord(word))
+                lyricLanguages.mainLanguageId, getSearchingWord(word))
         updateNumberOfShowingLyrics(lyricsList)
         lyricsList.filter { isLyricRight(word, regex, it) }
                 .map { getLyricItemFromLyric(it) }
@@ -75,10 +79,10 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
                     typeOfLyrics.value!!), getTranslatedSentence(lyric)!!)
 
     private fun getMainSentence(lyric: Lyric) =
-            getSentenceFromLang(languageDao.getCurrentMainLanguage().id, lyric)!!
+            getSentenceFromLang(lyricLanguagesFlow.value.mainLanguageId, lyric)!!
 
     private fun getTranslatedSentence(lyric: Lyric) =
-            getSentenceFromLang(languageDao.getCurrentTranslationLanguage().id, lyric)
+            getSentenceFromLang(lyricLanguagesFlow.value.translationLanguageId, lyric)
 
     private fun getSentenceFromLang(langId: String, lyric: Lyric) =
             when(langId) {
@@ -134,6 +138,8 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
         lyricItems.postValue(allLyricItems.value!!.take(currentShowedLyrics))
         postNewValues()
     }
+
+    fun setLyricLanguages(lyricLanguages: LyricLanguages) = this.lyricLanguagesFlow.tryEmit(lyricLanguages)
 
     fun searchWord(word: String, typeOfLyrics: String) {
         currentShowedLyrics = 0
