@@ -29,32 +29,34 @@ class HomeFragment : Fragment() {
         val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_home, container, false)
         layoutView = binding.root
-        observeSearchedWord()
+        observeSearchWord()
         setupSearchWordInput()
         setupRecycler(binding)
         startAnimations()
         return layoutView
     }
 
-    private fun observeSearchedWord() = homeViewModel.getSearchedWord().observe(activity as MainActivity, {
-        if(it != "") {
-            hideKeyboard()
-            searchWord(it)
-            homeViewModel.resetWord()
-        }
+    private fun observeSearchWord() = homeViewModel.getSearchWord()
+            .observe(activity as MainActivity, {
+                if(it != "") searchWord(it)
     })
 
     private fun setupSearchWordInput() =
             layoutView.searchWordInput.setOnEditorActionListener { _, actionId, _ ->
-                if(actionId == EditorInfo.IME_ACTION_SEARCH)
-                    if(layoutView.searchWordInput.text.toString().trim().isNotEmpty()) searchWord()
+                val searchWord = layoutView.searchWordInput.text.toString()
+                if(actionId == EditorInfo.IME_ACTION_SEARCH && wordIsCorrect(searchWord))
+                    searchWord(searchWord)
                 true
             }
 
-    private fun searchWord(word: String = layoutView.searchWordInput.text.toString()) {
+    private fun wordIsCorrect(word: String) =
+            word.trim().replace(Regex("[*.?]"), "").isNotEmpty()
+
+    private fun searchWord(word: String) {
         hideKeyboard()
-        (activity as MainNavigation).navigateTo(SearchFragment().newInstance(word))
+        (activity as MainNavigation).navigateTo(SearchFragment.newInstance(word))
         layoutView.searchWordInput.setText("")
+        homeViewModel.resetWord()
     }
 
     private fun hideKeyboard() {
@@ -81,15 +83,12 @@ class HomeFragment : Fragment() {
         })
 
     private fun startAnimations() {
+        val context = activity?.applicationContext
         with(layoutView) {
-            bannerStarsOne.startAnimation(AnimationUtils
-                    .loadAnimation(activity?.applicationContext, R.anim.fade_stars_one))
-            bannerStarsTwo.startAnimation(AnimationUtils
-                    .loadAnimation(activity?.applicationContext, R.anim.fade_stars_two))
-            bannerStarsThree.startAnimation(AnimationUtils
-                    .loadAnimation(activity?.applicationContext, R.anim.fade_stars_three))
-            bannerStarsFour.startAnimation(AnimationUtils
-                    .loadAnimation(activity?.applicationContext, R.anim.fade_stars_four))
+            bannerStarsOne.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_one))
+            bannerStarsTwo.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_two))
+            bannerStarsThree.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_three))
+            bannerStarsFour.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_four))
         }
     }
 

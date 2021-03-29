@@ -14,33 +14,32 @@ import com.whycody.wordslife.data.LyricLanguages
 import com.whycody.wordslife.data.SharedPreferenceStringLiveData
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.databinding.FragmentSearchResultBinding
+import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.result.recycler.SearchResultAdapter
 import kotlinx.android.synthetic.main.fragment_search_result.view.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SearchResultFragment : Fragment() {
 
     private lateinit var layoutView: View
+    private lateinit var typeOfLyrics: String
     private val searchResultViewModel: SearchResultViewModel by viewModel()
+    private val searchViewModel: SearchViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val binding: FragmentSearchResultBinding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_search_result, container, false)
+        typeOfLyrics = arguments?.getString(TYPE_OF_LYRICS, MAIN_LYRICS)!!
+        searchResultViewModel.setTypeOfLyrics(typeOfLyrics)
         layoutView = binding.root
         binding.searchViewModel = searchResultViewModel
         binding.lifecycleOwner = activity as MainActivity
         setupRecycler()
         observeCurrentLanguages()
+        observeSearchWord()
         return layoutView
-    }
-
-    fun setTypeOfLyrics(typeOfLyrics: String) {
-        if(!isDetached) searchResultViewModel.setTypeOfLyrics(typeOfLyrics)
-    }
-
-    fun searchWord(word: String) {
-        if(!isDetached) searchResultViewModel.searchWord(word)
     }
 
     private fun setupRecycler() {
@@ -52,7 +51,7 @@ class SearchResultFragment : Fragment() {
 
     private fun observeLyrics(resultAdapter: SearchResultAdapter) {
         searchResultViewModel.getLyricItems().observe(activity as MainActivity, {
-            if(it.isEmpty())
+            if(resultAdapter.currentList.isEmpty() || resultAdapter.currentList.size >= it.size)
                 layoutView.searchResultRecycler.scheduleLayoutAnimation()
             resultAdapter.submitList(it)
         })
@@ -83,8 +82,21 @@ class SearchResultFragment : Fragment() {
         })
     }
 
+    private fun observeSearchWord() = searchViewModel.getSearchWord()
+            .observe(activity as MainActivity, { searchResultViewModel.searchWord(it) })
+
     companion object {
+        const val TYPE_OF_LYRICS = "type of lyrics"
         const val MAIN_LYRICS = "main lyrics"
         const val SIMILAR_LYRICS = "similar lyrics"
+
+        fun newInstance(typeOfLyrics: String): SearchResultFragment {
+            val searchResultFragment = SearchResultFragment()
+            with(Bundle()) {
+                putString(TYPE_OF_LYRICS, typeOfLyrics)
+                searchResultFragment.arguments = this
+            }
+            return searchResultFragment
+        }
     }
 }

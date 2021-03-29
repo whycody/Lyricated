@@ -3,8 +3,8 @@
 
     <data>
         <variable
-            name="searchWord"
-            type="java.lang.String" />
+            name="viewModel"
+            type="com.whycody.wordslife.search.SearchViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -42,7 +42,7 @@
                 android:paddingEnd="25dp"
                 android:textSize="16sp"
                 android:maxLines="1"
-                android:text="@{searchWord}"
+                android:text="@{viewModel.searchWord}"
                 android:layout_marginBottom="17dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginStart="@dimen/app_padding"

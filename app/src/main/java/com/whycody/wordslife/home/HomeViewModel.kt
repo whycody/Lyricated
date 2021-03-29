@@ -44,7 +44,7 @@ class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
 
     fun getHistoryItems() = historyItems
 
-    fun getSearchedWord() = searchedWord
+    fun getSearchWord() = searchedWord
 
     fun resetWord() = searchedWord.postValue("")
 
@@ -60,11 +60,9 @@ class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
         chooseLanguageRepository.setCurrentTranslationLanguage(lastSearch.translationLanguageId)
     }
 
-    private fun postNewValues(lastSearch: LastSearch) {
-        searchedWord.postValue(lastSearch.text)
-    }
+    private fun postNewValues(lastSearch: LastSearch) = searchedWord.postValue(lastSearch.text)
 
-    override fun onStarClick(historyItem: HistoryItem) {
+    override fun onStarClick(historyItem: HistoryItem) =
         lastSearchRepository.updateLastSearchSaved(historyItem.id, !historyItem.saved)
-    }
+
 }

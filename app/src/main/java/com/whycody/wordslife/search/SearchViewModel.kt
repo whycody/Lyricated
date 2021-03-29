@@ -1,5 +1,6 @@
 package com.whycody.wordslife.search
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.whycody.wordslife.data.LastSearch
 import com.whycody.wordslife.data.language.LanguageDao
@@ -8,12 +9,17 @@ import com.whycody.wordslife.data.last.searches.LastSearchRepository
 class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
                       private val languageDao: LanguageDao): ViewModel() {
 
+    private val searchWord = MutableLiveData<String>()
+
     fun searchWord(word: String) {
+        searchWord.value = word
         val lastSearch = getLastSearch(word)
         val exactLastSearch = getExactLastSearch(lastSearch)
         if(exactLastSearch != null) lastSearchRepository.refreshTime(exactLastSearch.id)
         else lastSearchRepository.insertLastSearch(lastSearch)
     }
+
+    fun getSearchWord() = searchWord
 
     private fun getExactLastSearch(lastSearch: LastSearch) =
             lastSearchRepository.getAllLastSearches().find { lastSearchesAreTheSame(it, lastSearch) }
