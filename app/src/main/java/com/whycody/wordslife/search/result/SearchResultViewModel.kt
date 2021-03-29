@@ -137,19 +137,25 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
         postNewValues()
     }
 
-    fun setLyricLanguages(lyricLanguages: LyricLanguages) = this.lyricLanguagesFlow.tryEmit(lyricLanguages)
-
-    fun searchWord(word: String, typeOfLyrics: String) {
-        currentShowedLyrics = 0
+    fun setTypeOfLyrics(typeOfLyrics: String) {
         this.typeOfLyrics.value = typeOfLyrics
-        emitWordIfIsCorrect(getFormattedWord(word), typeOfLyrics)
-        searchWord.postValue(word)
+    }
+
+    fun setLyricLanguages(lyricLanguages: LyricLanguages) {
+        currentShowedLyrics = 0
+        this.lyricLanguagesFlow.tryEmit(lyricLanguages)
+    }
+
+    fun searchWord(word: String) {
+        currentShowedLyrics = 0
+        emitWordIfIsCorrect(getFormattedWord(word))
+        searchWord.value = word
     }
 
     private fun getFormattedWord(word: String) = word.trim().replace(Regex("[*.?]"), "")
 
-    private fun emitWordIfIsCorrect(word: String, typeOfLyrics: String) {
-        if(word.length <= 1 && typeOfLyrics == SearchResultFragment.SIMILAR_LYRICS)
+    private fun emitWordIfIsCorrect(word: String) {
+        if(word.length <= 1 && typeOfLyrics.value == SearchResultFragment.SIMILAR_LYRICS)
             resultsAvailable.postValue(false)
         else searchWordFlow.tryEmit(word)
     }

@@ -114,7 +114,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:layout_marginStart="@dimen/app_padding"
-                android:layout_marginEnd="@dimen/app_padding">
+                android:layout_marginEnd="@dimen/app_padding"
+                android:paddingBottom="60dp">
 
                 <View
                     android:id="@+id/dot"

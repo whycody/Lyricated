@@ -21,10 +21,8 @@ class SearchFragment : Fragment() {
     private var searchWord = ""
     private val searchViewModel: SearchViewModel by viewModel()
 
-    private val mainLyricsSearchResultFragment =
-        SearchResultFragment().newInstance(SearchResultFragment.MAIN_LYRICS)
-    private val similarLyricsSearchResultFragment =
-        SearchResultFragment().newInstance(SearchResultFragment.SIMILAR_LYRICS)
+    private val mainLyricsSearchResultFragment = SearchResultFragment()
+    private val similarLyricsSearchResultFragment = SearchResultFragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -35,6 +33,7 @@ class SearchFragment : Fragment() {
         binding.searchWord = searchWord
         layoutView = binding.root
         setupSearchWordInput()
+        setTypeOfLyrics()
         searchTypedWord(searchWord)
         return layoutView
     }
@@ -53,11 +52,16 @@ class SearchFragment : Fragment() {
         fragmentTransaction.commit()
     }
 
+    private fun setTypeOfLyrics() {
+        mainLyricsSearchResultFragment.setTypeOfLyrics(SearchResultFragment.MAIN_LYRICS)
+        similarLyricsSearchResultFragment.setTypeOfLyrics(SearchResultFragment.SIMILAR_LYRICS)
+    }
+
     private fun searchTypedWord(searchWord: String = layoutView.searchWordInput.text.toString()) {
         hideKeyboard()
         searchViewModel.searchWord(searchWord)
-        mainLyricsSearchResultFragment.searchWord(searchWord, SearchResultFragment.MAIN_LYRICS)
-        similarLyricsSearchResultFragment.searchWord(searchWord, SearchResultFragment.SIMILAR_LYRICS)
+        mainLyricsSearchResultFragment.searchWord(searchWord)
+        similarLyricsSearchResultFragment.searchWord(searchWord)
     }
     
     private fun hideKeyboard() {

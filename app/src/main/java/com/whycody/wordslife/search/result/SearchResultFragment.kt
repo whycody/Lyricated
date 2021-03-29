@@ -21,15 +21,12 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SearchResultFragment : Fragment() {
 
     private lateinit var layoutView: View
-    private lateinit var typeOfLyrics: String
     private val searchResultViewModel: SearchResultViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val binding: FragmentSearchResultBinding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_search_result, container, false)
-        typeOfLyrics = arguments?.getString(TYPE_OF_LYRICS, MAIN_LYRICS)!!
-        searchResultViewModel.typeOfLyrics.value = typeOfLyrics
         layoutView = binding.root
         binding.searchViewModel = searchResultViewModel
         binding.lifecycleOwner = activity as MainActivity
@@ -38,7 +35,13 @@ class SearchResultFragment : Fragment() {
         return layoutView
     }
 
-    fun searchWord(word: String, typeOfLyrics: String) = searchResultViewModel.searchWord(word, typeOfLyrics)
+    fun setTypeOfLyrics(typeOfLyrics: String) {
+        if(!isDetached) searchResultViewModel.setTypeOfLyrics(typeOfLyrics)
+    }
+
+    fun searchWord(word: String) {
+        if(!isDetached) searchResultViewModel.searchWord(word)
+    }
 
     private fun setupRecycler() {
         with(SearchResultAdapter()) {
@@ -80,17 +83,7 @@ class SearchResultFragment : Fragment() {
         })
     }
 
-    fun newInstance(typeOfLyrics: String): SearchResultFragment {
-        val fragment = SearchResultFragment()
-        with(Bundle()) {
-            putString(TYPE_OF_LYRICS, typeOfLyrics)
-            fragment.arguments = this
-        }
-        return fragment
-    }
-
     companion object {
-        const val TYPE_OF_LYRICS = "type of lyrics"
         const val MAIN_LYRICS = "main lyrics"
         const val SIMILAR_LYRICS = "similar lyrics"
     }
