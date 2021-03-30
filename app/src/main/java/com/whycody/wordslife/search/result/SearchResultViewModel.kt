@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlin.math.absoluteValue
 
 class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
                             languageDao: LanguageDao): ViewModel(), SearchInteractor {
@@ -60,6 +61,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
         lyricsList.filter { isLyricRight(word, regex, it) }
                 .map { getLyricItemFromLyric(it) }
                 .distinctBy { it.mainLangSentence.toString().toLowerCase() }
+                .sortedBy { (it.mainLangSentence.length - it.translatedSentence.length).absoluteValue }
     }
 
     private fun getSearchingWord(word: String) =
@@ -164,7 +166,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
         val difference = lyrics?.size?.minus(currentShowedLyrics.value)
                 ?: allLyricItems.value!!.size.minus(currentShowedLyrics.value)
         currentShowedLyrics.value =
-                if(difference < numberOfShowingLyrics*2) numberOfShowingLyrics + difference
+                if(difference < numberOfShowingLyrics*2) numberOfShowingLyrics*2 + currentShowedLyrics.value
                 else numberOfShowingLyrics + currentShowedLyrics.value
     }
 
