@@ -47,6 +47,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
 
     private suspend fun collectLyricItems() = flowLyricItems().collectLatest { lyricItems ->
         allLyricItems.postValue(lyricItems)
+        updateNumberOfShowingLyrics(lyricItems, true)
         this.lyricItems.postValue(lyricItems.take(currentShowedLyrics.value))
         postNewValues(lyricItems)
         searching.postValue(false)
@@ -56,8 +57,6 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
         searching.postValue(true)
         val regex = Regex(getPattern(typeOfLyrics.value!!, word), RegexOption.IGNORE_CASE)
         val lyricsList = lyricsRepository.getLyricsWithWordIncludedInLanguage(lyricLanguages.mainLanguageId, getSearchingWord(word))
-        currentShowedLyrics.value = 0
-        updateNumberOfShowingLyrics(lyricsList)
         lyricsList.filter { isLyricRight(word, regex, it) }
                 .map { getLyricItemFromLyric(it) }
                 .distinctBy { it.mainLangSentence.toString().toLowerCase() }
@@ -124,16 +123,13 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
         if(!resultsHidden.value!!) collapseLyricItemsList()
     }
 
-    private fun collapseLyricItemsList() {
-        currentShowedLyrics.value = 0
-        refreshLyricItems()
-    }
+    private fun collapseLyricItemsList() = refreshLyricItems(true)
 
     override fun showMoreResultsClicked() = refreshLyricItems()
 
-    private fun refreshLyricItems() {
+    private fun refreshLyricItems(newNumber: Boolean = false) {
         if(allLyricItems.value == null) return
-        updateNumberOfShowingLyrics()
+        updateNumberOfShowingLyrics(newNumber = newNumber)
         lyricItems.postValue(allLyricItems.value!!.take(currentShowedLyrics.value))
         postNewValues()
     }
@@ -162,12 +158,15 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
         thereAreMoreResults.postValue(currentShowedLyrics.value < lyrics?.size ?: allLyricItems.value!!.size)
     }
 
-    private fun updateNumberOfShowingLyrics(lyrics: List<Lyric>? = null) {
-        val difference = lyrics?.size?.minus(currentShowedLyrics.value)
-                ?: allLyricItems.value!!.size.minus(currentShowedLyrics.value)
-        currentShowedLyrics.value =
-                if(difference < numberOfShowingLyrics*2) numberOfShowingLyrics*2 + currentShowedLyrics.value
-                else numberOfShowingLyrics + currentShowedLyrics.value
+    private fun updateNumberOfShowingLyrics(lyrics: List<LyricItem>? = null, newNumber: Boolean = false) {
+        if(newNumber) currentShowedLyrics.value = 0
+        if(getDifference(lyrics) < numberOfShowingLyrics * 2)
+            currentShowedLyrics.value += numberOfShowingLyrics
+        currentShowedLyrics.value += numberOfShowingLyrics
     }
+
+    private fun getDifference(lyrics: List<LyricItem>? = null) =
+            lyrics?.size?.minus(currentShowedLyrics.value)
+            ?: allLyricItems.value!!.size.minus(currentShowedLyrics.value)
 
 }
