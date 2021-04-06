@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:visibility="@{searchViewModel.resultsAvailable &amp;&amp; !searchViewModel.resultsHidden ? View.VISIBLE : View.GONE}"
+                android:visibility="@{searchViewModel.resultsAvailable ? View.VISIBLE : View.GONE}"
                 android:overScrollMode="never"
                 android:layoutAnimation="@anim/layout_fall_down"/>
 
@@ -99,7 +99,7 @@
                 android:padding="@dimen/app_padding"
                 android:clickable="@{!searchViewModel.searching}"
                 android:onClick="@{()->searchViewModel.showMoreResultsClicked()}"
-                android:visibility="@{searchViewModel.thereAreMoreResults &amp;&amp; !searchViewModel.resultsHidden &amp;&amp; !searchViewModel.searching ? View.VISIBLE : View.GONE}"
+                android:visibility="@{searchViewModel.thereAreMoreResults &amp;&amp; !searchViewModel.resultsHidden &amp;&amp; !searchViewModel.searching &amp;&amp; searchViewModel.resultsAvailable ? View.VISIBLE : View.GONE}"
                 android:textColor="?attr/colorPrimary"
                 android:gravity="center"/>
 
