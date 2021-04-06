@@ -103,9 +103,9 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
 
     private fun getSimilarLyricsPattern(word: String) =
             when {
-                word.length > 4 -> "\\b\\S$word\\S*|\\b\\S?$word?[^${word[word.length - 1]}.,? ]\\S*|\\b${word.substring(0, word.length-1)}\\b"
-                word.length == 4 -> "\\b\\S$word\\S*|\\b\\S?$word?[^${word[word.length - 1]}.,? ]\\S*"
-                else -> "\\b\\S$word\\S?[^\\s]*|\\b\\S?$word[^.,? ][^\\s]*"
+                word.length > 4 -> "\\b\\S$word\\S*|\\b\\S?$word?[^${word[word.length - 1]}.,?! ]\\S*|\\b${word.substring(0, word.length-1)}\\b"
+                word.length == 4 -> "\\b\\S$word\\S*|\\b\\S?$word?[^${word[word.length - 1]}.,?! ]\\S*"
+                else -> "\\b\\S$word\\S?[^\\s]*|\\b\\S?$word[^.,?! ][^\\s]*"
             }
 
     override fun mainResultsHeaderClicked() {
