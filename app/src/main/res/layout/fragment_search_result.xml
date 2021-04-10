@@ -45,7 +45,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:textColor="?attr/colorPrimaryVariant"
-                    android:textSize="18sp"
+                    android:textSize="17sp"
                     android:text="@{searchViewModel.typeOfLyrics == SearchResultFragment.MAIN_LYRICS ? @string/main_lyrics_search_result : @string/similiar_lyrics_search_result}"/>
 
                 <View

@@ -53,7 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{mainText}"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
                         android:alpha="0.9"
                         android:textColor="?attr/colorPrimaryDark"/>
 
@@ -75,7 +75,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingStart="@dimen/app_padding"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:text="@{translation}"/>
 
                     </LinearLayout>

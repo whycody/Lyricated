@@ -2,6 +2,8 @@ package com.whycody.wordslife.home
 
 import android.app.Activity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +18,13 @@ import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentHomeBinding
 import com.whycody.wordslife.home.history.HistoryAdapter
 import com.whycody.wordslife.search.SearchFragment
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.fragment_home.view.clearBtn
+import kotlinx.android.synthetic.main.fragment_home.view.searchWordInput
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), TextWatcher {
 
     private lateinit var layoutView: View
     private val homeViewModel: HomeViewModel by viewModel()
@@ -29,6 +34,8 @@ class HomeFragment : Fragment() {
         val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_home, container, false)
         layoutView = binding.root
+        layoutView.searchWordInput.addTextChangedListener(this)
+        layoutView.clearBtn.setOnClickListener{ searchWordInput.setText("") }
         observeSearchWord()
         setupSearchWordInput()
         setupRecycler(binding)
@@ -62,6 +69,7 @@ class HomeFragment : Fragment() {
     private fun hideKeyboard() {
         val imm = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
+        layoutView.clearFocus()
     }
 
     private fun setupRecycler(binding: FragmentHomeBinding) {
@@ -91,5 +99,19 @@ class HomeFragment : Fragment() {
             bannerStarsFour.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_four))
         }
     }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        setClearBtnVisibility(s)
+    }
+
+    private fun setClearBtnVisibility(s: CharSequence?) {
+        layoutView.clearBtn.visibility =
+                if(s.isNullOrBlank()) View.INVISIBLE
+                else View.VISIBLE
+    }
+
+    override fun afterTextChanged(s: Editable?) {  }
 
 }

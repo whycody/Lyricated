@@ -49,6 +49,7 @@ class ChooseLanguageFragment : Fragment() {
     private fun hideKeyboard() {
         val imm = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
+        view?.clearFocus()
     }
 
     private fun setupRecycler() {

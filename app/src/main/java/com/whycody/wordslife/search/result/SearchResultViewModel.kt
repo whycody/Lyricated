@@ -134,6 +134,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
     fun setLyricLanguages(lyricLanguages: LyricLanguages) = this.lyricLanguagesFlow.tryEmit(lyricLanguages)
 
     fun searchWord(word: String) {
+        if(word == searchWord.value) return
         emitWordIfIsCorrect(getFormattedWord(word))
         searchWord.value = word
     }
