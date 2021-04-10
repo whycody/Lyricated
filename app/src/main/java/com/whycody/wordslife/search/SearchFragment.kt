@@ -61,8 +61,8 @@ class SearchFragment : Fragment(), TextWatcher {
     
     private fun addFragments() {
         val fragmentTransaction = childFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.searchContainer, mainLyricsSearchResultFragment)
-        fragmentTransaction.add(R.id.searchContainer, similarLyricsSearchResultFragment)
+        fragmentTransaction.add(R.id.fragmentsContainer, mainLyricsSearchResultFragment)
+        fragmentTransaction.add(R.id.fragmentsContainer, similarLyricsSearchResultFragment)
         fragmentTransaction.commit()
     }
 

@@ -16,5 +16,6 @@
     <string name="word_search_results">Wyniki wyszukiwania frazy \"%1$s\"</string>
     <string name="main_lyrics_search_result">Wyniki wyszukiwania</string>
     <string name="similiar_lyrics_search_result">Podobne wyszukiwania</string>
-    <string name="no_word_search_results">Niestety nie znaleźliśmy w naszej bazie żadnego zastosowania frazy \"%1$s\"</string>
+    <string name="no_word_search_results">Niestety nie znaleźliśmy zastosowania frazy \"%1$s\"</string>
+    <string name="filter">Filtruj</string>
 </resources>
