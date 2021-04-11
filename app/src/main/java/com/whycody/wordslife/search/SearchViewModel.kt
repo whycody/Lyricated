@@ -13,6 +13,7 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
 
     fun searchWord(word: String) {
         searchWord.value = word
+        if(word.isEmpty()) return
         val lastSearch = getLastSearch(word)
         val exactLastSearch = getExactLastSearch(lastSearch)
         if(exactLastSearch != null) lastSearchRepository.refreshTime(exactLastSearch.id)

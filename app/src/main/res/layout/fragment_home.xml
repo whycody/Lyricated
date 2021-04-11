@@ -92,51 +92,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"/>
 
-            <LinearLayout
+            <fragment
+                android:id="@+id/searchFieldFragment"
+                android:name="com.whycody.wordslife.search.field.SearchFieldFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/s_search_button"
                 android:layout_marginTop="25dp"
                 android:layout_marginStart="@dimen/app_padding"
-                android:layout_marginEnd="@dimen/app_padding">
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_search"
-                    android:alpha="0.6"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="4dp"
-                    android:background="@android:color/transparent"/>
-
-                <EditText
-                    android:id="@+id/searchWordInput"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/search"
-                    android:imeOptions="actionSearch"
-                    android:background="@android:color/transparent"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="6dp"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp"
-                    android:inputType="text"
-                    android:textSize="16sp"
-                    android:maxLines="1" />
-
-                <ImageButton
-                    android:id="@+id/clearBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_clear"
-                    android:visibility="invisible"
-                    android:alpha="0.6"
-                    android:paddingEnd="16dp"
-                    android:paddingStart="4dp"
-                    android:background="@android:color/transparent"/>
-
-            </LinearLayout>
+                android:layout_marginEnd="@dimen/app_padding"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -171,6 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/s_search_button"
+                    android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@+id/headerText"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent">

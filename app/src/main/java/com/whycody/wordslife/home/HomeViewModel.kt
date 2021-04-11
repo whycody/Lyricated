@@ -20,7 +20,7 @@ class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
 
     private val historyItemsFlow = lastSearchRepository.flowFourLastSearches()
     private val historyItems = MutableLiveData<List<HistoryItem>>()
-    private val searchedWord = MutableLiveData<String>()
+    private val clickedWord = MutableLiveData<String>()
 
     init {
         viewModelScope.launch {
@@ -44,13 +44,13 @@ class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
 
     fun getHistoryItems() = historyItems
 
-    fun getSearchWord() = searchedWord
+    fun getClickedWord() = clickedWord
 
-    fun resetWord() = searchedWord.postValue("")
+    fun resetClickedWord() = clickedWord.postValue("")
 
     override fun onHistoryItemClick(historyItem: HistoryItem) {
         val lastSearch = lastSearchRepository.getLastSearchById(historyItem.id)
-        searchedWord.postValue(lastSearch.text)
+        clickedWord.postValue(lastSearch.text)
         updateCurrentLanguages(lastSearch)
         postNewValues(lastSearch)
     }
@@ -60,7 +60,7 @@ class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
         chooseLanguageRepository.setCurrentTranslationLanguage(lastSearch.translationLanguageId)
     }
 
-    private fun postNewValues(lastSearch: LastSearch) = searchedWord.postValue(lastSearch.text)
+    private fun postNewValues(lastSearch: LastSearch) = clickedWord.postValue(lastSearch.text)
 
     override fun onStarClick(historyItem: HistoryItem) =
         lastSearchRepository.updateLastSearchSaved(historyItem.id, !historyItem.saved)

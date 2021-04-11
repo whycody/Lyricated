@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.whycody.wordslife.home.HomeFragment
+import com.whycody.wordslife.search.SearchFragment
 
 class MainActivity : AppCompatActivity(), MainNavigation {
 
@@ -27,4 +28,7 @@ class MainActivity : AppCompatActivity(), MainNavigation {
         if (addToBackstack) transaction.addToBackStack(null)
         transaction.commit()
     }
+
+    override fun fragmentsContainSearchFragment() =
+        supportFragmentManager.fragments.find { it is SearchFragment } != null
 }
