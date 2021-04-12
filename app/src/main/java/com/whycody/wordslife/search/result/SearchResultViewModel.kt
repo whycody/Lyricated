@@ -134,12 +134,12 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
     fun setLyricLanguages(lyricLanguages: LyricLanguages) = this.lyricLanguagesFlow.tryEmit(lyricLanguages)
 
     fun searchWord(word: String) {
-        if(word == searchWord.value) return
-        emitWordIfIsCorrect(getFormattedWord(word))
+        if(getFormattedWord(word) == getFormattedWord(searchWord.value)) return
+        emitWordIfIsCorrect(getFormattedWord(word)!!)
         searchWord.value = word
     }
 
-    private fun getFormattedWord(word: String) = word.trim().replace(Regex("[*.?]"), "")
+    private fun getFormattedWord(word: String?) = word?.trim()?.replace(Regex("[*.?]"), "")
 
     private fun emitWordIfIsCorrect(word: String) {
         resultsAvailable.value = !(word.length <= 1
@@ -158,6 +158,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
         if(newNumber) currentShowedLyrics.value = 0
         if(getDifference(lyrics) < numberOfShowingLyrics * 2)
             currentShowedLyrics.value += numberOfShowingLyrics
+        if(currentShowedLyrics.value == 0) currentShowedLyrics.value += 1
         currentShowedLyrics.value += numberOfShowingLyrics
     }
 

@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:alpha="@{viewModel.resultsHidden ? 0.8f : 1f}"
+            android:alpha="@{viewModel.resultsHidden || (viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1)) ? 0.8f : 1f}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -54,7 +54,8 @@
                         android:layout_height="wrap_content"
                         android:text="@{mainText}"
                         android:textSize="14sp"
-                        android:alpha="0.9"
+                        android:maxLines="@{viewModel.resultsHidden || viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1) ? 1 : 5}"
+                        android:alpha="@{!viewModel.resultsHidden &amp;&amp; (viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1))? 0.15f : 0.9f}"
                         android:textColor="?attr/colorPrimaryDark"/>
 
                     <LinearLayout
@@ -68,6 +69,7 @@
                             android:layout_width="12dp"
                             android:layout_height="10dp"
                             android:background="@drawable/ic_light_arrowright"
+                            android:alpha="@{!viewModel.resultsHidden &amp;&amp; (viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1))? 0.15f : 1f}"
                             android:layout_gravity="center"
                             android:layout_marginStart="8dp"/>
 
@@ -75,6 +77,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingStart="@dimen/app_padding"
+                            android:maxLines="@{viewModel.resultsHidden || viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1) ? 1 : 5}"
+                            android:alpha="@{!viewModel.resultsHidden &amp;&amp; (viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1))? 0.15f : 1f}"
                             android:textSize="13sp"
                             android:text="@{translation}"/>
 
@@ -86,6 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="46dp"
                     android:src="@drawable/ic_information"
+                    android:alpha="@{!viewModel.resultsHidden &amp;&amp; (viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1))? 0.15f : 1f}"
                     android:layout_gravity="center"
                     android:padding="10dp"
                     android:paddingStart="@dimen/app_padding" />
@@ -99,11 +104,27 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/s_search_alpha"
-            android:visibility="@{viewModel.resultsHidden ? View.VISIBLE : View.GONE}"
+            android:onClick="@{()->viewModel.mainResultsHeaderClicked()}"
+            android:visibility="@{viewModel.resultsHidden || viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1) ? View.VISIBLE : View.GONE}"
             app:layout_constraintTop_toTopOf="@id/mainLayout"
             app:layout_constraintBottom_toBottomOf="@id/mainLayout"
             app:layout_constraintRight_toRightOf="@id/mainLayout"
             app:layout_constraintLeft_toLeftOf="@id/mainLayout"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="@string/show_more_results"
+            android:padding="@dimen/app_padding"
+            android:clickable="@{!viewModel.searching}"
+            android:onClick="@{()->viewModel.showMoreResultsClicked()}"
+            android:visibility="@{viewModel.thereAreMoreResults &amp;&amp; !viewModel.resultsHidden &amp;&amp;position==(viewModel.lyricItems.size()-1) ? View.VISIBLE : View.GONE}"
+            android:textColor="?attr/colorPrimary"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

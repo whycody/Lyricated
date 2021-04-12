@@ -10,7 +10,7 @@
         android:id="@+id/fragmentsContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="10dp"
+        android:paddingTop="20dp"
         android:background="@drawable/s_search_backgr"
         android:paddingBottom="30dp"
         android:orientation="vertical"/>

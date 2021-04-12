@@ -3,10 +3,12 @@ package com.whycody.wordslife.search.result
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
