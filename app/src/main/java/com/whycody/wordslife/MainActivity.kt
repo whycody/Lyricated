@@ -14,6 +14,11 @@ class MainActivity : AppCompatActivity(), MainNavigation {
         if(savedInstanceState == null) showHomeFragment()
     }
 
+    override fun onBackPressed() {
+        val fragment = this.supportFragmentManager.findFragmentById(R.id.container)
+        if(fragment !is IOnBackPressed || fragment.onBackPressed()) super.onBackPressed()
+    }
+
     private fun showHomeFragment() {
         supportFragmentManager
                 .beginTransaction()
