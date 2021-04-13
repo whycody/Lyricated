@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.NestedScrollView
 import com.whycody.wordslife.IOnBackPressed
 import com.whycody.wordslife.R
+import kotlinx.android.synthetic.main.fragment_search.view.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class SearchFragment : Fragment(), IOnBackPressed {
@@ -20,16 +20,20 @@ class SearchFragment : Fragment(), IOnBackPressed {
                               savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         searchWord = arguments?.getString(SEARCH_WORD, "")!!
-        if(savedInstanceState == null) searchViewModel.searchWord(searchWord)
+        checkSavedInstanceState(savedInstanceState)
         return view
     }
 
+    private fun checkSavedInstanceState(savedInstanceState: Bundle?) {
+        if(savedInstanceState != null) return
+        searchViewModel.searchWord(searchWord)
+    }
+
     override fun onBackPressed(): Boolean {
-        val nestedScroll = view as NestedScrollView
         val scrollBounds = Rect()
-        nestedScroll.getHitRect(scrollBounds)
+        view?.getHitRect(scrollBounds)
         return if(!view!!.findViewById<View>(R.id.searchFieldFragment).getLocalVisibleRect(scrollBounds)) {
-            nestedScroll.smoothScrollTo(0, 0, 1000)
+            view!!.searchAppBar.setExpanded(true)
             false
         } else true
     }
@@ -42,7 +46,6 @@ class SearchFragment : Fragment(), IOnBackPressed {
     private fun resetSearchWord() = searchViewModel.searchWord("")
 
     companion object {
-
         const val SEARCH_WORD = "search_word"
         fun newInstance(searchWord: String): SearchFragment {
             val fragment = SearchFragment()

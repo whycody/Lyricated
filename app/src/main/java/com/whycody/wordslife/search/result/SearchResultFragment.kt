@@ -3,12 +3,10 @@ package com.whycody.wordslife.search.result
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
@@ -69,16 +67,26 @@ class SearchResultFragment : Fragment() {
 
     private fun observeLyrics(resultAdapter: SearchResultAdapter) {
         searchResultViewModel.getLyricItems().observe(activity as MainActivity, {
+            checkIfShouldScrollToTop(resultAdapter.currentList, it)
             resultAdapter.submitList(it)
             if(resultAdapter.currentList.isEmpty() || resultShownAgain(resultAdapter.currentList, it))
                 layoutView.searchResultRecycler.scheduleLayoutAnimation()
         })
     }
 
+    private fun checkIfShouldScrollToTop(currentLyricItems: List<LyricItem>, newLyricItems: List<LyricItem>) {
+        val listsAreFilled = listsAreNotEmpty(currentLyricItems, newLyricItems)
+        if(listsAreFilled && currentLyricItems[0].lyricId != newLyricItems[0].lyricId && typeOfLyrics == MAIN_LYRICS)
+            layoutView.searchResultRecycler.smoothScrollToPosition(0)
+    }
+
     private fun resultShownAgain(currentLyricItems: List<LyricItem>, newLyricItems: List<LyricItem>) =
-            currentLyricItems.isNotEmpty() && newLyricItems.isNotEmpty() &&
+            listsAreNotEmpty(currentLyricItems, newLyricItems) &&
                     currentLyricItems[0].lyricId == newLyricItems[0].lyricId &&
                     newLyricItems.size <= currentLyricItems.size && newLyricItems.size != 1
+
+    private fun listsAreNotEmpty(currentLyricItems: List<LyricItem>, newLyricItems: List<LyricItem>) =
+            currentLyricItems.isNotEmpty() && newLyricItems.isNotEmpty()
 
     private fun observeCurrentLanguages() {
         val sharedPrefs: SharedPreferences = activity!!.applicationContext

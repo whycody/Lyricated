@@ -25,18 +25,11 @@
                 android:paddingEnd="@dimen/app_padding"
                 android:paddingBottom="8dp">
 
-                <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/circle"/>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
                     android:textColor="?attr/colorPrimaryVariant"
                     android:textSize="17sp"
                     android:text="@{searchViewModel.typeOfLyrics == SearchResultFragment.MAIN_LYRICS ? @string/main_lyrics_search_result : @string/similiar_lyrics_search_result}"/>
