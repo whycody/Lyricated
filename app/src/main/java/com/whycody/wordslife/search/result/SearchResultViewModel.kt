@@ -99,7 +99,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
             if(typeOfLyrics == SearchResultFragment.MAIN_LYRICS) getMainLyricsPattern(word)
             else getSimilarLyricsPattern(word)
 
-    private fun getMainLyricsPattern(word: String) = "\\b$word\\b"
+    private fun getMainLyricsPattern(word: String) = "\\b$word\\b[^']"
 
     private fun getSimilarLyricsPattern(word: String) =
             when {
