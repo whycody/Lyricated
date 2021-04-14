@@ -37,9 +37,9 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
     fun getLyricItems() = lyricItems
 
     suspend fun collectLyricItems() = flowLyricItems().collectLatest { lyricItems ->
-        allLyricItems.postValue(lyricItems)
         updateNumberOfShowingLyrics(lyricItems, true)
         this.lyricItems.postValue(lyricItems.take(currentShowedLyrics.value))
+        allLyricItems.postValue(lyricItems)
         postNewValues(lyricItems)
     }
 
@@ -148,9 +148,9 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
     }
 
     private fun postNewValues(lyrics: List<LyricItem>? = null) {
-        searching.postValue(false)
         resultsAvailable.postValue(lyrics?.isNotEmpty() ?: lyricItems.value?.isNotEmpty())
         thereAreMoreResults.postValue(currentShowedLyrics.value < lyrics?.size ?: allLyricItems.value!!.size)
+        searching.postValue(false)
     }
 
     private fun updateNumberOfShowingLyrics(lyrics: List<LyricItem>? = null, newNumber: Boolean = false) {

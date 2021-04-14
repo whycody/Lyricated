@@ -40,6 +40,7 @@ class SearchResultFragment : Fragment() {
         binding.searchViewModel = searchResultViewModel
         binding.lifecycleOwner = activity as MainActivity
         setupRecycler()
+        observeHidden()
         observeCurrentLanguages()
         observeSearchWord()
         return layoutView
@@ -63,6 +64,13 @@ class SearchResultFragment : Fragment() {
             layoutView.searchResultRecycler.itemAnimator?.changeDuration = 0
             observeLyrics(this)
         }
+    }
+
+    private fun observeHidden() {
+        searchResultViewModel.resultsHidden.observe(activity as MainActivity, {
+            view?.headerArrow?.rotation = if(it) 0f else 180f
+            view?.headerArrow?.animate()?.rotationBy(180f)?.setDuration(200)?.start()
+        })
     }
 
     private fun observeLyrics(resultAdapter: SearchResultAdapter) {

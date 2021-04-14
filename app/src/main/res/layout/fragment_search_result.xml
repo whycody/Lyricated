@@ -10,112 +10,114 @@
             type="com.whycody.wordslife.search.result.SearchResultViewModel" />
     </data>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="5dp"
+            android:onClick="@{()->searchViewModel.mainResultsHeaderClicked()}"
+            android:visibility="@{searchViewModel.resultsAvailable ? View.VISIBLE : View.GONE}"
+            android:paddingStart="@dimen/app_padding"
+            android:paddingEnd="@dimen/app_padding"
+            android:paddingBottom="8dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:onClick="@{()->searchViewModel.mainResultsHeaderClicked()}"
-                android:visibility="@{searchViewModel.resultsAvailable ? View.VISIBLE : View.GONE}"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textColor="?attr/colorPrimaryVariant"
+                android:textSize="17sp"
+                android:text="@{searchViewModel.typeOfLyrics == SearchResultFragment.MAIN_LYRICS ? @string/main_lyrics_search_result : @string/similiar_lyrics_search_result}"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/headerArrow"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_arrow_down"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/app_padding"
+            android:layout_marginBottom="@dimen/app_padding"
+            android:visibility="@{(!searchViewModel.resultsAvailable &amp;&amp; searchViewModel.typeOfLyrics == SearchResultFragment.MAIN_LYRICS) ? View.VISIBLE : View.GONE}"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:paddingStart="@dimen/app_padding"
-                android:paddingEnd="@dimen/app_padding"
-                android:paddingBottom="8dp">
+                android:foregroundGravity="center"
+                android:scaleType="fitStart"
+                android:src="@drawable/gr_cloud_astronaut"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:foregroundGravity="center"
+                android:paddingStart="@dimen/app_padding"
+                android:paddingEnd="@dimen/app_padding">
+
+                <TextView
+                    android:id="@+id/opsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Opss.."
+                    android:textSize="18sp"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    android:textSize="17sp"
-                    android:text="@{searchViewModel.typeOfLyrics == SearchResultFragment.MAIN_LYRICS ? @string/main_lyrics_search_result : @string/similiar_lyrics_search_result}"/>
+                    android:text="@{@string/no_word_search_results(searchViewModel.searchWord)}"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toBottomOf="@id/opsText"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:rotation="@{!searchViewModel.resultsHidden ? 0 : 180}"
-                    android:src="@drawable/ic_arrow_down"/>
-
-            </LinearLayout>
-
-           <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="@dimen/app_padding"
-                android:paddingTop="20dp"
-                android:visibility="@{(!searchViewModel.resultsAvailable &amp;&amp; searchViewModel.typeOfLyrics == SearchResultFragment.MAIN_LYRICS) ? View.VISIBLE : View.GONE}"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/app_padding"
-                    android:layout_marginBottom="@dimen/app_padding"
-                    android:scaleType="fitStart"
-                    android:src="@drawable/gr_cloud_astronaut"/>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:foregroundGravity="center"
-                    android:paddingStart="@dimen/app_padding"
-                    android:paddingEnd="@dimen/app_padding">
-
-                    <TextView
-                        android:id="@+id/opsText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="Opss.."
-                        android:textSize="18sp"
-                        android:textColor="?attr/colorPrimaryVariant"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{@string/no_word_search_results(searchViewModel.searchWord)}"
-                        android:textSize="15sp"
-                        app:layout_constraintTop_toBottomOf="@id/opsText"
-                        app:layout_constraintLeft_toLeftOf="parent"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </LinearLayout>
-
-            <ProgressBar
-                style="?android:attr/progressBarStyleHorizontal"
-                android:indeterminate="true"
-                android:background="@android:color/transparent"
-                android:layout_width="match_parent"
-                android:layout_height="6dp"
-                android:layout_margin="@dimen/app_padding"
-                android:visibility="@{searchViewModel.searching &amp;&amp; !searchViewModel.resultsHidden ? View.VISIBLE : View.GONE}"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/searchResultRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:visibility="@{searchViewModel.resultsAvailable ? View.VISIBLE : View.GONE}"
-                android:overScrollMode="never"
-                android:layoutAnimation="@anim/layout_fall_down"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:indeterminate="true"
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_margin="@dimen/app_padding"
+            android:visibility="@{searchViewModel.searching &amp;&amp; !searchViewModel.resultsHidden ? View.VISIBLE : View.GONE}"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchResultRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:visibility="@{searchViewModel.resultsAvailable ? View.VISIBLE : View.GONE}"
+            android:overScrollMode="never"
+            android:layoutAnimation="@anim/layout_fall_down"/>
+
+    </LinearLayout>
 
 </layout>
