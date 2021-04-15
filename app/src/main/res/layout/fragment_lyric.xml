@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fillViewport="true"
-    android:overScrollMode="never">
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context=".search.lyric.LyricFragment">
 
-    <LinearLayout
-        android:id="@+id/fragmentsContainer"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="20dp"
-        android:paddingBottom="30dp"
-        android:orientation="vertical"/>
+        android:text="@string/hello_blank_fragment" />
 
 </androidx.core.widget.NestedScrollView>

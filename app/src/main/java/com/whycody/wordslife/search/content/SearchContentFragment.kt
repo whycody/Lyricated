@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import com.whycody.wordslife.R
 import com.whycody.wordslife.search.result.SearchResultFragment
 
-class SearchContentFragment: Fragment() {
+class SearchContentFragment: Fragment(), SearchContentView {
 
     private val mainLyricsSearchResultFragment =
         SearchResultFragment.newInstance(SearchResultFragment.MAIN_LYRICS)
@@ -21,6 +22,9 @@ class SearchContentFragment: Fragment() {
         if(savedInstanceState == null) addFragments()
         return view
     }
+
+    override fun scrollToTop() =
+            (view as NestedScrollView).smoothScrollTo(0, 0, 700)
 
     private fun addFragments() {
         val fragmentTransaction = childFragmentManager.beginTransaction()

@@ -10,9 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.whycody.wordslife.data.LyricItem
 import com.whycody.wordslife.BR
 import com.whycody.wordslife.R
+import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.result.SearchResultViewModel
 
-class SearchResultAdapter(private val viewModel: SearchResultViewModel, private val lifecycleOwner: LifecycleOwner):
+class SearchResultAdapter(private val viewModel: SearchResultViewModel,
+                          private val searchViewModel: SearchViewModel,
+                          private val lifecycleOwner: LifecycleOwner,):
         ListAdapter<LyricItem, SearchResultAdapter.SearchHolder>(SearchDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHolder {
@@ -31,6 +34,7 @@ class SearchResultAdapter(private val viewModel: SearchResultViewModel, private 
             binding.setVariable(BR.position, layoutPosition)
             binding.setVariable(BR.mainText, lyricItem.mainLangSentence)
             binding.setVariable(BR.translation, lyricItem.translatedSentence)
+            binding.setVariable(BR.searchViewModel, searchViewModel)
             binding.setVariable(BR.viewModel, viewModel)
             binding.executePendingBindings()
         }

@@ -10,6 +10,7 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
                       private val languageDao: LanguageDao): ViewModel() {
 
     private val searchWord = MutableLiveData<String>()
+    private val userAction = MutableLiveData<Int>()
 
     fun searchWord(word: String) {
         searchWord.value = word
@@ -21,6 +22,12 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
     }
 
     fun getSearchWord() = searchWord
+
+    fun setUserAction(id: Int) = userAction.postValue(id)
+
+    fun getUserAction() = userAction
+
+    fun resetUserAction() = userAction.postValue(SearchFragment.NO_ACTION)
 
     private fun getExactLastSearch(lastSearch: LastSearch) =
             lastSearchRepository.getAllLastSearches().find { lastSearchesAreTheSame(it, lastSearch) }

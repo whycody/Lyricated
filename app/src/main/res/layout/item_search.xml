@@ -3,6 +3,7 @@
 
     <data>
         <import type="android.view.View"/>
+        <import type="com.whycody.wordslife.search.SearchFragment"/>
         <variable
             name="position"
             type="int" />
@@ -15,6 +16,9 @@
         <variable
             name="viewModel"
             type="com.whycody.wordslife.search.result.SearchResultViewModel" />
+        <variable
+            name="searchViewModel"
+            type="com.whycody.wordslife.search.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +45,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/app_padding">
+                android:padding="@dimen/app_padding"
+                android:onClick="@{()->searchViewModel.setUserAction(SearchFragment.LYRIC_CLICKED)}">
 
                 <LinearLayout
                     android:layout_width="0dp"

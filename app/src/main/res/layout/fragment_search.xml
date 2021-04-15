@@ -119,14 +119,16 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:background="@color/gray"
-        app:layout_anchor="@id/searchContentFragment"
+        app:layout_anchor="@id/fragmentsContainer"
         app:layout_anchorGravity="bottom"/>
 
-    <fragment
-        android:id="@+id/searchContentFragment"
-        android:name="com.whycody.wordslife.search.content.SearchContentFragment"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/fragmentsContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/gray"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="0dp"
         app:layout_anchor="@+id/searchAppBar"
         app:layout_anchorGravity="bottom"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
