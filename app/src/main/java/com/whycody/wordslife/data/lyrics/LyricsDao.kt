@@ -27,4 +27,7 @@ interface LyricsDao {
 
     @Query("SELECT * FROM lyrics WHERE pt LIKE '%' || :word || '%' LIMIT 1000")
     fun getPtLyricsWithWordIncluded(word: String): List<Lyric>
+
+    @Query("SELECT * FROM lyrics WHERE :lyricId=lyric_id")
+    fun getLyricWithId(lyricId: Int): Lyric
 }

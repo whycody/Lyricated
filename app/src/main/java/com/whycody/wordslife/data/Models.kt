@@ -5,7 +5,7 @@ import android.text.SpannableStringBuilder
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.io.Serializable
+import com.whycody.wordslife.search.SearchFragment
 import java.util.*
 
 data class Language(
@@ -27,7 +27,11 @@ data class LyricItem(
 
 data class LyricLanguages(
         val mainLanguageId: String,
-        val translationLanguageId: String): Serializable
+        val translationLanguageId: String)
+
+data class UserAction(
+        val actionType: Int = SearchFragment.NO_ACTION,
+        val actionId: Int = SearchFragment.NO_ACTION)
 
 @Entity(tableName = "lyrics")
 data class Lyric(

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="lyricViewModel"
+            type="com.whycody.wordslife.search.lyric.LyricViewModel" />
+    </data>
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/app_padding"
+        android:paddingEnd="@dimen/app_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/s_lyric_background"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_quote"
+                android:scaleType="fitCenter"
+                android:paddingStart="@dimen/app_padding" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:text="@{lyricViewModel.currentLyricItem.mainLangSentence}"
+                android:textColor="?attr/colorPrimaryVariant"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</layout>

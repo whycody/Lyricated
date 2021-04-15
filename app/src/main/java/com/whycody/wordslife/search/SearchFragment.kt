@@ -49,16 +49,22 @@ class SearchFragment : Fragment(), IOnBackPressed {
     })
 
     private fun observeUserAction() = searchViewModel.getUserAction().observe(activity as MainActivity, {
-        if(it == NO_ACTION) return@observe
-        if(it == LYRIC_CLICKED) tryShowFragment(LyricFragment())
+        if(it.actionType == NO_ACTION) return@observe
+        if(it.actionType == LYRIC_CLICKED) showLyricFragment(it.actionId)
         appBarLastStateIsExpanded = appBarIsExpanded()
         searchViewModel.resetUserAction()
     })
 
+    private fun showLyricFragment(lyricId: Int) {
+        tryShowFragment(LyricFragment.newInstance(lyricId))
+        if(!appBarIsExpanded())
+            searchAppBar.setExpanded(true)
+    }
+
     private fun tryShowFragment(fragment: Fragment) {
         try {
             showFragment(fragment)
-        } catch (_: Exception) {}
+        } catch (_: Exception) { }
     }
 
     private fun showFragment(fragment: Fragment) {

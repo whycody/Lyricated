@@ -3,6 +3,7 @@ package com.whycody.wordslife.search
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.whycody.wordslife.data.LastSearch
+import com.whycody.wordslife.data.UserAction
 import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.last.searches.LastSearchRepository
 
@@ -10,7 +11,7 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
                       private val languageDao: LanguageDao): ViewModel() {
 
     private val searchWord = MutableLiveData<String>()
-    private val userAction = MutableLiveData<Int>()
+    private val userAction = MutableLiveData(UserAction())
 
     fun searchWord(word: String) {
         searchWord.value = word
@@ -23,11 +24,13 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
 
     fun getSearchWord() = searchWord
 
-    fun setUserAction(id: Int) = userAction.postValue(id)
+    fun setUserAction(userAction: UserAction) = this.userAction.postValue(userAction)
+
+    fun setUserAction(actionType: Int, actionId: Int) = userAction.postValue(UserAction(actionType, actionId))
 
     fun getUserAction() = userAction
 
-    fun resetUserAction() = userAction.postValue(SearchFragment.NO_ACTION)
+    fun resetUserAction() = userAction.postValue(UserAction())
 
     private fun getExactLastSearch(lastSearch: LastSearch) =
             lastSearchRepository.getAllLastSearches().find { lastSearchesAreTheSame(it, lastSearch) }

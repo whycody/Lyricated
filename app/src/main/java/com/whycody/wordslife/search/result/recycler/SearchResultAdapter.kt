@@ -32,10 +32,9 @@ class SearchResultAdapter(private val viewModel: SearchResultViewModel,
 
         fun setupData(lyricItem: LyricItem) {
             binding.setVariable(BR.position, layoutPosition)
-            binding.setVariable(BR.mainText, lyricItem.mainLangSentence)
-            binding.setVariable(BR.translation, lyricItem.translatedSentence)
-            binding.setVariable(BR.searchViewModel, searchViewModel)
+            binding.setVariable(BR.lyricItem, lyricItem)
             binding.setVariable(BR.viewModel, viewModel)
+            binding.setVariable(BR.searchViewModel, searchViewModel)
             binding.executePendingBindings()
         }
     }

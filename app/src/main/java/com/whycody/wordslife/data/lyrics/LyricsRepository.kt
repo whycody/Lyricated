@@ -4,6 +4,8 @@ import com.whycody.wordslife.data.language.LanguageDaoImpl
 
 class LyricsRepository(private val lyricsDao: LyricsDao) {
 
+    fun getLyricWithId(lyricId: Int) = lyricsDao.getLyricWithId(lyricId)
+
     fun getLyricsWithWordIncludedInLanguage(langId: String, word: String) =
             when(langId) {
                 LanguageDaoImpl.PL -> lyricsDao.getPlLyricsWithWordIncluded(word)

@@ -1,18 +1,61 @@
 package com.whycody.wordslife.search.lyric
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.whycody.wordslife.R
+import com.whycody.wordslife.search.lyric.quote.QuoteFragment
+import kotlinx.coroutines.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class LyricFragment : Fragment() {
+
+    private var lyricId = 0
+    private var job: Job? = null
+    private val lyricViewModel: LyricViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_lyric, container, false)
+        lyricId = arguments?.getInt(LYRIC_ID, 0)!!
+        checkSavedInstanceState(savedInstanceState)
         return view
     }
 
+    private fun checkSavedInstanceState(savedInstanceState: Bundle?) {
+        if(savedInstanceState!=null) return
+        lyricViewModel.searchLyricItem(lyricId)
+        addFragments()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        job = MainScope().launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO) { lyricViewModel.collectLyricItem() }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job?.cancel()
+    }
+
+    private fun addFragments() {
+        val fragmentTransaction = childFragmentManager.beginTransaction()
+        fragmentTransaction.add(R.id.fragmentsContainer, QuoteFragment())
+        fragmentTransaction.commit()
+    }
+
+    companion object {
+        const val LYRIC_ID = "lyricId"
+        fun newInstance(lyricId: Int) =
+            LyricFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(LYRIC_ID, lyricId)
+                }
+            }
+    }
 }

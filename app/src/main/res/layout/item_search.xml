@@ -8,11 +8,8 @@
             name="position"
             type="int" />
         <variable
-            name="mainText"
-            type="android.text.SpannableStringBuilder" />
-        <variable
-            name="translation"
-            type="java.lang.String" />
+            name="lyricItem"
+            type="com.whycody.wordslife.data.LyricItem" />
         <variable
             name="viewModel"
             type="com.whycody.wordslife.search.result.SearchResultViewModel" />
@@ -46,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/app_padding"
-                android:onClick="@{()->searchViewModel.setUserAction(SearchFragment.LYRIC_CLICKED)}">
+                android:onClick="@{()->searchViewModel.setUserAction(SearchFragment.LYRIC_CLICKED, lyricItem.lyricId)}">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -57,7 +54,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{mainText}"
+                        android:text="@{lyricItem.mainLangSentence}"
                         android:textSize="14sp"
                         android:maxLines="@{viewModel.resultsHidden || viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1) ? 1 : 5}"
                         android:alpha="@{!viewModel.resultsHidden &amp;&amp; (viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1))? 0.15f : 0.9f}"
@@ -85,7 +82,7 @@
                             android:maxLines="@{viewModel.resultsHidden || viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1) ? 1 : 5}"
                             android:alpha="@{!viewModel.resultsHidden &amp;&amp; (viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1))? 0.15f : 1f}"
                             android:textSize="13sp"
-                            android:text="@{translation}"/>
+                            android:text="@{lyricItem.translatedSentence}"/>
 
                     </LinearLayout>
 

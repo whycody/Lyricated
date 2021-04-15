@@ -11,11 +11,6 @@ import com.whycody.wordslife.search.result.SearchResultFragment
 
 class SearchContentFragment: Fragment(), SearchContentView {
 
-    private val mainLyricsSearchResultFragment =
-        SearchResultFragment.newInstance(SearchResultFragment.MAIN_LYRICS)
-    private val similarLyricsSearchResultFragment =
-        SearchResultFragment.newInstance(SearchResultFragment.SIMILAR_LYRICS)
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_search_content, container, false)
@@ -28,8 +23,10 @@ class SearchContentFragment: Fragment(), SearchContentView {
 
     private fun addFragments() {
         val fragmentTransaction = childFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.fragmentsContainer, mainLyricsSearchResultFragment)
-        fragmentTransaction.add(R.id.fragmentsContainer, similarLyricsSearchResultFragment)
+        fragmentTransaction.add(R.id.fragmentsContainer,
+            SearchResultFragment.newInstance(SearchResultFragment.MAIN_LYRICS))
+        fragmentTransaction.add(R.id.fragmentsContainer,
+            SearchResultFragment.newInstance(SearchResultFragment.SIMILAR_LYRICS))
         fragmentTransaction.commit()
     }
 }
