@@ -1,24 +1,20 @@
 <resources>
     <string name="app_name">Lyricated</string>
-    <string name="english">angielski</string>
-    <string name="polish">polski</string>
-    <string name="spanish">hiszpański</string>
-    <string name="portugal">portugalski</string>
-    <string name="german">niemiecki</string>
-    <string name="italian">włoski</string>
-    <string name="french">francuski</string>
-    <string name="search">Szukaj</string>
-    <string name="library">Biblioteka</string>
-    <string name="previous_words">Wróć do wcześniejszych słówek</string>
-    <string name="choose_main_language">Wybierz język, którego się uczysz</string>
-    <string name="choose_translation_language">Wybierz język tłumaczenia</string>
-    <string name="show_more_results">Pokaż więcej wyników</string>
-    <string name="word_search_results">Wyniki wyszukiwania frazy \"%1$s\"</string>
-    <string name="main_lyrics_search_result">Wyniki wyszukiwania</string>
-    <string name="similiar_lyrics_search_result">Podobne wyszukiwania</string>
-    <string name="no_word_search_results">Niestety nie znaleźliśmy zastosowania frazy \"%1$s\"</string>
-    <string name="filter">Filtruj</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="sort">Sortuj</string>
+    <string name="english">english</string>
+    <string name="polish">polish</string>
+    <string name="spanish">spanish</string>
+    <string name="portugal">portuguese</string>
+    <string name="german">german</string>
+    <string name="italian">italian</string>
+    <string name="french">french</string>
+    <string name="search">Search</string>
+    <string name="previous_words">Back to previous words</string>
+    <string name="choose_main_language">Choose language that you\'re learning</string>
+    <string name="choose_translation_language">Choose translation language</string>
+    <string name="show_more_results">Show more results</string>
+    <string name="main_lyrics_search_result">Search results</string>
+    <string name="similiar_lyrics_search_result">Similar results</string>
+    <string name="no_word_search_results">Sadly we couldn\'t find phrase \"%1$s\"</string>
+    <string name="filter">Filter</string>
+    <string name="sort">Sort</string>
 </resources>

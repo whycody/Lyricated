@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Lyricated</string>
+    <string name="english">inglés</string>
+    <string name="polish">polaco</string>
+    <string name="spanish">español</string>
+    <string name="portugal">portugués</string>
+    <string name="german">alemán</string>
+    <string name="italian">italiano</string>
+    <string name="french">francés</string>
+    <string name="search">Busca</string>
+    <string name="previous_words">Vuelve a las palabras anteriores</string>
+    <string name="choose_main_language">Elige el idioma que estás aprendiendo</string>
+    <string name="choose_translation_language">Elige el idioma de la traducción</string>
+    <string name="show_more_results">Mostrar más resultados</string>
+    <string name="main_lyrics_search_result">Resultados de la búsqueda</string>
+    <string name="similiar_lyrics_search_result">Resultados similares</string>
+    <string name="no_word_search_results">Desafortunadamente no hemos podido encontrar la frase \"%1$s\"</string>
+    <string name="filter">Filtrar</string>
+    <string name="sort">Ordenar</string>
+</resources>
