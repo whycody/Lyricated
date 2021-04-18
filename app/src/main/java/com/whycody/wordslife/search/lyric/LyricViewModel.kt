@@ -1,13 +1,11 @@
 package com.whycody.wordslife.search.lyric
 
-import android.text.SpannableStringBuilder
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.whycody.wordslife.data.*
 import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.data.lyrics.LyricsRepository
-import com.whycody.wordslife.search.lyric.movie.MovieFragment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -15,7 +13,6 @@ import kotlinx.coroutines.flow.combine
 
 class LyricViewModel(private val lyricsRepository: LyricsRepository, languageDao: LanguageDao): ViewModel() {
 
-    private val currentLyricItem = MutableLiveData<LyricItem>()
     private val currentExtendedLyricItem = MutableLiveData<ExtendedLyricItem>()
     private val lyricIdFlow = MutableStateFlow(0)
     private val lyricLanguagesFlow = MutableStateFlow(LyricLanguages(
@@ -23,20 +20,12 @@ class LyricViewModel(private val lyricsRepository: LyricsRepository, languageDao
 
     suspend fun collectLyricItem() = flowExtendedLyricItem().collect { currentExtendedLyricItem.postValue(it) }
 
-    private fun flowLyricItem(): Flow<LyricItem> = lyricIdFlow.combine(lyricLanguagesFlow) { id, languages ->
-        val lyric = lyricsRepository.getLyricWithId(id)
-        val lyricItem = LyricItem(lyric.lyricId,
-                SpannableStringBuilder(getSentenceFromLang(languages.mainLanguageId, lyric)),
-                getSentenceFromLang(languages.translationLanguageId, lyric)!!)
-        lyricItem
-    }
-
     private fun flowExtendedLyricItem(): Flow<ExtendedLyricItem> = lyricIdFlow.combine(lyricLanguagesFlow) { id, languages ->
         val lyric = lyricsRepository.getLyricWithId(id)
         val extendedLyricItem = ExtendedLyricItem(lyric.lyricId, lyric.time,
             getSentenceFromLang(languages.mainLanguageId, lyric)!!,
             getSentenceFromLang(languages.translationLanguageId, lyric)!!,
-            Movie("Movie Title", "Translated Title"))
+            MovieItem("Movie Title", "Translated Title"))
         extendedLyricItem
     }
 
@@ -54,8 +43,6 @@ class LyricViewModel(private val lyricsRepository: LyricsRepository, languageDao
     fun searchLyricItem(lyricId: Int) = lyricIdFlow.tryEmit(lyricId)
 
     fun setLyricLanguages(lyricLanguages: LyricLanguages) = lyricLanguagesFlow.tryEmit(lyricLanguages)
-
-    fun getCurrentLyricItem() = currentLyricItem
 
     fun getCurrentExtendedLyricItem() = currentExtendedLyricItem
 }

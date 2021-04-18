@@ -50,7 +50,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{lyricViewModel.currentExtendedLyricItem.movie.originalTitle}"
+                        android:text="@{lyricViewModel.currentExtendedLyricItem.movieItem.originalTitle}"
                         android:textColor="?attr/colorPrimaryVariant"
                         android:maxLines="1"
                         android:ellipsize="end"
@@ -62,8 +62,8 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:ellipsize="end"
-                        android:visibility="@{lyricViewModel.currentExtendedLyricItem.movie.translatedTitle == null ? View.GONE : View.VISIBLE}"
-                        android:text="@{lyricViewModel.currentExtendedLyricItem.movie.translatedTitle}" />
+                        android:visibility="@{lyricViewModel.currentExtendedLyricItem.movieItem.translatedTitle == null ? View.GONE : View.VISIBLE}"
+                        android:text="@{lyricViewModel.currentExtendedLyricItem.movieItem.translatedTitle}" />
 
                 </LinearLayout>
 
@@ -87,7 +87,7 @@
                     android:paddingRight="11dp"
                     android:background="@drawable/s_time_backgr"
                     android:alpha="0.8"
-                    android:text="@{lyricViewModel.currentExtendedLyricItem.movie.type == MovieFragment.SERIE ? ((@string/season).charAt(0) + `1:` + (@string/episode).charAt(0) + `2, ` + @string/time + `: ` + lyricViewModel.currentExtendedLyricItem.time) : @string/time + `: ` + lyricViewModel.currentExtendedLyricItem.time}"/>
+                    android:text="@{lyricViewModel.currentExtendedLyricItem.movieItem.type == MovieFragment.SERIE ? ((@string/season).charAt(0) + `1:` + (@string/episode).charAt(0) + `2, ` + @string/time + `: ` + lyricViewModel.currentExtendedLyricItem.time) : @string/time + `: ` + lyricViewModel.currentExtendedLyricItem.time}"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -31,9 +31,9 @@ data class ExtendedLyricItem(
         val time: String,
         val mainLangSentence: String,
         val translatedSentence: String,
-        val movie: Movie)
+        val movieItem: MovieItem)
 
-data class Movie(
+data class MovieItem(
         val originalTitle: String,
         val translatedTitle: String? = null,
         val type: String = MovieFragment.MOVIE,
@@ -60,6 +60,30 @@ data class Lyric(
         val ger: String?,
         val it: String?,
         val pt: String?)
+
+@Entity(tableName = "movies")
+data class Movie(
+        @ColumnInfo(name = "movie_id") @PrimaryKey val movieId: String,
+        val lang: String,
+        val type: String,
+        val minutes: Int,
+        val lyrics: Int,
+        val eng: String?,
+        val pl: String?,
+        val esp: String?,
+        val fr: String?,
+        val ger: String?,
+        val it: String?,
+        val pt: String?)
+
+@Entity(tableName = "episodes")
+data class Episode(
+        @ColumnInfo(name = "episode_id") @PrimaryKey val episodeId: Int,
+        @ColumnInfo(name = "series_id") val seriesId: String,
+        @ColumnInfo(name = "first_lyric_id") val firstLyricId: Int,
+        @ColumnInfo(name = "last_lyric_id") val lastLyricId: Int,
+        val season: Int,
+        val episode: Int)
 
 @Entity(tableName = "last_searches")
 data class LastSearch(
