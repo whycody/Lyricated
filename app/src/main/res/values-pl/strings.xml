@@ -17,4 +17,8 @@
     <string name="no_word_search_results">Niestety nie znaleźliśmy zastosowania frazy \"%1$s\"</string>
     <string name="filter">Filtruj</string>
     <string name="sort">Sortuj</string>
+    <string name="play">Odtwórz</string>
+    <string name="season">Sezon</string>
+    <string name="episode">Odcinek</string>
+    <string name="time">Czas</string>
 </resources>

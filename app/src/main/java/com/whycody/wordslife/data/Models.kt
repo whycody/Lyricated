@@ -6,6 +6,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.whycody.wordslife.search.SearchFragment
+import com.whycody.wordslife.search.lyric.movie.MovieFragment
 import java.util.*
 
 data class Language(
@@ -24,6 +25,20 @@ data class LyricItem(
         val lyricId: Int,
         val mainLangSentence: SpannableStringBuilder,
         val translatedSentence: String)
+
+data class ExtendedLyricItem(
+        val lyricId: Int,
+        val time: String,
+        val mainLangSentence: String,
+        val translatedSentence: String,
+        val movie: Movie)
+
+data class Movie(
+        val originalTitle: String,
+        val translatedTitle: String? = null,
+        val type: String = MovieFragment.MOVIE,
+        val season: Int? = 0,
+        val episode: Int? = 0)
 
 data class LyricLanguages(
         val mainLanguageId: String,

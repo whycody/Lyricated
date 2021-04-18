@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.whycody.wordslife.search.lyric.movie.MovieFragment"/>
+        <import type="android.view.View"/>
+        <variable
+            name="lyricViewModel"
+            type="com.whycody.wordslife.search.lyric.LyricViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/app_padding"
+        android:paddingEnd="@dimen/app_padding"
+        android:paddingBottom="20dp"
+        tools:context=".search.lyric.movie.MovieFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/s_lyric_background"
+            android:paddingBottom="@dimen/app_padding"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/movieHeader"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:paddingStart="@dimen/app_padding"
+                    android:src="@drawable/ic_movie"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:paddingStart="5dp"
+                    android:paddingTop="@dimen/app_padding"
+                    android:paddingBottom="@dimen/app_padding"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{lyricViewModel.currentExtendedLyricItem.movie.originalTitle}"
+                        android:textColor="?attr/colorPrimaryVariant"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:visibility="@{lyricViewModel.currentExtendedLyricItem.movie.translatedTitle == null ? View.GONE : View.VISIBLE}"
+                        android:text="@{lyricViewModel.currentExtendedLyricItem.movie.translatedTitle}" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:paddingStart="@dimen/app_padding"
+                android:paddingEnd="@dimen/app_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:background="@drawable/s_time_backgr"
+                    android:alpha="0.8"
+                    android:text="@{lyricViewModel.currentExtendedLyricItem.movie.type == MovieFragment.SERIE ? ((@string/season).charAt(0) + `1:` + (@string/episode).charAt(0) + `2, ` + @string/time + `: ` + lyricViewModel.currentExtendedLyricItem.time) : @string/time + `: ` + lyricViewModel.currentExtendedLyricItem.time}"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="end|center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_play"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="@string/play"
+                        android:textColor="?attr/colorPrimary"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</layout>

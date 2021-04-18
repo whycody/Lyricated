@@ -17,4 +17,8 @@
     <string name="no_word_search_results">Sadly we couldn\'t find phrase \"%1$s\"</string>
     <string name="filter">Filter</string>
     <string name="sort">Sort</string>
+    <string name="play">Play</string>
+    <string name="season">Season</string>
+    <string name="episode">Episode</string>
+    <string name="time">Time</string>
 </resources>

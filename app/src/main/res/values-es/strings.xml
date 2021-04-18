@@ -17,4 +17,8 @@
     <string name="no_word_search_results">Desafortunadamente no hemos podido encontrar la frase \"%1$s\"</string>
     <string name="filter">Filtrar</string>
     <string name="sort">Ordenar</string>
+    <string name="play">Reproducir</string>
+    <string name="season">Temporada</string>
+    <string name="episode">Episodio</string>
+    <string name="time">Tiempo</string>
 </resources>

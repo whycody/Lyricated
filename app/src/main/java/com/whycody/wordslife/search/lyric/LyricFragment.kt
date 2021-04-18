@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.whycody.wordslife.R
+import com.whycody.wordslife.search.lyric.movie.MovieFragment
 import com.whycody.wordslife.search.lyric.quote.QuoteFragment
 import kotlinx.coroutines.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -46,6 +47,7 @@ class LyricFragment : Fragment() {
     private fun addFragments() {
         val fragmentTransaction = childFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragmentsContainer, QuoteFragment())
+        fragmentTransaction.add(R.id.fragmentsContainer, MovieFragment())
         fragmentTransaction.commit()
     }
 
