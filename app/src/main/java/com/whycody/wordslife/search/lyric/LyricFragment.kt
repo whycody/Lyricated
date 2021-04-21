@@ -53,7 +53,7 @@ class LyricFragment : Fragment() {
     private fun addFragments() {
         val fragmentTransaction = childFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragmentsContainer, QuoteFragment())
-        fragmentTransaction.add(R.id.fragmentsContainer, MovieFragment())
+        fragmentTransaction.add(R.id.fragmentsContainer, MovieFragment.newInstance(lyricId))
         fragmentTransaction.commit()
     }
 

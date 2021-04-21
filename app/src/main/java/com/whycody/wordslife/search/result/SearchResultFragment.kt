@@ -61,7 +61,7 @@ class SearchResultFragment : Fragment() {
     private fun setupRecycler() {
         with(SearchResultAdapter(searchResultViewModel, searchViewModel, activity as MainActivity)) {
             layoutView.searchResultRecycler.adapter = this
-            layoutView.searchResultRecycler.itemAnimator?.changeDuration = 0
+            layoutView.searchResultRecycler.itemAnimator = null
             observeLyrics(this)
         }
     }

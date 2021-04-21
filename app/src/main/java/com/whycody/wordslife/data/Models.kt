@@ -5,8 +5,8 @@ import android.text.SpannableStringBuilder
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.search.SearchFragment
-import com.whycody.wordslife.search.lyric.movie.MovieFragment
 import java.util.*
 
 data class Language(
@@ -28,24 +28,26 @@ data class LyricItem(
 
 data class ExtendedLyricItem(
         val lyricId: Int,
-        val time: String,
         val mainLangSentence: String?,
         val translatedSentence: String?,
-        val movieItem: MovieItem)
+        val movieId: String,
+        val time: String,
+        val languages: LyricLanguages)
 
 data class MovieItem(
         val mainTitle: String,
         val translatedTitle: String? = null,
         val type: String,
-        val episodeItem: EpisodeItem?)
+        val episodeItem: EpisodeItem?,
+        val time: String?)
 
 data class EpisodeItem(
         val season: Int,
         val episode: Int)
 
 data class LyricLanguages(
-        val mainLanguageId: String,
-        val translationLanguageId: String)
+        val mainLanguageId: String = LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE,
+        val translationLanguageId: String = LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE)
 
 data class UserAction(
         val actionType: Int = SearchFragment.NO_ACTION,

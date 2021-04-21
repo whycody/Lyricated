@@ -12,6 +12,7 @@ import com.whycody.wordslife.data.movie.MovieRepository
 import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.lyric.LyricViewModel
+import com.whycody.wordslife.search.lyric.movie.MovieViewModel
 import com.whycody.wordslife.search.result.SearchResultViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
@@ -55,6 +56,7 @@ val viewModelsModule = module {
     viewModel { HomeViewModel(get(), get(), get()) }
     viewModel { ChooseLanguageViewModel(get()) }
     viewModel { SearchViewModel(get(), get()) }
-    viewModel { SearchResultViewModel(get(), get()) }
-    viewModel { LyricViewModel(get(), get(), get()) }
+    viewModel { SearchResultViewModel(get()) }
+    viewModel { LyricViewModel(get()) }
+    viewModel { MovieViewModel(get()) }
 }

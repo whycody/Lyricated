@@ -9,15 +9,13 @@ import androidx.lifecycle.ViewModel
 import com.whycody.wordslife.data.Lyric
 import com.whycody.wordslife.data.LyricItem
 import com.whycody.wordslife.data.LyricLanguages
-import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.data.lyrics.LyricsRepository
 import com.whycody.wordslife.search.SearchInteractor
 import kotlinx.coroutines.flow.*
 import kotlin.math.absoluteValue
 
-class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
-                            languageDao: LanguageDao): ViewModel(), SearchInteractor {
+class SearchResultViewModel(private val lyricsRepository: LyricsRepository): ViewModel(), SearchInteractor {
 
     private val lyricItems = MutableLiveData<List<LyricItem>>()
     private val allLyricItems = MutableLiveData<List<LyricItem>>()
@@ -31,8 +29,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
 
     private var currentShowedLyrics = MutableStateFlow(numberOfShowingLyrics)
     private val searchWordFlow = MutableStateFlow("")
-    private val lyricLanguagesFlow = MutableStateFlow(LyricLanguages(
-            languageDao.getCurrentMainLanguage().id, languageDao.getCurrentTranslationLanguage().id))
+    private val lyricLanguagesFlow = MutableStateFlow(LyricLanguages())
 
     fun getLyricItems() = lyricItems
 

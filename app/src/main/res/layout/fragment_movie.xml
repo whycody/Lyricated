@@ -6,8 +6,8 @@
         <import type="com.whycody.wordslife.search.lyric.movie.MovieFragment"/>
         <import type="android.view.View"/>
         <variable
-            name="lyricViewModel"
-            type="com.whycody.wordslife.search.lyric.LyricViewModel" />
+            name="movieViewModel"
+            type="com.whycody.wordslife.search.lyric.movie.MovieViewModel" />
     </data>
 
     <LinearLayout
@@ -56,7 +56,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{lyricViewModel.currentExtendedLyricItem.movieItem.mainTitle}"
+                        android:text="@{movieViewModel.movieItem.mainTitle}"
                         android:textColor="?attr/colorPrimaryVariant"
                         android:maxLines="1"
                         android:paddingEnd="@dimen/app_padding"
@@ -70,7 +70,7 @@
                         android:maxLines="1"
                         android:paddingEnd="@dimen/app_padding"
                         android:ellipsize="end"
-                        android:text="@{lyricViewModel.currentExtendedLyricItem.movieItem.translatedTitle == null ? (lyricViewModel.currentExtendedLyricItem.movieItem.episodeItem == null ? @string/movie : @string/series) : lyricViewModel.currentExtendedLyricItem.movieItem.translatedTitle}" />
+                        android:text="@{movieViewModel.movieItem.translatedTitle == null ? (movieViewModel.movieItem.episodeItem == null ? @string/movie : @string/series) : movieViewModel.movieItem.translatedTitle}" />
 
                 </LinearLayout>
 
@@ -96,7 +96,7 @@
                     android:focusable="true"
                     android:padding="11dp"
                     android:layout_marginEnd="10dp"
-                    android:text="@{lyricViewModel.currentExtendedLyricItem.movieItem.episodeItem != null ? ((@string/season).charAt(0) + Integer.toString(lyricViewModel.currentExtendedLyricItem.movieItem.episodeItem.season) + `:` + (@string/episode).charAt(0) + Integer.toString(lyricViewModel.currentExtendedLyricItem.movieItem.episodeItem.episode) + `, ` + @string/time + `: ` + lyricViewModel.currentExtendedLyricItem.time) : @string/time + `: ` + lyricViewModel.currentExtendedLyricItem.time}"/>
+                    android:text="@{movieViewModel.movieItem.episodeItem != null ? ((@string/season).charAt(0) + Integer.toString(movieViewModel.movieItem.episodeItem.season) + `:` + (@string/episode).charAt(0) + Integer.toString(movieViewModel.movieItem.episodeItem.episode) + `, ` + @string/time + `: ` + movieViewModel.movieItem.time) : @string/time + `: ` + movieViewModel.movieItem.time}"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -118,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/play"
                         android:textStyle="bold"
-                        android:textColor="@color/red"/>
+                        android:textColor="?attr/colorPrimary"/>
 
                 </LinearLayout>
 
