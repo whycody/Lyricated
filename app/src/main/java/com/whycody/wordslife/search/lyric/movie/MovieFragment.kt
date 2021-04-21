@@ -23,9 +23,4 @@ class MovieFragment : Fragment() {
         binding.lifecycleOwner = activity
         return binding.root
     }
-
-    companion object {
-        const val MOVIE = "movie"
-        const val SERIE = "serie"
-    }
 }

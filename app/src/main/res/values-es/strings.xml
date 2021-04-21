@@ -21,4 +21,6 @@
     <string name="season">Temporada</string>
     <string name="episode">Episodio</string>
     <string name="time">Tiempo</string>
+    <string name="movie">Película</string>
+    <string name="series">Serie</string>
 </resources>

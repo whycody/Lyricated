@@ -1,12 +1,17 @@
 package com.whycody.wordslife.search.lyric
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
+import com.whycody.wordslife.data.LyricLanguages
+import com.whycody.wordslife.data.SharedPreferenceStringLiveData
+import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.search.lyric.movie.MovieFragment
 import com.whycody.wordslife.search.lyric.quote.QuoteFragment
 import kotlinx.coroutines.*
@@ -23,6 +28,7 @@ class LyricFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_lyric, container, false)
         lyricId = arguments?.getInt(LYRIC_ID, 0)!!
         checkSavedInstanceState(savedInstanceState)
+        observeCurrentLanguages()
         return view
     }
 
@@ -35,7 +41,7 @@ class LyricFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         job = MainScope().launch(Dispatchers.Main) {
-            withContext(Dispatchers.IO) { lyricViewModel.collectLyricItem() }
+            withContext(Dispatchers.IO) { lyricViewModel.collectExtendedLyricItem() }
         }
     }
 
@@ -49,6 +55,31 @@ class LyricFragment : Fragment() {
         fragmentTransaction.add(R.id.fragmentsContainer, QuoteFragment())
         fragmentTransaction.add(R.id.fragmentsContainer, MovieFragment())
         fragmentTransaction.commit()
+    }
+
+    private fun observeCurrentLanguages() {
+        val sharedPrefs: SharedPreferences = activity!!.applicationContext
+                .getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
+        observeMainLanguage(sharedPrefs)
+        observeTranslationLanguage(sharedPrefs)
+    }
+
+    private fun observeMainLanguage(sharedPrefs: SharedPreferences) {
+        SharedPreferenceStringLiveData(sharedPrefs, LanguageDaoImpl.MAIN_LANGUAGE,
+                LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE).observe(activity as MainActivity, {
+            lyricViewModel.setLyricLanguages(LyricLanguages(it,
+                    sharedPrefs.getString(LanguageDaoImpl.TRANSLATION_LANGUAGE,
+                            LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE)!!))
+        })
+    }
+
+    private fun observeTranslationLanguage(sharedPrefs: SharedPreferences) {
+        SharedPreferenceStringLiveData(sharedPrefs, LanguageDaoImpl.TRANSLATION_LANGUAGE,
+                LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE).observe(activity as MainActivity, {
+            lyricViewModel.setLyricLanguages(LyricLanguages(
+                    sharedPrefs.getString(LanguageDaoImpl.MAIN_LANGUAGE,
+                            LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE)!!, it))
+        })
     }
 
     companion object {

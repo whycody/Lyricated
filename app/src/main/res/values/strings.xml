@@ -21,4 +21,6 @@
     <string name="season">Season</string>
     <string name="episode">Episode</string>
     <string name="time">Time</string>
+    <string name="movie">Movie</string>
+    <string name="series">Series</string>
 </resources>

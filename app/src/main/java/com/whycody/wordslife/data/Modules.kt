@@ -8,6 +8,7 @@ import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.data.last.searches.LastSearchRepository
 import com.whycody.wordslife.data.lyrics.LyricsRepository
+import com.whycody.wordslife.data.movie.MovieRepository
 import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.lyric.LyricViewModel
@@ -28,15 +29,22 @@ val dataModule = module {
 
     fun provideLyricsDao(database: MyDatabase) = database.lyricsDao()
 
+    fun provideMovieDao(database: MyDatabase) = database.movieDao()
+
+    fun provideEpisodeDao(database: MyDatabase) = database.episodeDao()
+
     single { provideDatabase(androidApplication()) }
     single { provideLastSearchDao(get()) }
     single { provideLyricsDao(get()) }
+    single { provideMovieDao(get()) }
+    single { provideEpisodeDao(get()) }
 }
 
 val repositoryModule = module {
     single { LastSearchRepository(get())}
     single { ChooseLanguageRepository(get()) }
     single { LyricsRepository(get()) }
+    single { MovieRepository(get(), get()) }
 }
 
 val languageModule = module {
@@ -48,5 +56,5 @@ val viewModelsModule = module {
     viewModel { ChooseLanguageViewModel(get()) }
     viewModel { SearchViewModel(get(), get()) }
     viewModel { SearchResultViewModel(get(), get()) }
-    viewModel { LyricViewModel(get(), get()) }
+    viewModel { LyricViewModel(get(), get(), get()) }
 }

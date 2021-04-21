@@ -29,16 +29,19 @@ data class LyricItem(
 data class ExtendedLyricItem(
         val lyricId: Int,
         val time: String,
-        val mainLangSentence: String,
-        val translatedSentence: String,
+        val mainLangSentence: String?,
+        val translatedSentence: String?,
         val movieItem: MovieItem)
 
 data class MovieItem(
-        val originalTitle: String,
+        val mainTitle: String,
         val translatedTitle: String? = null,
-        val type: String = MovieFragment.MOVIE,
-        val season: Int? = 0,
-        val episode: Int? = 0)
+        val type: String,
+        val episodeItem: EpisodeItem?)
+
+data class EpisodeItem(
+        val season: Int,
+        val episode: Int)
 
 data class LyricLanguages(
         val mainLanguageId: String,

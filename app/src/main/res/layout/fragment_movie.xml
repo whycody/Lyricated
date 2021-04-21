@@ -50,9 +50,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{lyricViewModel.currentExtendedLyricItem.movieItem.originalTitle}"
+                        android:text="@{lyricViewModel.currentExtendedLyricItem.movieItem.mainTitle}"
                         android:textColor="?attr/colorPrimaryVariant"
                         android:maxLines="1"
+                        android:paddingEnd="@dimen/app_padding"
                         android:ellipsize="end"
                         android:textStyle="bold"
                         android:textSize="20sp"/>
@@ -61,9 +62,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
+                        android:paddingEnd="@dimen/app_padding"
                         android:ellipsize="end"
-                        android:visibility="@{lyricViewModel.currentExtendedLyricItem.movieItem.translatedTitle == null ? View.GONE : View.VISIBLE}"
-                        android:text="@{lyricViewModel.currentExtendedLyricItem.movieItem.translatedTitle}" />
+                        android:text="@{lyricViewModel.currentExtendedLyricItem.movieItem.translatedTitle == null ? (lyricViewModel.currentExtendedLyricItem.movieItem.episodeItem == null ? @string/movie : @string/series) : lyricViewModel.currentExtendedLyricItem.movieItem.translatedTitle}" />
 
                 </LinearLayout>
 
@@ -71,27 +72,34 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
+                android:background="@drawable/s_time_backgr"
                 android:layout_marginTop="5dp"
-                android:paddingStart="@dimen/app_padding"
-                android:paddingEnd="@dimen/app_padding">
+                android:layout_marginStart="@dimen/app_padding"
+                android:layout_marginEnd="@dimen/app_padding">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:textColor="?attr/colorPrimaryVariant"
-                    android:paddingTop="7dp"
-                    android:paddingBottom="7dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
-                    android:background="@drawable/s_time_backgr"
-                    android:alpha="0.8"
-                    android:text="@{lyricViewModel.currentExtendedLyricItem.movieItem.type == MovieFragment.SERIE ? ((@string/season).charAt(0) + `1:` + (@string/episode).charAt(0) + `2, ` + @string/time + `: ` + lyricViewModel.currentExtendedLyricItem.time) : @string/time + `: ` + lyricViewModel.currentExtendedLyricItem.time}"/>
+                    android:maxLines="1"
+                    android:layout_weight="1"
+                    android:gravity="start|center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="11dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@{lyricViewModel.currentExtendedLyricItem.movieItem.episodeItem != null ? ((@string/season).charAt(0) + Integer.toString(lyricViewModel.currentExtendedLyricItem.movieItem.episodeItem.season) + `:` + (@string/episode).charAt(0) + Integer.toString(lyricViewModel.currentExtendedLyricItem.movieItem.episodeItem.episode) + `, ` + @string/time + `: ` + lyricViewModel.currentExtendedLyricItem.time) : @string/time + `: ` + lyricViewModel.currentExtendedLyricItem.time}"/>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:background="@drawable/ripple_item_backgr"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingStart="7dp"
+                    android:paddingEnd="11dp"
                     android:gravity="end|center">
 
                     <ImageView
@@ -102,9 +110,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:text="@string/play"
-                        android:textColor="?attr/colorPrimary"/>
+                        android:textStyle="bold"
+                        android:textColor="@color/red"/>
 
                 </LinearLayout>
 

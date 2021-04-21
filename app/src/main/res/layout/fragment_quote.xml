@@ -2,6 +2,7 @@
 <layout>
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="lyricViewModel"
             type="com.whycody.wordslife.search.lyric.LyricViewModel" />
@@ -11,6 +12,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="@{lyricViewModel.currentExtendedLyricItem.mainLangSentence == null ? View.GONE : View.VISIBLE}"
         android:paddingStart="@dimen/app_padding"
         android:paddingEnd="@dimen/app_padding"
         android:paddingBottom="20dp">
@@ -39,7 +41,7 @@
                 android:paddingEnd="@dimen/app_padding"
                 android:paddingStart="10dp"
                 android:text="@{lyricViewModel.currentExtendedLyricItem.mainLangSentence}"
-                android:textColor="?attr/colorPrimaryVariant"
+                android:textColor="@color/header_gray"
                 android:textSize="15sp" />
 
         </LinearLayout>
