@@ -57,8 +57,6 @@ class SearchFragment : Fragment(), IOnBackPressed {
 
     private fun showLyricFragment(lyricId: Int) {
         tryShowFragment(LyricFragment.newInstance(lyricId))
-        if(!appBarIsExpanded())
-            searchAppBar.setExpanded(true)
     }
 
     private fun tryShowFragment(fragment: Fragment) {

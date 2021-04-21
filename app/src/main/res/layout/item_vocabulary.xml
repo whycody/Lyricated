@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="word"
+            type="java.lang.String" />
+        <variable
+            name="interactor"
+            type="com.whycody.wordslife.search.lyric.vocabulary.VocabularyInteractor" />
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="7dp">
+
+        <TextView
+            android:id="@+id/wordText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{word}"
+            android:clickable="true"
+            android:focusable="true"
+            android:textSize="15sp"
+            android:paddingHorizontal="11dp"
+            android:paddingVertical="8dp"
+            android:onClick="@{()->interactor.wordClicked(word)}"
+            android:textColor="?attr/colorPrimaryDark"
+            android:background="@drawable/ripple_vocabulary_backgr"/>
+
+    </LinearLayout>
+
+</layout>

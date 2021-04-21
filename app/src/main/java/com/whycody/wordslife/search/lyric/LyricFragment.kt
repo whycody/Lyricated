@@ -14,6 +14,7 @@ import com.whycody.wordslife.data.SharedPreferenceStringLiveData
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.search.lyric.movie.MovieFragment
 import com.whycody.wordslife.search.lyric.quote.QuoteFragment
+import com.whycody.wordslife.search.lyric.vocabulary.VocabularyFragment
 import kotlinx.coroutines.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -54,6 +55,7 @@ class LyricFragment : Fragment() {
         val fragmentTransaction = childFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragmentsContainer, QuoteFragment())
         fragmentTransaction.add(R.id.fragmentsContainer, MovieFragment.newInstance(lyricId))
+        fragmentTransaction.add(R.id.fragmentsContainer, VocabularyFragment())
         fragmentTransaction.commit()
     }
 

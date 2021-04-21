@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.LyricItem
@@ -39,7 +40,7 @@ class SearchResultFragment : Fragment() {
         layoutView = binding.root
         binding.searchViewModel = searchResultViewModel
         binding.lifecycleOwner = activity as MainActivity
-        setupRecycler()
+        setupRecycler(layoutView.searchResultRecycler)
         observeHidden()
         observeCurrentLanguages()
         observeSearchWord()
@@ -58,10 +59,10 @@ class SearchResultFragment : Fragment() {
         job?.cancel()
     }
 
-    private fun setupRecycler() {
+    private fun setupRecycler(recyclerView: RecyclerView) {
         with(SearchResultAdapter(searchResultViewModel, searchViewModel, activity as MainActivity)) {
-            layoutView.searchResultRecycler.adapter = this
-            layoutView.searchResultRecycler.itemAnimator = null
+            recyclerView.adapter = this
+            recyclerView.itemAnimator = null
             observeLyrics(this)
         }
     }

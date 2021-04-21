@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="?attr/colorPrimarySurface">
+    android:color="@color/translation_gray">
 
     <item android:id="@android:id/background">
 
         <shape android:shape="rectangle">
 
-            <solid android:color="?attr/colorSecondary" />
+            <solid android:color="@color/lyric_gray"/>
+
+            <corners android:radius="5dp"/>
 
         </shape>
 

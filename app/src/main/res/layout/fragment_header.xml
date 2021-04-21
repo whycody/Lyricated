@@ -31,7 +31,7 @@
             android:textStyle="bold"
             android:textSize="15sp"
             android:paddingStart="8dp"
-            android:textColor="?attr/colorPrimaryDark"
+            android:textColor="?attr/colorPrimaryVariant"
             android:text="@{header}"
             app:layout_constraintLeft_toRightOf="@id/dot"
             app:layout_constraintTop_toTopOf="parent"

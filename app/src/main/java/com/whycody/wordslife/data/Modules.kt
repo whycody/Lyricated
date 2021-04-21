@@ -13,12 +13,14 @@ import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.lyric.LyricViewModel
 import com.whycody.wordslife.search.lyric.movie.MovieViewModel
+import com.whycody.wordslife.search.lyric.vocabulary.VocabularyViewModel
 import com.whycody.wordslife.search.result.SearchResultViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val dataModule = module {
+
     fun provideDatabase(application: Application): MyDatabase {
         return Room.databaseBuilder(application, MyDatabase::class.java, "MyDatabase")
                 .allowMainThreadQueries()
@@ -59,4 +61,5 @@ val viewModelsModule = module {
     viewModel { SearchResultViewModel(get()) }
     viewModel { LyricViewModel(get()) }
     viewModel { MovieViewModel(get()) }
+    viewModel { VocabularyViewModel() }
 }
