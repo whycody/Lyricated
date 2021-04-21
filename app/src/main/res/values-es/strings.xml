@@ -23,4 +23,7 @@
     <string name="time">Tiempo</string>
     <string name="movie">Película</string>
     <string name="series">Serie</string>
+    <string name="production">Producción</string>
+    <string name="vocabulary">Vocabulario</string>
+    <string name="translation">Traducción</string>
 </resources>

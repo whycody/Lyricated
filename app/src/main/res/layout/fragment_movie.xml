@@ -10,13 +10,19 @@
             type="com.whycody.wordslife.search.lyric.LyricViewModel" />
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/app_padding"
         android:paddingEnd="@dimen/app_padding"
         android:paddingBottom="20dp"
-        tools:context=".search.lyric.movie.MovieFragment">
+        tools:context=".search.lyric.movie.MovieFragment"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/headerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,6 +126,6 @@
 
         </LinearLayout>
 
-    </FrameLayout>
+    </LinearLayout>
 
 </layout>
