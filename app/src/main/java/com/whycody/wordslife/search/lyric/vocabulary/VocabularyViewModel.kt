@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.whycody.wordslife.data.ExtendedLyricItem
 import com.whycody.wordslife.data.VocabularyItem
+import java.util.*
 
 class VocabularyViewModel: ViewModel() {
 
@@ -16,12 +17,12 @@ class VocabularyViewModel: ViewModel() {
 
     private fun getVocabularyItemsFromSentence(sentence: String?): List<VocabularyItem> {
         if(sentence.isNullOrEmpty()) return emptyList()
-        return getFormattedWord(sentence)
-            .split(" ")
-            .filter { it!="-" }
-            .mapIndexed { index, s -> VocabularyItem(index, s) }
+        return sentence.trim().split(" ")
+                .filter { it.any { it.isLetter() } }
+                .mapIndexed { index, s -> VocabularyItem(index, getFormattedWord(s)) }
     }
 
-    private fun getFormattedWord(word: String) =
-        word.toLowerCase().trim().replace(Regex("[)(:,*.?¿\\[\\]!¡\"]"), "")
+    private fun getFormattedWord(word: String) = word
+            .toLowerCase(Locale.ROOT)
+            .replace(Regex("^\\W*|\\W*\\B\$"), "")
 }

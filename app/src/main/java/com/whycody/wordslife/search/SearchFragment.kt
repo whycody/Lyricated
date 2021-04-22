@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.whycody.wordslife.IOnBackPressed
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
@@ -56,7 +57,8 @@ class SearchFragment : Fragment(), IOnBackPressed {
     })
 
     private fun showLyricFragment(lyricId: Int) {
-        tryShowFragment(LyricFragment.newInstance(lyricId))
+        try { LyricFragment.newInstance(lyricId).show(childFragmentManager, "Lyric") }
+        catch (_: Exception) { }
     }
 
     private fun tryShowFragment(fragment: Fragment) {
@@ -85,7 +87,7 @@ class SearchFragment : Fragment(), IOnBackPressed {
     }
 
     private fun backToSearchContentFragment() {
-        childFragmentManager.popBackStackImmediate()
+        (childFragmentManager.fragments.last() as BottomSheetDialogFragment).dismiss()
         checkIfShouldExpandAppBar()
     }
 
@@ -106,7 +108,7 @@ class SearchFragment : Fragment(), IOnBackPressed {
 
     private fun scrollToTopTheWholeFragment() {
         searchAppBar.setExpanded(true)
-        (childFragmentManager.fragments.last() as SearchContentView).scrollToTop()
+        (childFragmentManager.fragments.find { it is SearchContentFragment } as SearchContentView).scrollToTop()
     }
 
     override fun onDestroy() {

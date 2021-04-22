@@ -3,10 +3,10 @@ package com.whycody.wordslife.search.lyric
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.LyricLanguages
@@ -18,7 +18,7 @@ import com.whycody.wordslife.search.lyric.vocabulary.VocabularyFragment
 import kotlinx.coroutines.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
-class LyricFragment : Fragment() {
+class LyricFragment : BottomSheetDialogFragment() {
 
     private var lyricId = 0
     private var job: Job? = null
@@ -32,6 +32,8 @@ class LyricFragment : Fragment() {
         observeCurrentLanguages()
         return view
     }
+
+    override fun getTheme() = R.style.Theme_NoWiredStrapInNavigationBar
 
     private fun checkSavedInstanceState(savedInstanceState: Bundle?) {
         if(savedInstanceState!=null) return
