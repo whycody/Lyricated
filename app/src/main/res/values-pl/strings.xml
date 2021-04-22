@@ -26,4 +26,6 @@
     <string name="production">Produkcja</string>
     <string name="vocabulary">Słownictwo</string>
     <string name="translation">Tłumaczenie</string>
+    <string name="lyric">Napis</string>
+    <string name="details">Szczegóły napisu</string>
 </resources>

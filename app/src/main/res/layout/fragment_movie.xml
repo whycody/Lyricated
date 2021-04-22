@@ -33,23 +33,17 @@
             <LinearLayout
                 android:id="@+id/movieHeader"
                 android:layout_width="match_parent"
-                android:layout_height="85dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
-                    android:paddingStart="@dimen/app_padding"
-                    android:src="@drawable/ic_movie"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_gravity="center"
-                    android:paddingStart="5dp"
-                    android:paddingTop="@dimen/app_padding"
-                    android:paddingBottom="@dimen/app_padding"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="8dp"
+                    android:paddingHorizontal="@dimen/app_padding"
                     android:layout_weight="1">
 
                     <TextView
@@ -58,7 +52,6 @@
                         android:text="@{movieViewModel.movieItem.mainTitle}"
                         android:textColor="?attr/colorPrimaryDark"
                         android:maxLines="1"
-                        android:paddingEnd="@dimen/app_padding"
                         android:ellipsize="end"
                         android:textStyle="bold"
                         android:textSize="20sp"/>
@@ -67,7 +60,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:paddingEnd="@dimen/app_padding"
                         android:ellipsize="end"
                         android:text="@{movieViewModel.movieItem.translatedTitle == null ? (movieViewModel.movieItem.episodeItem == null ? @string/movie : @string/series) : movieViewModel.movieItem.translatedTitle}" />
 

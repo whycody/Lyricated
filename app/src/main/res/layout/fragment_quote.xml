@@ -8,14 +8,20 @@
             type="com.whycody.wordslife.search.lyric.LyricViewModel" />
     </data>
 
-    <FrameLayout
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="@{lyricViewModel.currentExtendedLyricItem.mainLangSentence == null ? View.GONE : View.VISIBLE}"
         android:paddingStart="@dimen/app_padding"
         android:paddingEnd="@dimen/app_padding"
-        android:paddingBottom="20dp">
+        android:paddingBottom="20dp"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/headerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,29 +29,19 @@
             android:background="@drawable/s_lyric_background"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="53dp"
-                android:layout_height="45dp"
-                android:src="@drawable/ic_quote"
-                android:scaleType="fitCenter"
-                android:paddingTop="4dp"
-                android:paddingStart="@dimen/app_padding" />
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="center"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingEnd="@dimen/app_padding"
-                android:paddingStart="10dp"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="@dimen/app_padding"
                 android:text="@{lyricViewModel.currentExtendedLyricItem.mainLangSentence}"
                 android:textColor="@color/header_gray"
                 android:textSize="15sp" />
 
         </LinearLayout>
 
-    </FrameLayout>
+    </LinearLayout>
 
 </layout>

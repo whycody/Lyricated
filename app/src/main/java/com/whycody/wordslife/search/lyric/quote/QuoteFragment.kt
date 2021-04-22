@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentQuoteBinding
 import com.whycody.wordslife.search.lyric.LyricViewModel
+import com.whycody.wordslife.search.lyric.header.HeaderFragment
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class QuoteFragment : Fragment() {
@@ -19,8 +20,16 @@ class QuoteFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
         val binding: FragmentQuoteBinding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_quote, container, false)
+        if(savedInstanceState == null) addHeader()
         binding.lyricViewModel = lyricViewModel
         binding.lifecycleOwner = activity
         return binding.root
+    }
+
+    private fun addHeader() {
+        val fragmentTransaction = childFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.headerContainer,
+                HeaderFragment.newInstance(getString(R.string.lyric)))
+        fragmentTransaction.commit()
     }
 }

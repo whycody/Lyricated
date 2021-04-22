@@ -23,5 +23,5 @@ class VocabularyViewModel: ViewModel() {
     }
 
     private fun getFormattedWord(word: String) =
-        word.toLowerCase().trim().replace(Regex("[)(:,*.?¿!¡\"]"), "")
+        word.toLowerCase().trim().replace(Regex("[)(:,*.?¿\\[\\]!¡\"]"), "")
 }

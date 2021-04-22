@@ -12,8 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        android:paddingTop="20dp"
+        android:paddingTop="27dp"
         android:paddingBottom="30dp"
-        android:orientation="vertical"/>
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"
+            android:paddingHorizontal="@dimen/app_padding"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="17sp"
+            android:text="@string/details"/>
+    </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
