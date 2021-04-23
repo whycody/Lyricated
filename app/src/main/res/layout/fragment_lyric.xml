@@ -17,11 +17,12 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/lyricHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/app_padding"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="20dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -34,7 +35,6 @@
                 android:text="@string/details"/>
 
             <ImageView
-                android:id="@+id/headerArrow"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"

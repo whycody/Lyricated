@@ -17,8 +17,8 @@
 
         <View
             android:id="@+id/dot"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
             android:background="@drawable/circle"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="@+id/invisibleTextView"
@@ -30,8 +30,9 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="15sp"
-            android:paddingStart="8dp"
-            android:textColor="?attr/colorPrimaryVariant"
+            android:paddingStart="7dp"
+            android:alpha="0.9"
+            android:textColor="?attr/colorPrimaryDark"
             android:text="@{header}"
             app:layout_constraintLeft_toRightOf="@id/dot"
             app:layout_constraintTop_toTopOf="parent"

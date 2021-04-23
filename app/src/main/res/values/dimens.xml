@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="app_padding">16dp</dimen>
-    <dimen name="current_fragment_height">44dp</dimen>
+    <dimen name="current_fragment_height">46dp</dimen>
 </resources>
