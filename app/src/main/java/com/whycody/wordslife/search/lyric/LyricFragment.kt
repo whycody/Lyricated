@@ -15,6 +15,7 @@ import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.search.lyric.movie.MovieFragment
 import com.whycody.wordslife.search.lyric.quote.QuoteFragment
 import com.whycody.wordslife.search.lyric.vocabulary.VocabularyFragment
+import kotlinx.android.synthetic.main.fragment_search_result.view.*
 import kotlinx.coroutines.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -28,6 +29,7 @@ class LyricFragment : BottomSheetDialogFragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_lyric, container, false)
         lyricId = arguments?.getInt(LYRIC_ID, 0)!!
+        view.headerArrow.setOnClickListener{ dismiss() }
         checkSavedInstanceState(savedInstanceState)
         observeCurrentLanguages()
         return view
