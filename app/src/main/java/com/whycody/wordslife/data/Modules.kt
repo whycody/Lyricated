@@ -13,6 +13,7 @@ import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.lyric.LyricViewModel
 import com.whycody.wordslife.search.lyric.movie.MovieViewModel
+import com.whycody.wordslife.search.lyric.translation.TranslationViewModel
 import com.whycody.wordslife.search.lyric.vocabulary.VocabularyViewModel
 import com.whycody.wordslife.search.result.SearchResultViewModel
 import org.koin.android.ext.koin.androidApplication
@@ -62,4 +63,5 @@ val viewModelsModule = module {
     viewModel { LyricViewModel(get()) }
     viewModel { MovieViewModel(get()) }
     viewModel { VocabularyViewModel() }
+    viewModel { TranslationViewModel(get()) }
 }

@@ -49,6 +49,10 @@ data class VocabularyItem(
         val index: Int,
         val word: String)
 
+data class TranslationItem(
+        val drawable: Drawable,
+        val translatedSentence: String?)
+
 data class LyricLanguages(
         val mainLanguageId: String = LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE,
         val translationLanguageId: String = LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE)

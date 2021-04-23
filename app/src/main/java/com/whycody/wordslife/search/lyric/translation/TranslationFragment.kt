@@ -1,4 +1,4 @@
-package com.whycody.wordslife.search.lyric.movie
+package com.whycody.wordslife.search.lyric.translation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,37 +8,42 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
-import com.whycody.wordslife.databinding.FragmentMovieBinding
+import com.whycody.wordslife.databinding.FragmentTranslationBinding
 import com.whycody.wordslife.search.lyric.LyricViewModel
 import com.whycody.wordslife.search.lyric.header.HeaderFragment
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MovieFragment : Fragment() {
+class TranslationFragment : Fragment() {
 
     private val lyricViewModel: LyricViewModel by sharedViewModel()
-    private val movieViewModel: MovieViewModel by viewModel()
+    private val translationViewModel: TranslationViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding: FragmentMovieBinding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_movie, container, false)
+        val binding: FragmentTranslationBinding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_translation, container, false)
         if(savedInstanceState == null) addHeader()
-        binding.movieViewModel = movieViewModel
-        binding.lifecycleOwner = activity
+        observeTranslationItem(binding)
         observeExtendedLyricItem()
         return binding.root
     }
 
-    private fun observeExtendedLyricItem() =
-        lyricViewModel.getCurrentExtendedLyricItem().observe(activity as MainActivity, {
-            movieViewModel.findMovie(it)
-        })
-
     private fun addHeader() {
         val fragmentTransaction = childFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.headerContainer,
-            HeaderFragment.newInstance(getString(R.string.production)))
+            HeaderFragment.newInstance(getString(R.string.translation)))
         fragmentTransaction.commit()
     }
+
+    private fun observeTranslationItem(binding: FragmentTranslationBinding) =
+        translationViewModel.getTranslationItem().observe(activity as MainActivity, {
+            binding.translationItem = it
+        })
+
+    private fun observeExtendedLyricItem() =
+        lyricViewModel.getCurrentExtendedLyricItem().observe(activity as MainActivity, {
+            translationViewModel.findTranslation(it)
+        })
+
 }
