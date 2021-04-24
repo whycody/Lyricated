@@ -18,8 +18,8 @@ class MovieViewModel(private val movieRepository: MovieRepository): ViewModel() 
     private fun getMovieItemFromLyric(extendedLyricItem: ExtendedLyricItem): MovieItem {
         val movie = movieRepository.getMovieWithId(extendedLyricItem.movieId)
         return MovieItem(
-            getTitleFromMovieInLang(extendedLyricItem.languages.mainLanguageId, movie, true)!!,
-            getTitleFromMovieInLang(extendedLyricItem.languages.translationLanguageId, movie, false),
+            getTitleFromMovieInLang(extendedLyricItem.languages.mainLangId, movie, true)!!,
+            getTitleFromMovieInLang(extendedLyricItem.languages.translationLangId, movie, false),
             movie.type,
             getEpisodeItemFromMovie(extendedLyricItem),
             extendedLyricItem.time)

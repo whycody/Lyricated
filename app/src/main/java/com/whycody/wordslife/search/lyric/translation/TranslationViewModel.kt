@@ -17,6 +17,6 @@ class TranslationViewModel(private val languageDao: LanguageDao): ViewModel() {
 
     private fun getTranslationItemFromLyric(extendedLyricItem: ExtendedLyricItem) =
         TranslationItem(
-            languageDao.getLanguage(extendedLyricItem.languages.translationLanguageId)!!.drawable,
+            languageDao.getLanguage(extendedLyricItem.languages.translationLangId)!!.drawable,
             extendedLyricItem.translatedSentence)
 }

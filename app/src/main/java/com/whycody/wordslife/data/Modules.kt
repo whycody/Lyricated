@@ -7,6 +7,8 @@ import com.whycody.wordslife.data.language.ChooseLanguageRepository
 import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.data.last.searches.LastSearchRepository
+import com.whycody.wordslife.data.lyrics.LyricsQueryBuilder
+import com.whycody.wordslife.data.lyrics.LyricsQueryBuilderImpl
 import com.whycody.wordslife.data.lyrics.LyricsRepository
 import com.whycody.wordslife.data.movie.MovieRepository
 import com.whycody.wordslife.home.HomeViewModel
@@ -47,12 +49,16 @@ val dataModule = module {
 val repositoryModule = module {
     single { LastSearchRepository(get())}
     single { ChooseLanguageRepository(get()) }
-    single { LyricsRepository(get()) }
+    single { LyricsRepository(get(), get()) }
     single { MovieRepository(get(), get()) }
 }
 
 val languageModule = module {
     single<LanguageDao> { LanguageDaoImpl(get()) }
+}
+
+val queryModule = module {
+    single<LyricsQueryBuilder> { LyricsQueryBuilderImpl() }
 }
 
 val viewModelsModule = module {

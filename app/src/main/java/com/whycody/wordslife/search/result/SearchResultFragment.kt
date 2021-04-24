@@ -30,6 +30,7 @@ class SearchResultFragment : Fragment() {
     private var job: Job? = null
     private val searchResultViewModel: SearchResultViewModel by viewModel()
     private val searchViewModel: SearchViewModel by sharedViewModel()
+    private lateinit var resultAdapter: SearchResultAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -37,6 +38,7 @@ class SearchResultFragment : Fragment() {
                 R.layout.fragment_search_result, container, false)
         typeOfLyrics = arguments?.getString(TYPE_OF_LYRICS, MAIN_LYRICS)!!
         searchResultViewModel.setTypeOfLyrics(typeOfLyrics)
+        resultAdapter = SearchResultAdapter(searchResultViewModel, searchViewModel, activity as MainActivity)
         layoutView = binding.root
         binding.searchViewModel = searchResultViewModel
         binding.lifecycleOwner = activity as MainActivity
@@ -60,10 +62,10 @@ class SearchResultFragment : Fragment() {
     }
 
     private fun setupRecycler(recyclerView: RecyclerView) {
-        with(SearchResultAdapter(searchResultViewModel, searchViewModel, activity as MainActivity)) {
+        with(resultAdapter) {
             recyclerView.adapter = this
             recyclerView.itemAnimator = null
-            observeLyrics(this)
+            observeLyrics()
         }
     }
 
@@ -74,13 +76,16 @@ class SearchResultFragment : Fragment() {
         })
     }
 
-    private fun observeLyrics(resultAdapter: SearchResultAdapter) {
-        searchResultViewModel.getLyricItems().observe(activity as MainActivity, {
-            checkIfShouldScrollToTop(resultAdapter.currentList, it)
-            resultAdapter.submitList(it)
-            if(resultAdapter.currentList.isEmpty() || resultShownAgain(resultAdapter.currentList, it))
-                layoutView.searchResultRecycler.scheduleLayoutAnimation()
-        })
+    private fun observeLyrics() = searchResultViewModel.getLyricItems()
+            .observe(activity as MainActivity, {
+                submitLyricItems(it)
+            })
+
+    private fun submitLyricItems(lyricItems: List<LyricItem>) {
+        checkIfShouldScrollToTop(resultAdapter.currentList, lyricItems)
+        resultAdapter.submitList(lyricItems)
+        if(resultAdapter.currentList.isEmpty() || resultShownAgain(resultAdapter.currentList, lyricItems))
+            layoutView.searchResultRecycler.scheduleLayoutAnimation()
     }
 
     private fun checkIfShouldScrollToTop(currentLyricItems: List<LyricItem>, newLyricItems: List<LyricItem>) {

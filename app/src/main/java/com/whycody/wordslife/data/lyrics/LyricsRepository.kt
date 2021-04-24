@@ -1,19 +1,12 @@
 package com.whycody.wordslife.data.lyrics
 
-import com.whycody.wordslife.data.language.LanguageDaoImpl
+import com.whycody.wordslife.data.LyricLanguages
 
-class LyricsRepository(private val lyricsDao: LyricsDao) {
+class LyricsRepository(private val lyricsDao: LyricsDao,
+                       private val queryBuilder: LyricsQueryBuilder) {
 
     fun getLyricWithId(lyricId: Int) = lyricsDao.getLyricWithId(lyricId)
 
-    fun getLyricsWithWordIncludedInLanguage(langId: String, word: String) =
-            when(langId) {
-                LanguageDaoImpl.PL -> lyricsDao.getPlLyricsWithWordIncluded(word)
-                LanguageDaoImpl.ENG -> lyricsDao.getEngLyricsWithWordIncluded(word)
-                LanguageDaoImpl.PT -> lyricsDao.getPtLyricsWithWordIncluded(word)
-                LanguageDaoImpl.GER -> lyricsDao.getGerLyricsWithWordIncluded(word)
-                LanguageDaoImpl.FR -> lyricsDao.getFrLyricsWithWordIncluded(word)
-                LanguageDaoImpl.ESP -> lyricsDao.getEspLyricsWithWordIncluded(word)
-                else -> lyricsDao.getItLyricsWithWordIncluded(word)
-            }
+    fun getLyricItemsWithWord(word: String, languages: LyricLanguages, queryLimit: Boolean = true) =
+        lyricsDao.getLyricItemsWithWord(queryBuilder.getQuery(word, languages, queryLimit))
 }

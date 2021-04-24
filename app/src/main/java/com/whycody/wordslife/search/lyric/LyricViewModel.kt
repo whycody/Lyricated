@@ -28,8 +28,8 @@ class LyricViewModel(private val lyricsRepository: LyricsRepository): ViewModel(
 
     private fun getExtendedLyricItemFromLyric(lyric: Lyric, languages: LyricLanguages) =
             ExtendedLyricItem(lyric.lyricId,
-                    getSentenceFromLyricInLang(languages.mainLanguageId, lyric),
-                    getSentenceFromLyricInLang(languages.translationLanguageId, lyric),
+                    getSentenceFromLyricInLang(languages.mainLangId, lyric),
+                    getSentenceFromLyricInLang(languages.translationLangId, lyric),
                     lyric.movieId,
                     lyric.time,
                     languages)

@@ -54,7 +54,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{lyricItem.mainLangSentence}"
+                        android:text="@{lyricItem.mainSentenceSpan}"
                         android:textSize="14sp"
                         android:maxLines="@{viewModel.resultsHidden || viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1) ? 1 : 5}"
                         android:alpha="@{!viewModel.resultsHidden &amp;&amp; (viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1))? 0.15f : 0.9f}"

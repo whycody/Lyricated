@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.text.SpannableStringBuilder
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.search.SearchFragment
@@ -23,8 +24,13 @@ data class HistoryItem(
 
 data class LyricItem(
         val lyricId: Int,
-        val mainLangSentence: SpannableStringBuilder,
-        val translatedSentence: String)
+        val mainSentence: String,
+        val translatedSentence: String,
+        @Ignore var mainSentenceSpan: SpannableStringBuilder?) {
+
+    constructor(lyricId: Int, mainSentence: String, translatedSentence: String) :
+            this(lyricId, mainSentence, translatedSentence, null)
+}
 
 data class ExtendedLyricItem(
         val lyricId: Int,
@@ -54,8 +60,8 @@ data class TranslationItem(
         val translatedSentence: String?)
 
 data class LyricLanguages(
-        val mainLanguageId: String = LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE,
-        val translationLanguageId: String = LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE)
+        val mainLangId: String = LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE,
+        val translationLangId: String = LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE)
 
 data class UserAction(
         val actionType: Int = SearchFragment.NO_ACTION,

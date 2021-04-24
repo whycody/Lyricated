@@ -6,14 +6,12 @@ import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.whycody.wordslife.data.Lyric
 import com.whycody.wordslife.data.LyricItem
 import com.whycody.wordslife.data.LyricLanguages
-import com.whycody.wordslife.data.language.LanguageDaoImpl
+import com.whycody.wordslife.data.lyrics.LyricsQueryBuilderImpl
 import com.whycody.wordslife.data.lyrics.LyricsRepository
 import com.whycody.wordslife.search.SearchInteractor
 import kotlinx.coroutines.flow.*
-import kotlin.math.absoluteValue
 
 class SearchResultViewModel(private val lyricsRepository: LyricsRepository): ViewModel(), SearchInteractor {
 
@@ -40,56 +38,38 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository): Vie
         postNewValues(lyricItems)
     }
 
-    private fun flowLyricItems(): Flow<List<LyricItem>> = searchWordFlow.combine(lyricLanguagesFlow) { word, lyricLanguages ->
+    private fun flowLyricItems(): Flow<List<LyricItem>> = searchWordFlow.combine(lyricLanguagesFlow) { word, languages ->
+        if(word.length == 1 && typeOfLyrics.value == SearchResultFragment.SIMILAR_LYRICS) emptyList<LyricItem>()
         searching.postValue(true)
+        getLyricItemsList(word, languages)
+    }
+
+    private fun getLyricItemsList(word: String, languages: LyricLanguages, queryLimit: Boolean = true): List<LyricItem> {
         val regex = Regex(getPattern(typeOfLyrics.value!!, word), RegexOption.IGNORE_CASE)
-        val lyricsList = lyricsRepository.getLyricsWithWordIncludedInLanguage(lyricLanguages.mainLanguageId, getSearchingWord(word))
-        lyricsList.filter { isLyricRight(word, regex, it) }
-                .map { getLyricItemFromLyric(it) }
-                .distinctBy { it.mainLangSentence.toString().toLowerCase() }
-                .sortedBy { (it.mainLangSentence.length - it.translatedSentence.length).absoluteValue }
+        val lyricItems = lyricsRepository.getLyricItemsWithWord(getSearchingWord(word), languages, queryLimit)
+        val filteredLyricItems = lyricItems.filter { isLyricItemRight(word, regex, it) }
+        return if(filteredLyricItems.size > 20 || lyricItems.size < LyricsQueryBuilderImpl.DEFAULT_QUERY_LIMIT || !queryLimit)
+            filteredLyricItems
+        else getLyricItemsList(word, languages, false)
     }
 
     private fun getSearchingWord(word: String) =
             if(typeOfLyrics.value == SearchResultFragment.MAIN_LYRICS || word.length < 4) word
             else word.substring(0, word.length-2)
 
-    private fun isLyricRight(word: String, regex: Regex, lyric: Lyric): Boolean {
-        if(getTranslatedSentence(lyric) == null) return false
-        val foundWord = regex.find(getMainSentence(lyric))
-        return if(foundWord == null) false
-        else foundWord.value.length <= word.length*2
+    private fun isLyricItemRight(word: String, regex: Regex, lyricItem: LyricItem): Boolean {
+        val foundWord = regex.find(lyricItem.mainSentence) ?: return false
+        if(typeOfLyrics.value == SearchResultFragment.SIMILAR_LYRICS &&
+                foundWord.value.length >= word.length*2) return false
+        setSentenceSpan(regex, lyricItem)
+        return true
     }
 
-    private fun getLyricItemFromLyric(lyric: Lyric) =
-            LyricItem(lyric.lyricId, getSentenceSpan(getMainSentence(lyric), searchWordFlow.value,
-                    typeOfLyrics.value!!), getTranslatedSentence(lyric)!!)
-
-    private fun getMainSentence(lyric: Lyric) =
-            getSentenceFromLang(lyricLanguagesFlow.value.mainLanguageId, lyric)!!
-
-    private fun getTranslatedSentence(lyric: Lyric) =
-            getSentenceFromLang(lyricLanguagesFlow.value.translationLanguageId, lyric)
-
-    private fun getSentenceFromLang(langId: String, lyric: Lyric) =
-            when(langId) {
-                LanguageDaoImpl.PL -> lyric.pl
-                LanguageDaoImpl.ENG -> lyric.eng
-                LanguageDaoImpl.PT -> lyric.pt
-                LanguageDaoImpl.GER -> lyric.ger
-                LanguageDaoImpl.FR -> lyric.fr
-                LanguageDaoImpl.ESP -> lyric.esp
-                else -> lyric.it
-            }
-
-    private fun getSentenceSpan(mainSentence: String, word: String, typeOfLyrics: String): SpannableStringBuilder {
-        val stb = SpannableStringBuilder(mainSentence)
-        val regex = Regex(getPattern(typeOfLyrics, word), RegexOption.IGNORE_CASE)
-        regex.findAll(mainSentence).forEach{
-            stb.setSpan(StyleSpan(Typeface.BOLD),
-                    it.range.first, it.range.last+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        }
-        return stb
+    private fun setSentenceSpan(regex: Regex, lyric: LyricItem) {
+        val stb = SpannableStringBuilder(lyric.mainSentence)
+        regex.findAll(lyric.mainSentence).forEach { stb.setSpan(StyleSpan(Typeface.BOLD),
+                it.range.first, it.range.last+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE) }
+        lyric.mainSentenceSpan = stb
     }
 
     private fun getPattern(typeOfLyrics: String, word: String) =
@@ -131,18 +111,13 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository): Vie
     fun setLyricLanguages(lyricLanguages: LyricLanguages) = this.lyricLanguagesFlow.tryEmit(lyricLanguages)
 
     fun searchWord(word: String) {
-        if(getFormattedWord(word) == getFormattedWord(searchWord.value)) return
-        emitWordIfIsCorrect(getFormattedWord(word)!!)
+        val formattedWord = getFormattedWord(word)
+        if(formattedWord == searchWord.value) return
+        searchWordFlow.tryEmit(formattedWord!!)
         searchWord.value = word
     }
 
     private fun getFormattedWord(word: String?) = word?.trim()?.replace(Regex("[*.?]"), "")
-
-    private fun emitWordIfIsCorrect(word: String) {
-        resultsAvailable.value = !(word.length <= 1
-                && typeOfLyrics.value == SearchResultFragment.SIMILAR_LYRICS)
-        if(resultsAvailable.value!!) searchWordFlow.tryEmit(word)
-    }
 
     private fun postNewValues(lyrics: List<LyricItem>? = null) {
         resultsAvailable.postValue(lyrics?.isNotEmpty() ?: lyricItems.value?.isNotEmpty())
