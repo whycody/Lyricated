@@ -46,8 +46,38 @@ class SearchResultFragment : Fragment() {
         observeHidden()
         observeCurrentLanguages()
         observeSearchWord()
+        observeResults()
         return layoutView
     }
+
+    private fun observeResults() {
+        if(typeOfLyrics == MAIN_LYRICS) observeMainResults()
+        else observeSimilarResults()
+    }
+
+    private fun observeMainResults() {
+        observeMainResultsReady()
+        observeMainResultsReadyToAdmit()
+    }
+
+    private fun observeSimilarResults() {
+        observeSimilarResultsReady()
+        observeSimilarResultsReadyToAdmit()
+    }
+
+    private fun observeMainResultsReady() = searchResultViewModel.getMainResultsReady()
+            .observe(activity as MainActivity) { searchViewModel.setMainResultsReady(it) }
+
+    private fun observeMainResultsReadyToAdmit() = searchViewModel.getMainResultsReadyToAdmit()
+            .observe(activity as MainActivity) { if(it) postNewValues() }
+
+    private fun observeSimilarResultsReady() = searchResultViewModel.getSimilarResultsReady()
+            .observe(activity as MainActivity) { searchViewModel.setSimilarResultsReady(it) }
+
+    private fun observeSimilarResultsReadyToAdmit() = searchViewModel.getSimilarResultsReadyToAdmit()
+            .observe(activity as MainActivity) { if(it) postNewValues() }
+
+    private fun postNewValues() = searchResultViewModel.postNewValues()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

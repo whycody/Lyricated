@@ -22,6 +22,8 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository): Vie
     var searching = MutableLiveData(false)
     var typeOfLyrics = MutableLiveData(SearchResultFragment.MAIN_LYRICS)
     var searchWord = MutableLiveData("")
+    private val mainResultsReady = MutableLiveData(false)
+    private val similarResultsReady = MutableLiveData(false)
 
     private var currentShowedLyrics = 1
     private val numberOfShowingLyrics = 5
@@ -31,18 +33,28 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository): Vie
 
     fun getLyricItems() = lyricItems
 
+    fun getMainResultsReady() = mainResultsReady
+
+    fun getSimilarResultsReady() = similarResultsReady
+
     suspend fun collectLyricItems() = flowLyricItems().collectLatest { lyricItems ->
         allLyricItems = lyricItems
         currentShowedLyrics = 1
-        postNewValues()
+        setResultsReady(true)
     }
 
     private fun flowLyricItems(): Flow<List<LyricItem>> =
             searchWordFlow.combine(lyricLanguagesFlow) { word, languages ->
                 if(wordIsNotCorrect(word)) emptyList<LyricItem>()
                 searching.postValue(true)
+                setResultsReady(false)
                 getLyricItemsList(word, languages)
             }
+
+    private fun setResultsReady(ready: Boolean) {
+        if(typeOfLyrics.value == SearchResultFragment.MAIN_LYRICS) mainResultsReady.postValue(ready)
+        else similarResultsReady.postValue(ready)
+    }
 
     private fun wordIsNotCorrect(word: String) =
             word.length == 1 && typeOfLyrics.value == SearchResultFragment.SIMILAR_LYRICS
@@ -57,7 +69,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository): Vie
     }
 
     private fun shouldNotSearchMore(newList: List<LyricItem>, currentList: List<LyricItem>, queryLimit: Boolean) =
-            newList.size > 20 || currentList.size < LyricsQueryBuilderImpl.DEFAULT_QUERY_LIMIT || !queryLimit
+            newList.size >= 10 || currentList.size < LyricsQueryBuilderImpl.DEFAULT_QUERY_LIMIT || !queryLimit
 
     private fun getSearchingWord(word: String) =
             if(typeOfLyrics.value == SearchResultFragment.MAIN_LYRICS || word.length < 4) word
@@ -122,7 +134,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository): Vie
     private fun getFormattedWord(word: String?) =
             word?.trim()?.replace(Regex("[*.?]"), "")
 
-    private fun postNewValues() {
+    fun postNewValues() {
         val sizeOfShowedLyrics = updateNumberOfShowedLyricItems()
         lyricItems.postValue(allLyricItems.take(sizeOfShowedLyrics))
         resultsAvailable.postValue(allLyricItems.isNotEmpty())

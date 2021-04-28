@@ -12,6 +12,10 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
 
     private val searchWord = MutableLiveData<String>()
     private val userAction = MutableLiveData(UserAction())
+    private val mainResultsReady = MutableLiveData(false)
+    private val similarResultsReady = MutableLiveData(false)
+    private val mainResultsReadyToAdmit = MutableLiveData(false)
+    private val similarResultsReadyToAdmit = MutableLiveData(false)
 
     fun searchWord(word: String) {
         searchWord.value = word
@@ -22,9 +26,23 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
         else lastSearchRepository.insertLastSearch(lastSearch)
     }
 
-    fun getSearchWord() = searchWord
+    fun setMainResultsReady(ready: Boolean) {
+        mainResultsReady.value = ready
+        mainResultsReadyToAdmit.value = mainResultsReady.value!! && similarResultsReady.value!!
+        similarResultsReadyToAdmit.value = mainResultsReady.value!! && similarResultsReady.value!!
+    }
 
-    fun setUserAction(userAction: UserAction) = this.userAction.postValue(userAction)
+    fun setSimilarResultsReady(ready: Boolean) {
+        similarResultsReady.value = ready
+        mainResultsReadyToAdmit.value = mainResultsReady.value!! && similarResultsReady.value!!
+        similarResultsReadyToAdmit.value = mainResultsReady.value!! && similarResultsReady.value!!
+    }
+
+    fun getMainResultsReadyToAdmit() = mainResultsReadyToAdmit
+
+    fun getSimilarResultsReadyToAdmit() = similarResultsReadyToAdmit
+
+    fun getSearchWord() = searchWord
 
     fun setUserAction(actionType: Int, actionId: Int) = userAction.postValue(UserAction(actionType, actionId))
 
