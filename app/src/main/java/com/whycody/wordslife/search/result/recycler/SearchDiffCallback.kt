@@ -6,7 +6,7 @@ import com.whycody.wordslife.data.LyricItem
 class SearchDiffCallback: DiffUtil.ItemCallback<LyricItem>() {
 
     override fun areItemsTheSame(oldItem: LyricItem, newItem: LyricItem)
-        = oldItem.lyricId == newItem.lyricId
+        = false
 
     override fun areContentsTheSame(oldItem: LyricItem, newItem: LyricItem)
         = oldItem == newItem
