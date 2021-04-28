@@ -12,6 +12,7 @@ import com.whycody.wordslife.R
 import com.whycody.wordslife.data.LyricLanguages
 import com.whycody.wordslife.data.SharedPreferenceStringLiveData
 import com.whycody.wordslife.data.language.LanguageDaoImpl
+import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.lyric.movie.MovieFragment
 import com.whycody.wordslife.search.lyric.quote.QuoteFragment
 import com.whycody.wordslife.search.lyric.translation.TranslationFragment
@@ -24,7 +25,9 @@ class LyricFragment : BottomSheetDialogFragment() {
 
     private var lyricId = 0
     private var job: Job? = null
+    private var searchWord = ""
     private val lyricViewModel: LyricViewModel by sharedViewModel()
+    private val searchViewModel: SearchViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -33,6 +36,7 @@ class LyricFragment : BottomSheetDialogFragment() {
         view.lyricHeader.setOnClickListener{ dismiss() }
         checkSavedInstanceState(savedInstanceState)
         observeCurrentLanguages()
+        observeSearchWord()
         return view
     }
 
@@ -89,6 +93,12 @@ class LyricFragment : BottomSheetDialogFragment() {
                             LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE)!!, it))
         })
     }
+
+    private fun observeSearchWord() = searchViewModel.getSearchWord()
+            .observe(activity as MainActivity) {
+                if(searchWord.isEmpty()) searchWord = it
+                else dismiss()
+            }
 
     companion object {
         const val LYRIC_ID = "lyricId"

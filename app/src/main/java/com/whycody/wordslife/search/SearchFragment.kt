@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.whycody.wordslife.IOnBackPressed
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
@@ -42,28 +41,24 @@ class SearchFragment : Fragment(), IOnBackPressed {
 
     private fun observeSearchWord() = searchViewModel.getSearchWord().observe(activity as MainActivity, {
         if(it == searchWord) return@observe
-        if(!currentFragmentIsSearchContent()) {
-            backToSearchContentFragment()
-            scrollToTopTheWholeFragment()
-        }
+        if(!currentFragmentIsSearchContent()) scrollToTopTheWholeFragment()
         searchWord = it
     })
 
     private fun observeUserAction() = searchViewModel.getUserAction().observe(activity as MainActivity, {
         if(it.actionType == NO_ACTION) return@observe
-        if(it.actionType == LYRIC_CLICKED) showLyricFragment(it.actionId)
+        if(it.actionType == LYRIC_CLICKED) tryShowLyricFragment(it.actionId)
         appBarLastStateIsExpanded = appBarIsExpanded()
         searchViewModel.resetUserAction()
     })
 
-    private fun showLyricFragment(lyricId: Int) {
+    private fun tryShowLyricFragment(lyricId: Int) {
         try { LyricFragment.newInstance(lyricId).show(childFragmentManager, "Lyric") }
         catch (_: Exception) { }
     }
 
     private fun tryShowFragment(fragment: Fragment) {
-        try {
-            showFragment(fragment)
+        try { showFragment(fragment)
         } catch (_: Exception) { }
     }
 
@@ -77,23 +72,10 @@ class SearchFragment : Fragment(), IOnBackPressed {
     }
 
     override fun onBackPressed(): Boolean {
-        return if(!currentFragmentIsSearchContent()) {
-            backToSearchContentFragment()
-            false
-        } else if(!appBarIsExpanded()) {
+        return if(!appBarIsExpanded()) {
             scrollToTopTheWholeFragment()
             false
         } else true
-    }
-
-    private fun backToSearchContentFragment() {
-        (childFragmentManager.fragments.last() as BottomSheetDialogFragment).dismiss()
-        checkIfShouldExpandAppBar()
-    }
-
-    private fun checkIfShouldExpandAppBar() {
-        if(!currentFragmentIsSearchContent() || appBarLastStateIsExpanded) return
-        searchAppBar.setExpanded(false)
     }
 
     private fun currentFragmentIsSearchContent() =
@@ -107,7 +89,7 @@ class SearchFragment : Fragment(), IOnBackPressed {
     }
 
     private fun scrollToTopTheWholeFragment() {
-        searchAppBar.setExpanded(true)
+        searchAppBar.postDelayed({ searchAppBar.setExpanded(true) }, 100)
         (childFragmentManager.fragments.find { it is SearchContentFragment } as SearchContentView).scrollToTop()
     }
 
