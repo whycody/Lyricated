@@ -72,11 +72,11 @@ data class Lyric(
         @ColumnInfo(name = "lyric_id") @PrimaryKey val lyricId: Int,
         @ColumnInfo(name = "movie_id") val movieId: String,
         val time: String,
-        val eng: String?,
+        val en: String?,
         val pl: String?,
-        val esp: String?,
+        val es: String?,
         val fr: String?,
-        val ger: String?,
+        val de: String?,
         val it: String?,
         val pt: String?)
 

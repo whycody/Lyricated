@@ -38,21 +38,21 @@ class MovieViewModel(private val movieRepository: MovieRepository): ViewModel() 
     }
 
     private fun getMainTitle(originalTitle: String?, movie: Movie) =
-        originalTitle?: getTitleInLang(LanguageDaoImpl.ENG, movie)
+        originalTitle?: getTitleInLang(LanguageDaoImpl.EN, movie)
 
     private fun getTranslationTitle(langId: String, originalTitle: String?, movie: Movie) =
-        if(langId != movie.lang && (originalTitle != null || langId != LanguageDaoImpl.ENG))
+        if(langId != movie.lang && (originalTitle != null || langId != LanguageDaoImpl.EN))
             getTitleInLang(langId, movie)
         else null
 
     private fun getTitleInLang(langId: String, movie: Movie) =
         when(langId) {
             LanguageDaoImpl.PL -> movie.pl
-            LanguageDaoImpl.ENG -> movie.eng
+            LanguageDaoImpl.EN -> movie.eng
             LanguageDaoImpl.PT -> movie.pt
-            LanguageDaoImpl.GER -> movie.ger
+            LanguageDaoImpl.DE -> movie.ger
             LanguageDaoImpl.FR -> movie.fr
-            LanguageDaoImpl.ESP -> movie.esp
+            LanguageDaoImpl.ES -> movie.esp
             LanguageDaoImpl.IT -> movie.it
             else -> null
         }

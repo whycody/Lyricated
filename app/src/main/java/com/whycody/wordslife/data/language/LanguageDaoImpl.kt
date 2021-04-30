@@ -15,13 +15,13 @@ class LanguageDaoImpl(private val context: Context): LanguageDao {
             getAllLanguages().find { language -> language.id == id }
 
     override fun getAllLanguages() = listOf(
-                Language(ENG, context.getString(R.string.english),
+                Language(EN, context.getString(R.string.english),
                         context.getDrawable(R.drawable.ic_unitedkingdom)!!),
                 Language(PL, context.getString(R.string.polish),
                         context.getDrawable(R.drawable.ic_poland)!!),
-                Language(GER, context.getString(R.string.german),
+                Language(DE, context.getString(R.string.german),
                         context.getDrawable(R.drawable.ic_germany)!!),
-                Language(ESP, context.getString(R.string.spanish),
+                Language(ES, context.getString(R.string.spanish),
                         context.getDrawable(R.drawable.ic_spain)!!),
                 Language(FR, context.getString(R.string.french),
                         context.getDrawable(R.drawable.ic_france)!!),
@@ -73,15 +73,15 @@ class LanguageDaoImpl(private val context: Context): LanguageDao {
     }
 
     companion object {
-        const val ENG = "eng"
+        const val EN = "en"
         const val PL = "pl"
-        const val GER = "ger"
-        const val ESP = "esp"
+        const val DE = "de"
+        const val ES = "es"
         const val FR = "fr"
         const val PT = "pt"
         const val IT = "it"
 
-        const val DEFAULT_MAIN_LANGUAGE = ENG
+        const val DEFAULT_MAIN_LANGUAGE = EN
         const val DEFAULT_TRANSLATION_LANGUAGE = PL
         const val MAIN_LANGUAGE = "main_language"
         const val TRANSLATION_LANGUAGE = "translation_language"

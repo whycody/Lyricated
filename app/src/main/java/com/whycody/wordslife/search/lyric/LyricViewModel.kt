@@ -37,11 +37,11 @@ class LyricViewModel(private val lyricsRepository: LyricsRepository): ViewModel(
     private fun getSentenceFromLyricInLang(langId: String, lyric: Lyric) =
             when(langId) {
                 LanguageDaoImpl.PL -> lyric.pl
-                LanguageDaoImpl.ENG -> lyric.eng
+                LanguageDaoImpl.EN -> lyric.en
                 LanguageDaoImpl.PT -> lyric.pt
-                LanguageDaoImpl.GER -> lyric.ger
+                LanguageDaoImpl.DE -> lyric.de
                 LanguageDaoImpl.FR -> lyric.fr
-                LanguageDaoImpl.ESP -> lyric.esp
+                LanguageDaoImpl.ES -> lyric.es
                 LanguageDaoImpl.IT -> lyric.it
                 else -> null
             }
