@@ -1,11 +1,13 @@
 package com.whycody.wordslife.search
 
+import android.animation.LayoutTransition
 import android.graphics.Rect
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import com.whycody.wordslife.IOnBackPressed
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
@@ -28,6 +30,7 @@ class SearchFragment : Fragment(), IOnBackPressed {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         searchWord = arguments?.getString(SEARCH_WORD, "")!!
         checkSavedInstanceState(savedInstanceState)
+        enableAnimation(view.findViewById(R.id.searchContainer) as LinearLayout)
         observeSearchWord()
         observeUserAction()
         return view
@@ -38,6 +41,9 @@ class SearchFragment : Fragment(), IOnBackPressed {
         searchViewModel.searchWord(searchWord)
         tryShowFragment(SearchContentFragment())
     }
+
+    private fun enableAnimation(linearLayout: LinearLayout) =
+            linearLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
     private fun observeSearchWord() = searchViewModel.getSearchWord().observe(activity as MainActivity, {
         if(it == searchWord) return@observe

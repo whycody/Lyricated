@@ -11,13 +11,15 @@ import com.whycody.wordslife.data.lyrics.LyricsQueryBuilder
 import com.whycody.wordslife.data.lyrics.LyricsQueryBuilderImpl
 import com.whycody.wordslife.data.lyrics.LyricsRepository
 import com.whycody.wordslife.data.movie.MovieRepository
+import com.whycody.wordslife.data.translation.TranslationDao
 import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.lyric.LyricViewModel
 import com.whycody.wordslife.search.lyric.movie.MovieViewModel
-import com.whycody.wordslife.search.lyric.translation.TranslationViewModel
+import com.whycody.wordslife.search.lyric.translation.LyricTranslationViewModel
 import com.whycody.wordslife.search.lyric.vocabulary.VocabularyViewModel
 import com.whycody.wordslife.search.result.SearchResultViewModel
+import com.whycody.wordslife.search.translation.TranslationViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -59,6 +61,7 @@ val languageModule = module {
 
 val queryModule = module {
     single<LyricsQueryBuilder> { LyricsQueryBuilderImpl() }
+    single { TranslationDao(get()) }
 }
 
 val viewModelsModule = module {
@@ -69,5 +72,6 @@ val viewModelsModule = module {
     viewModel { LyricViewModel(get()) }
     viewModel { MovieViewModel(get()) }
     viewModel { VocabularyViewModel() }
+    viewModel { LyricTranslationViewModel(get()) }
     viewModel { TranslationViewModel(get()) }
 }

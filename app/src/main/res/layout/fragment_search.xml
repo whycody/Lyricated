@@ -26,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:animateLayoutChanges="true"
                 android:paddingTop="40dp">
 
                 <fragment
@@ -43,6 +44,12 @@
                     android:layout_marginTop="25dp"
                     android:layout_marginStart="@dimen/app_padding"
                     android:layout_marginEnd="@dimen/app_padding"/>
+
+                <fragment
+                    android:id="@+id/translationFragment"
+                    android:name="com.whycody.wordslife.search.translation.TranslationFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

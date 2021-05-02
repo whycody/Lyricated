@@ -19,7 +19,10 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
 
     fun searchWord(word: String) {
         searchWord.value = word
-        if(word.isEmpty()) return
+        if(word.isNotEmpty()) insertLastSearch(word)
+    }
+
+    private fun insertLastSearch(word: String) {
         val lastSearch = getLastSearch(word)
         val exactLastSearch = getExactLastSearch(lastSearch)
         if(exactLastSearch != null) lastSearchRepository.refreshTime(exactLastSearch.id)
@@ -28,15 +31,21 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
 
     fun setMainResultsReady(ready: Boolean) {
         mainResultsReady.value = ready
-        mainResultsReadyToAdmit.value = mainResultsReady.value!! && similarResultsReady.value!!
-        similarResultsReadyToAdmit.value = mainResultsReady.value!! && similarResultsReady.value!!
+        setResultsReadiness()
     }
 
     fun setSimilarResultsReady(ready: Boolean) {
         similarResultsReady.value = ready
-        mainResultsReadyToAdmit.value = mainResultsReady.value!! && similarResultsReady.value!!
-        similarResultsReadyToAdmit.value = mainResultsReady.value!! && similarResultsReady.value!!
+        setResultsReadiness()
     }
+
+    private fun setResultsReadiness() {
+        val resultsAreReady = resultsAreReady()
+        mainResultsReadyToAdmit.value = resultsAreReady
+        similarResultsReadyToAdmit.value = resultsAreReady
+    }
+
+    private fun resultsAreReady() = mainResultsReady.value!! && similarResultsReady.value!!
 
     fun getMainResultsReadyToAdmit() = mainResultsReadyToAdmit
 

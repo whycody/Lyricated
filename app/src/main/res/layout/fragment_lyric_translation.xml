@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="translationItem"
+            type="com.whycody.wordslife.data.TranslationItem" />
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/app_padding"
+        android:paddingBottom="20dp"
+        tools:context=".search.lyric.translation.LyricTranslationFragment"
+        android:visibility="@{translationItem.translatedSentence == null ? View.GONE : View.VISIBLE}"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/headerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/s_lyric_background"
+            android:paddingHorizontal="@dimen/app_padding"
+            android:paddingVertical="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center"
+                android:src="@{translationItem.drawable}"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{translationItem.translatedSentence}"
+                android:textSize="15sp"
+                android:textColor="?attr/colorPrimaryDark"
+                android:layout_gravity="center"
+                android:gravity="center|start"
+                android:paddingStart="12dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

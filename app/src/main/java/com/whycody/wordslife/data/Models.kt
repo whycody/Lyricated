@@ -6,8 +6,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.beust.klaxon.Json
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.search.SearchFragment
+import com.whycody.wordslife.search.translation.TranslationViewModel
 import java.util.*
 
 data class Language(
@@ -21,6 +23,11 @@ data class HistoryItem(
         var mainLanguage: Drawable,
         var translationLanguage: Drawable,
         var saved: Boolean = false)
+
+data class Translation(
+        @Json(name = "text") val translatedPhrase: String? = null,
+        @Json(ignored = true) var translationLangId: String? = null,
+        @Json(ignored = true) var type: Int = TranslationViewModel.TRANSLATION)
 
 data class LyricItem(
         val lyricId: Int,

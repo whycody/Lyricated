@@ -94,7 +94,7 @@
                     android:src="@drawable/ic_information"
                     android:alpha="@{!viewModel.resultsHidden &amp;&amp; (viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1))? 0.15f : 1f}"
                     android:layout_gravity="center"
-                    android:padding="10dp"
+                    android:padding="12dp"
                     android:paddingStart="@dimen/app_padding" />
 
             </LinearLayout>

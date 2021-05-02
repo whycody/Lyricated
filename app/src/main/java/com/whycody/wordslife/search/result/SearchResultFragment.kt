@@ -1,5 +1,6 @@
 package com.whycody.wordslife.search.result
 
+import android.animation.LayoutTransition
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.whycody.wordslife.MainActivity
@@ -42,6 +44,7 @@ class SearchResultFragment : Fragment() {
         layoutView = binding.root
         binding.searchViewModel = searchResultViewModel
         binding.lifecycleOwner = activity as MainActivity
+        enableAnimation(layoutView as LinearLayout)
         setupRecycler(layoutView.searchResultRecycler)
         observeHidden()
         observeCurrentLanguages()
@@ -49,6 +52,9 @@ class SearchResultFragment : Fragment() {
         observeResults()
         return layoutView
     }
+
+    private fun enableAnimation(linearLayout: LinearLayout) =
+            linearLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
     private fun observeResults() {
         if(typeOfLyrics == MAIN_LYRICS) observeMainResults()
