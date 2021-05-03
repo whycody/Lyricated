@@ -8,10 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.LyricLanguages
@@ -20,11 +18,11 @@ import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.databinding.FragmentTranslationBinding
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.translation.recycler.TranslationAdapter
+import com.whycody.wordslife.search.translation.recycler.TranslationItemDecoration
 import kotlinx.android.synthetic.main.fragment_translation.view.*
 import kotlinx.coroutines.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
-
 
 class TranslationFragment : Fragment() {
 
@@ -59,19 +57,14 @@ class TranslationFragment : Fragment() {
     }
 
     private fun setupRecycler(recyclerView: RecyclerView) {
-        with(TranslationAdapter()) {
-            recyclerView.adapter = this
-            recyclerView.itemAnimator = null
-            recyclerView.layoutManager = getFlexboxLayoutManager()
-            observeTranslations(this)
+        val translationAdapter = TranslationAdapter()
+        observeTranslations(translationAdapter)
+        with(recyclerView) {
+            adapter = translationAdapter
+            itemAnimator = null
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            addItemDecoration(TranslationItemDecoration(context!!.applicationContext))
         }
-    }
-
-    private fun getFlexboxLayoutManager(): FlexboxLayoutManager {
-        val flexboxManager = FlexboxLayoutManager(context)
-        flexboxManager.flexDirection = FlexDirection.ROW
-        flexboxManager.justifyContent = JustifyContent.FLEX_START
-        return flexboxManager
     }
 
     private fun observeTranslations(adapter: TranslationAdapter) = translationViewModel

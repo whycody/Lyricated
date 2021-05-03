@@ -15,7 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="false"
-        android:paddingHorizontal="@dimen/app_padding"
         tools:context=".search.translation.TranslationFragment"
         android:orientation="vertical">
 
@@ -23,8 +22,9 @@
             android:id="@+id/translationRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:paddingVertical="7dp"
+            android:paddingVertical="10dp"
             android:visibility="@{translationViewModel.translations.empty ? View.GONE : View.VISIBLE}"/>
 
     </LinearLayout>

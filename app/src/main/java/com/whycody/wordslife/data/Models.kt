@@ -26,8 +26,14 @@ data class HistoryItem(
 
 data class Translation(
         @Json(name = "text") val translatedPhrase: String? = null,
+        @Json(ignored = true) var numberOfUsages: Int = 0,
         @Json(ignored = true) var translationLangId: String? = null,
         @Json(ignored = true) var type: Int = TranslationViewModel.TRANSLATION)
+
+data class TranslationQuery(
+        val status: String,
+        val message: String,
+        val result: List<String>)
 
 data class LyricItem(
         val lyricId: Int,
