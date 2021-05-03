@@ -50,7 +50,7 @@ class TranslationDao(private val languageDao: LanguageDao) {
                     " \"to\": \"${languageDao.getCurrentTranslationLanguage().id}\", \"phrase\": \"$phrase\"}"
 
     private fun getTranslation(phrase: String) =
-            Translation(phrase, languageDao.getCurrentMainLanguage().id)
+            Translation(phrase, translationLangId = languageDao.getCurrentMainLanguage().id)
 
     private fun getTranslatedPhrase(translationJson: String) = Klaxon().parse<Translation>(translationJson)
 
