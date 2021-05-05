@@ -7,9 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.whycody.wordslife.MainActivity
-import com.whycody.wordslife.R
 import com.whycody.wordslife.choose.language.ChooseLanguageFragment
 import com.whycody.wordslife.data.SharedPreferenceStringLiveData
 import com.whycody.wordslife.data.language.LanguageDao
@@ -24,8 +22,7 @@ class CurrentLanguageFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding: FragmentCurrentLanguageBinding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_current_language, container, false)
+        val binding = FragmentCurrentLanguageBinding.inflate(inflater)
         sharedPrefs = context?.getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)!!
         observeCurrentLanguages(binding)
         setupViews(binding)

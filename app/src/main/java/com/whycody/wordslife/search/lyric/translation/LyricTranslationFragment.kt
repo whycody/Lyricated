@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentLyricTranslationBinding
@@ -21,8 +20,7 @@ class LyricTranslationFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding: FragmentLyricTranslationBinding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_lyric_translation, container, false)
+        val binding = FragmentLyricTranslationBinding.inflate(inflater)
         if(savedInstanceState == null) addHeader()
         observeTranslationItem(binding)
         observeExtendedLyricItem()

@@ -10,7 +10,7 @@ interface LanguageDao {
 
     fun switchCurrentLanguages()
 
-    fun setCurrentLanguages(mainLanguageId: String, translationLanguageId: String)
+    fun setCurrentLanguages(mainLangId: String, translLangId: String)
 
     fun getCurrentMainLanguage(): Language
 

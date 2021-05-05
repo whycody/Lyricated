@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentQuoteBinding
 import com.whycody.wordslife.search.lyric.LyricViewModel
@@ -18,8 +17,7 @@ class QuoteFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding: FragmentQuoteBinding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_quote, container, false)
+        val binding = FragmentQuoteBinding.inflate(inflater)
         if(savedInstanceState == null) addHeader()
         binding.lyricViewModel = lyricViewModel
         binding.lifecycleOwner = activity

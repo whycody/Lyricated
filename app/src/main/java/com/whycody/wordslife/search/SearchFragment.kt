@@ -32,7 +32,7 @@ class SearchFragment : Fragment(), IOnBackPressed {
         searchWord = arguments?.getString(SEARCH_WORD, "")!!
         searchAppBar = binding.searchAppBar
         checkSavedInstanceState(savedInstanceState)
-        enableAnimation(binding.searchContainer as LinearLayout)
+        enableAnimation(binding.searchContainer)
         observeSearchWord()
         observeUserAction()
         return binding.root

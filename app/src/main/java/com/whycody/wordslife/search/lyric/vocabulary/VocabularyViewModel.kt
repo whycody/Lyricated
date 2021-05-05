@@ -18,7 +18,7 @@ class VocabularyViewModel: ViewModel() {
     private fun getVocabularyItemsFromSentence(sentence: String?): List<VocabularyItem> {
         if(sentence.isNullOrEmpty()) return emptyList()
         return sentence.trim().split(" ")
-                .filter { it.any { it.isLetter() } }
+                .filter { it.any { character -> character.isLetter() } }
                 .mapIndexed { index, s -> VocabularyItem(index, getFormattedWord(s)) }
     }
 

@@ -7,15 +7,16 @@ import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import com.whycody.wordslife.R
+import com.whycody.wordslife.databinding.FragmentSearchContentBinding
 import com.whycody.wordslife.search.result.SearchResultFragment
 
 class SearchContentFragment: Fragment(), SearchContentView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_search_content, container, false)
+                              savedInstanceState: Bundle?): View {
+        val binding = FragmentSearchContentBinding.inflate(inflater)
         if(savedInstanceState == null) addFragments()
-        return view
+        return binding.root
     }
 
     override fun scrollToTop() =

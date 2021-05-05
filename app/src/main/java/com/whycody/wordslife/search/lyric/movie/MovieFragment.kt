@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentMovieBinding
@@ -21,8 +20,7 @@ class MovieFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding: FragmentMovieBinding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_movie, container, false)
+        val binding = FragmentMovieBinding.inflate(inflater)
         if(savedInstanceState == null) addHeader()
         binding.movieViewModel = movieViewModel
         binding.lifecycleOwner = activity

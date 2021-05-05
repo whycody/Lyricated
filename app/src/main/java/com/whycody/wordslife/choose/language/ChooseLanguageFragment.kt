@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.whycody.wordslife.MainActivity
@@ -24,8 +23,7 @@ class ChooseLanguageFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding: FragmentChooseLanguageBinding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_choose_language, container, false)
+        val binding = FragmentChooseLanguageBinding.inflate(inflater)
         val mainLanguage = arguments?.getBoolean(LanguageDaoImpl.MAIN_LANGUAGE, true)!!
         binding.mainLanguage = mainLanguage
         viewModel.setMainLanguage(mainLanguage)

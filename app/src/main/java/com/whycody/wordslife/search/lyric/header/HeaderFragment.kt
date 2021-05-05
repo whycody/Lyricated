@@ -5,16 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentHeaderBinding
 
 class HeaderFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding: FragmentHeaderBinding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_header, container, false)
+        val binding = FragmentHeaderBinding.inflate(inflater)
         binding.header = arguments?.getString(HEADER, "")!!
         return binding.root
     }

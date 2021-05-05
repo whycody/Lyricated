@@ -1,6 +1,7 @@
 package com.whycody.wordslife.data
 
 import android.app.Application
+import androidx.core.content.ContextCompat
 import androidx.room.Room
 import com.whycody.wordslife.R
 import com.whycody.wordslife.choose.language.ChooseLanguageViewModel
@@ -69,7 +70,7 @@ val queryModule = module {
 }
 
 val utilsModule = module {
-    single<SearchResultSpanBuilder> { SearchResultSpanBuilderImpl(androidContext().resources.getColor(R.color.light_yellow)) }
+    single<SearchResultSpanBuilder> { SearchResultSpanBuilderImpl(ContextCompat.getColor(androidContext(), R.color.light_yellow)) }
 }
 
 val viewModelsModule = module {

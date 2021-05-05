@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.MainNavigation
@@ -24,8 +23,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_home, container, false)
+        val binding = FragmentHomeBinding.inflate(inflater)
         observeSearchWord()
         observeClickedWord()
         setupRecycler(binding)

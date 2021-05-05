@@ -10,8 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.databinding.DataBindingUtil
-import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentSearchFieldBinding
 import com.whycody.wordslife.search.SearchViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -23,8 +21,7 @@ class SearchFieldFragment : Fragment(), TextWatcher {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_search_field, container, false)
+        binding = FragmentSearchFieldBinding.inflate(inflater)
         binding.lifecycleOwner = activity
         binding.viewModel = searchViewModel
         binding.searchWordInput.addTextChangedListener(this)
