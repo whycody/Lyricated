@@ -19,9 +19,20 @@ class SearchResultSpanBuilderImpl(private val color: Int): SearchResultSpanBuild
 
     override fun getSortedLyricItemsWithTranslationSpan(lyricItems: List<LyricItem>,
                                                         translations: List<Translation>): List<LyricItem> {
-        lyricItems.forEach { it.translationAvailable = setTranslatedSpansInLyric(it, translations) >= 1 }
+        lyricItems.forEach {
+            it.translationAvailable = setTranslatedSpansInLyric(it,
+                getFormatTranslations(translations)) >= 1
+        }
         return lyricItems.sortedByDescending { it.translationAvailable }
     }
+
+    private fun getFormatTranslations(translations: List<Translation>) =
+        translations.map {
+            Translation(
+                it.translatedPhrase?.replace("(", "\\(")?.replace(")", "\\)"),
+                it.numberOfUsages, it.translationLangId, it.type
+            )
+        }
 
     private fun setTranslatedSpansInLyric(lyricItem: LyricItem, translations: List<Translation>): Int {
         lyricItem.translatedSentenceSpan = SpannableStringBuilder(lyricItem.translatedSentence)
