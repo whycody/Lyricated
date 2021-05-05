@@ -40,7 +40,8 @@ data class LyricItem(
         val mainSentence: String,
         val translatedSentence: String,
         @Ignore var mainSentenceSpan: SpannableStringBuilder?,
-        @Ignore var translatedSentenceSpan: SpannableStringBuilder?) {
+        @Ignore var translatedSentenceSpan: SpannableStringBuilder?,
+        @Ignore var translationAvailable: Boolean = false) {
 
     constructor(lyricId: Int, mainSentence: String, translatedSentence: String) :
             this(lyricId, mainSentence, translatedSentence, null, SpannableStringBuilder(translatedSentence))

@@ -64,7 +64,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
                                   queryLimit: Boolean = true): List<LyricItem> {
         val regex = Regex(getMainSentencePattern(typeOfLyrics.value!!, word), RegexOption.IGNORE_CASE)
         val lyricItems = lyricsRepository.getLyricItemsWithWord(getSearchingWord(word), languages, queryLimit)
-        val filteredLyricItems = lyricItems.filter { isLyricItemRight(word, regex, it) }.take(21)
+        val filteredLyricItems = lyricItems.filter { isLyricItemRight(word, regex, it) }.take(100)
         return if(shouldNotSearchMore(filteredLyricItems, lyricItems, queryLimit)) filteredLyricItems
         else getLyricItemsList(word, languages, false)
     }
@@ -130,7 +130,6 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
             word?.trim()?.replace(Regex("[*.?]"), "")
 
     fun postNewValues(newNumber: Boolean = false) {
-        allLyricItems = allLyricItems.take(10)
         val sizeOfShowedLyrics = updateNumberOfShowedLyricItems(newNumber)
         lyricItems.postValue(allLyricItems.take(sizeOfShowedLyrics))
         resultsAvailable.postValue(allLyricItems.isNotEmpty())
