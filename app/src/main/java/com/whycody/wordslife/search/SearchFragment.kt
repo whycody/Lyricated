@@ -8,14 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.google.android.material.appbar.AppBarLayout
 import com.whycody.wordslife.IOnBackPressed
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
+import com.whycody.wordslife.databinding.FragmentSearchBinding
 import com.whycody.wordslife.search.lyric.LyricFragment
 import com.whycody.wordslife.search.content.SearchContentFragment
 import com.whycody.wordslife.search.content.SearchContentView
-import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.android.synthetic.main.fragment_search.view.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.lang.Exception
 
@@ -23,17 +23,19 @@ class SearchFragment : Fragment(), IOnBackPressed {
 
     private var searchWord = ""
     private val searchViewModel: SearchViewModel by sharedViewModel()
+    private lateinit var searchAppBar: AppBarLayout
     private var appBarLastStateIsExpanded = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val view = inflater.inflate(R.layout.fragment_search, container, false)
+        val binding = FragmentSearchBinding.inflate(inflater)
         searchWord = arguments?.getString(SEARCH_WORD, "")!!
+        searchAppBar = binding.searchAppBar
         checkSavedInstanceState(savedInstanceState)
-        enableAnimation(view.findViewById(R.id.searchContainer) as LinearLayout)
+        enableAnimation(binding.searchContainer as LinearLayout)
         observeSearchWord()
         observeUserAction()
-        return view
+        return binding.root
     }
 
     private fun checkSavedInstanceState(savedInstanceState: Bundle?) {

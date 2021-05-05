@@ -14,20 +14,26 @@ class TranslationViewModel(private val translationDao: TranslationDao): ViewMode
 
     private val loadingList = listOf(
             Translation(translatedPhrase = "          ", type = LOADING),
-            Translation(translatedPhrase = "    ", type = LOADING),
-            Translation(translatedPhrase = "           ", type = LOADING))
+            Translation(translatedPhrase = "                ", type = LOADING),
+            Translation(translatedPhrase = "           ", type = LOADING),
+            Translation(translatedPhrase = "                         ", type = LOADING))
+    private val loading = MutableLiveData(true)
     private val translations = MutableLiveData(loadingList)
     private val searchWordFlow = MutableStateFlow("")
     private val lyricLanguagesFlow = MutableStateFlow(LyricLanguages())
 
     fun getTranslations() = translations
 
+    fun getLoading() = loading
+
     suspend fun collectTranslations() = flowTranslations().collect {
         if(it.isNotEmpty()) translations.postValue(it)
+        loading.postValue(false)
     }
 
     private fun flowTranslations(): Flow<List<Translation>> =
         searchWordFlow.combine(lyricLanguagesFlow) { word, _ ->
+            loading.postValue(true)
             translations.postValue(loadingList)
             getTranslations(word)
         }

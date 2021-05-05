@@ -14,13 +14,11 @@ import com.whycody.wordslife.databinding.FragmentHomeBinding
 import com.whycody.wordslife.home.history.HistoryAdapter
 import com.whycody.wordslife.search.SearchFragment
 import com.whycody.wordslife.search.SearchViewModel
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
-    private lateinit var layoutView: View
     private val homeViewModel: HomeViewModel by viewModel()
     private val searchViewModel: SearchViewModel by sharedViewModel()
 
@@ -28,12 +26,11 @@ class HomeFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
         val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_home, container, false)
-        layoutView = binding.root
         observeSearchWord()
         observeClickedWord()
         setupRecycler(binding)
-        startAnimations()
-        return layoutView
+        startAnimations(binding)
+        return binding.root
     }
 
     private fun observeSearchWord() = searchViewModel.getSearchWord()
@@ -57,7 +54,7 @@ class HomeFragment : Fragment() {
         val historyAdapter = HistoryAdapter(homeViewModel)
         observeHistoryItems(binding, historyAdapter)
         binding.historyDisponible = true
-        with(binding.root.historyRecycler) {
+        with(binding.historyRecycler) {
             itemAnimator?.changeDuration = 0
             adapter = historyAdapter
         }
@@ -67,13 +64,13 @@ class HomeFragment : Fragment() {
         homeViewModel.getHistoryItems().observe(activity as MainActivity, {
             binding.historyDisponible = it.isNotEmpty()
             if (historyAdapter.currentList.isEmpty())
-                layoutView.historyRecycler.scheduleLayoutAnimation()
+                binding.historyRecycler.scheduleLayoutAnimation()
             historyAdapter.submitList(it)
         })
 
-    private fun startAnimations() {
+    private fun startAnimations(binding: FragmentHomeBinding) {
         val context = activity?.applicationContext
-        with(layoutView) {
+        with(binding) {
             bannerStarsOne.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_one))
             bannerStarsTwo.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_two))
             bannerStarsThree.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_three))

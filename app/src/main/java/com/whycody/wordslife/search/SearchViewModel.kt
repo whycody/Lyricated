@@ -3,6 +3,7 @@ package com.whycody.wordslife.search
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.whycody.wordslife.data.LastSearch
+import com.whycody.wordslife.data.Translation
 import com.whycody.wordslife.data.UserAction
 import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.last.searches.LastSearchRepository
@@ -12,6 +13,8 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
 
     private val searchWord = MutableLiveData<String>()
     private val userAction = MutableLiveData(UserAction())
+    private val translations = MutableLiveData<List<Translation>>()
+    private val translationsLoading = MutableLiveData(false)
     private val mainResultsReady = MutableLiveData(false)
     private val similarResultsReady = MutableLiveData(false)
     private val mainResultsReadyToAdmit = MutableLiveData(false)
@@ -22,11 +25,20 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
         if(word.isNotEmpty()) insertLastSearch(word)
     }
 
+    fun setTranslations(translations: List<Translation>) {
+        this.translations.value = translations
+    }
+
     private fun insertLastSearch(word: String) {
         val lastSearch = getLastSearch(word)
         val exactLastSearch = getExactLastSearch(lastSearch)
         if(exactLastSearch != null) lastSearchRepository.refreshTime(exactLastSearch.id)
         else lastSearchRepository.insertLastSearch(lastSearch)
+    }
+
+    fun setTranslationsLoading(loading: Boolean) {
+        translationsLoading.value = loading
+        setResultsReadiness()
     }
 
     fun setMainResultsReady(ready: Boolean) {
@@ -45,11 +57,13 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
         similarResultsReadyToAdmit.value = resultsAreReady
     }
 
-    private fun resultsAreReady() = mainResultsReady.value!! && similarResultsReady.value!!
+    private fun resultsAreReady() = mainResultsReady.value!! && similarResultsReady.value!! && !translationsLoading.value!!
 
     fun getMainResultsReadyToAdmit() = mainResultsReadyToAdmit
 
     fun getSimilarResultsReadyToAdmit() = similarResultsReadyToAdmit
+
+    fun getTranslations() = translations
 
     fun getSearchWord() = searchWord
 

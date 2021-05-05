@@ -19,7 +19,6 @@ import com.whycody.wordslife.databinding.FragmentTranslationBinding
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.translation.recycler.TranslationAdapter
 import com.whycody.wordslife.search.translation.recycler.TranslationItemDecoration
-import kotlinx.android.synthetic.main.fragment_translation.view.*
 import kotlinx.coroutines.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -27,21 +26,19 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class TranslationFragment : Fragment() {
 
     private var job: Job? = null
-    private lateinit var layoutView: View
     private val translationViewModel: TranslationViewModel by viewModel()
     private val searchViewModel: SearchViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding: FragmentTranslationBinding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_translation, container, false)
-        layoutView = binding.root
+        val binding = FragmentTranslationBinding.inflate(inflater)
         binding.lifecycleOwner = activity
         binding.translationViewModel = translationViewModel
-        setupRecycler(layoutView.translationRecycler)
+        setupRecycler(binding.translationRecycler)
+        observeLoading()
         observeCurrentLanguages()
         observeSearchWord()
-        return layoutView
+        return binding.root
     }
 
     override fun onAttach(context: Context) {
@@ -69,7 +66,14 @@ class TranslationFragment : Fragment() {
 
     private fun observeTranslations(adapter: TranslationAdapter) = translationViewModel
         .getTranslations().observe(activity as MainActivity, {
+                if(it == adapter.currentList) return@observe
                 adapter.submitList(it)
+                searchViewModel.setTranslations(it)
+            })
+
+    private fun observeLoading() = translationViewModel
+            .getLoading().observe(activity as MainActivity, {
+                searchViewModel.setTranslationsLoading(it)
             })
 
     private fun observeCurrentLanguages() {

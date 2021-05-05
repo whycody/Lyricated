@@ -9,6 +9,7 @@
     <color name="header_gray">#232323</color>
     <color name="paragraph_gray">#4A4A4A</color>
     <color name="translation_gray">#636363</color>
+    <color name="light_yellow">#FFFADB</color>
     <color name="light_blue">#0052B4</color>
     <color name="dark_blue">#0E0E4C</color>
     <color name="black">#FF000000</color>

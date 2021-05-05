@@ -82,7 +82,7 @@
                             android:maxLines="@{viewModel.resultsHidden || viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1) ? 1 : 5}"
                             android:alpha="@{!viewModel.resultsHidden &amp;&amp; (viewModel.thereAreMoreResults &amp;&amp; position==(viewModel.lyricItems.size()-1))? 0.15f : 1f}"
                             android:textSize="13sp"
-                            android:text="@{lyricItem.translatedSentence}"/>
+                            android:text="@{lyricItem.translatedSentenceSpan}"/>
 
                     </LinearLayout>
 

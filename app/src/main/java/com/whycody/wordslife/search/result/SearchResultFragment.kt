@@ -20,14 +20,13 @@ import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.databinding.FragmentSearchResultBinding
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.result.recycler.SearchResultAdapter
-import kotlinx.android.synthetic.main.fragment_search_result.view.*
 import kotlinx.coroutines.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SearchResultFragment : Fragment() {
 
-    private lateinit var layoutView: View
+    private lateinit var binding: FragmentSearchResultBinding
     private lateinit var typeOfLyrics: String
     private var job: Job? = null
     private val searchResultViewModel: SearchResultViewModel by viewModel()
@@ -36,25 +35,28 @@ class SearchResultFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding: FragmentSearchResultBinding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_search_result, container, false)
+        binding = FragmentSearchResultBinding.inflate(inflater)
         typeOfLyrics = arguments?.getString(TYPE_OF_LYRICS, MAIN_LYRICS)!!
         searchResultViewModel.setTypeOfLyrics(typeOfLyrics)
         resultAdapter = SearchResultAdapter(searchResultViewModel, searchViewModel, activity as MainActivity)
-        layoutView = binding.root
         binding.searchViewModel = searchResultViewModel
         binding.lifecycleOwner = activity as MainActivity
-        enableAnimation(layoutView as LinearLayout)
-        setupRecycler(layoutView.searchResultRecycler)
-        observeHidden()
-        observeCurrentLanguages()
-        observeSearchWord()
-        observeResults()
-        return layoutView
+        enableAnimation(binding.root as LinearLayout)
+        setupRecycler(binding.searchResultRecycler)
+        observeValues()
+        return binding.root
     }
 
     private fun enableAnimation(linearLayout: LinearLayout) =
             linearLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+
+    private fun observeValues() {
+        observeHidden()
+        observeCurrentLanguages()
+        observeSearchWord()
+        observeTranslations()
+        observeResults()
+    }
 
     private fun observeResults() {
         if(typeOfLyrics == MAIN_LYRICS) observeMainResults()
@@ -83,7 +85,10 @@ class SearchResultFragment : Fragment() {
     private fun observeSimilarResultsReadyToAdmit() = searchViewModel.getSimilarResultsReadyToAdmit()
             .observe(activity as MainActivity) { if(it) postNewValues() }
 
-    private fun postNewValues() = searchResultViewModel.postNewValues()
+    private fun postNewValues() {
+        searchResultViewModel.setupTranslations()
+        searchResultViewModel.postNewValues()
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -107,8 +112,8 @@ class SearchResultFragment : Fragment() {
 
     private fun observeHidden() {
         searchResultViewModel.resultsHidden.observe(activity as MainActivity, {
-            view?.headerArrow?.rotation = if(it) 0f else 180f
-            view?.headerArrow?.animate()?.rotationBy(180f)?.setDuration(200)?.start()
+            binding.headerArrow.rotation = if(it) 0f else 180f
+            binding.headerArrow.animate()?.rotationBy(180f)?.setDuration(200)?.start()
         })
     }
 
@@ -120,20 +125,13 @@ class SearchResultFragment : Fragment() {
     private fun submitLyricItems(lyricItems: List<LyricItem>) {
         checkIfShouldScrollToTop(resultAdapter.currentList, lyricItems)
         resultAdapter.submitList(lyricItems)
-        if(resultAdapter.currentList.isEmpty() || resultShownAgain(resultAdapter.currentList, lyricItems))
-            layoutView.searchResultRecycler.scheduleLayoutAnimation()
     }
 
     private fun checkIfShouldScrollToTop(currentLyricItems: List<LyricItem>, newLyricItems: List<LyricItem>) {
         val listsAreFilled = listsAreNotEmpty(currentLyricItems, newLyricItems)
         if(listsAreFilled && currentLyricItems[0].lyricId != newLyricItems[0].lyricId && typeOfLyrics == MAIN_LYRICS)
-            layoutView.searchResultRecycler.smoothScrollToPosition(0)
+            binding.searchResultRecycler.smoothScrollToPosition(0)
     }
-
-    private fun resultShownAgain(currentLyricItems: List<LyricItem>, newLyricItems: List<LyricItem>) =
-            listsAreNotEmpty(currentLyricItems, newLyricItems) &&
-                    currentLyricItems[0].lyricId == newLyricItems[0].lyricId &&
-                    newLyricItems.size <= currentLyricItems.size && newLyricItems.size != 1
 
     private fun listsAreNotEmpty(currentLyricItems: List<LyricItem>, newLyricItems: List<LyricItem>) =
             currentLyricItems.isNotEmpty() && newLyricItems.isNotEmpty()
@@ -165,6 +163,9 @@ class SearchResultFragment : Fragment() {
 
     private fun observeSearchWord() = searchViewModel.getSearchWord()
             .observe(activity as MainActivity, { searchResultViewModel.searchWord(it) })
+
+    private fun observeTranslations() = searchViewModel.getTranslations()
+            .observe(activity as MainActivity) { searchResultViewModel.applyTranslations(it) }
 
     companion object {
         const val TYPE_OF_LYRICS = "type of lyrics"

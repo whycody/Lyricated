@@ -1,19 +1,18 @@
 package com.whycody.wordslife.search.result
 
-import android.graphics.Typeface
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.style.StyleSpan
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.whycody.wordslife.data.LyricItem
 import com.whycody.wordslife.data.LyricLanguages
+import com.whycody.wordslife.data.Translation
 import com.whycody.wordslife.data.lyrics.LyricsQueryBuilderImpl
 import com.whycody.wordslife.data.lyrics.LyricsRepository
 import com.whycody.wordslife.search.SearchInteractor
+import com.whycody.wordslife.search.result.span.builder.SearchResultSpanBuilder
 import kotlinx.coroutines.flow.*
 
-class SearchResultViewModel(private val lyricsRepository: LyricsRepository): ViewModel(), SearchInteractor {
+class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
+                            private val spanBuilder: SearchResultSpanBuilder): ViewModel(), SearchInteractor {
 
     private val lyricItems = MutableLiveData<List<LyricItem>>()
     var resultsAvailable = MutableLiveData(true)
@@ -30,6 +29,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository): Vie
     private var allLyricItems = emptyList<LyricItem>()
     private val searchWordFlow = MutableStateFlow("")
     private val lyricLanguagesFlow = MutableStateFlow(LyricLanguages())
+    private val translationsFlow = MutableStateFlow(emptyList<Translation>())
 
     fun getLyricItems() = lyricItems
 
@@ -45,13 +45,14 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository): Vie
 
     private fun flowLyricItems(): Flow<List<LyricItem>> =
             searchWordFlow.combine(lyricLanguagesFlow) { word, languages ->
-                if(wordIsNotCorrect(word)) emptyList<LyricItem>()
-                searching.postValue(true)
-                setResultsReady(false)
-                getLyricItemsList(word, languages)
+                if(!wordIsNotCorrect(word)) {
+                    setResultsReady(false)
+                    getLyricItemsList(word, languages)
+                } else emptyList()
             }
 
     private fun setResultsReady(ready: Boolean) {
+        if(!ready) searching.postValue(true)
         if(typeOfLyrics.value == SearchResultFragment.MAIN_LYRICS) mainResultsReady.postValue(ready)
         else similarResultsReady.postValue(ready)
     }
@@ -61,9 +62,9 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository): Vie
 
     private fun getLyricItemsList(word: String, languages: LyricLanguages,
                                   queryLimit: Boolean = true): List<LyricItem> {
-        val regex = Regex(getPattern(typeOfLyrics.value!!, word), RegexOption.IGNORE_CASE)
+        val regex = Regex(getMainSentencePattern(typeOfLyrics.value!!, word), RegexOption.IGNORE_CASE)
         val lyricItems = lyricsRepository.getLyricItemsWithWord(getSearchingWord(word), languages, queryLimit)
-        val filteredLyricItems = lyricItems.filter { isLyricItemRight(word, regex, it) }.take(60)
+        val filteredLyricItems = lyricItems.filter { isLyricItemRight(word, regex, it) }.take(21)
         return if(shouldNotSearchMore(filteredLyricItems, lyricItems, queryLimit)) filteredLyricItems
         else getLyricItemsList(word, languages, false)
     }
@@ -73,24 +74,21 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository): Vie
 
     private fun getSearchingWord(word: String) =
             if(typeOfLyrics.value == SearchResultFragment.MAIN_LYRICS || word.length < 4) word
-            else word.substring(0, word.length-2)
+            else word.substring(0, word.length - 2)
 
     private fun isLyricItemRight(word: String, regex: Regex, lyricItem: LyricItem): Boolean {
         val foundWord = regex.find(lyricItem.mainSentence) ?: return false
-        if(typeOfLyrics.value == SearchResultFragment.SIMILAR_LYRICS &&
-                foundWord.value.length >= word.length*2) return false
-        setSentenceSpan(regex, lyricItem)
+        if(foundWord.value.trim().length >= word.length*2 || lyricItemIsDoubled(word, lyricItem)) return false
+        spanBuilder.setMainSentenceSpan(regex, lyricItem)
         return true
     }
 
-    private fun setSentenceSpan(regex: Regex, lyric: LyricItem) {
-        val stb = SpannableStringBuilder(lyric.mainSentence)
-        regex.findAll(lyric.mainSentence).forEach { stb.setSpan(StyleSpan(Typeface.BOLD),
-                it.range.first, it.range.last+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE) }
-        lyric.mainSentenceSpan = stb
-    }
+    private fun lyricItemIsDoubled(word: String, lyricItem: LyricItem) =
+            typeOfLyrics.value == SearchResultFragment.SIMILAR_LYRICS &&
+                    Regex(getMainLyricsPattern(word), RegexOption.IGNORE_CASE)
+                            .find(lyricItem.mainSentence) != null
 
-    private fun getPattern(typeOfLyrics: String, word: String) =
+    private fun getMainSentencePattern(typeOfLyrics: String, word: String) =
             if(typeOfLyrics == SearchResultFragment.MAIN_LYRICS) getMainLyricsPattern(word)
             else getSimilarLyricsPattern(word)
 
@@ -98,7 +96,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository): Vie
 
     private fun getSimilarLyricsPattern(word: String) =
             when {
-                word.length > 4 -> "\\b\\S$word\\S*|\\b\\S?$word?[^${word[word.length - 1]}.,?! ]\\S*|\\b${word.substring(0, word.length-1)}\\b"
+                word.length > 4 -> "\\b\\S$word\\S*|\\b\\S?$word?[^${word[word.length - 1]}.,?! ]\\S*|\\b${word.substring(0, word.length - 1)}\\b"
                 word.length == 4 -> "\\b\\S$word\\S*|\\b\\S?$word?[^${word[word.length - 1]}.,?! ]\\S*"
                 else -> "\\b\\S$word\\S?[^\\s]*|\\b\\S?$word[^.,?! ][^\\s]*"
             }
@@ -111,18 +109,15 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository): Vie
         } else collapseLyricItemsList()
     }
 
-    private fun collapseLyricItemsList() = refreshLyricItems(true)
+    private fun collapseLyricItemsList() = postNewValues(true)
 
-    override fun showMoreResultsClicked() = refreshLyricItems(false)
-
-    private fun refreshLyricItems(newNumber: Boolean) {
-        if(newNumber) currentShowedLyrics = 1
-        postNewValues()
-    }
+    override fun showMoreResultsClicked() = postNewValues(false)
 
     fun setTypeOfLyrics(typeOfLyrics: String) = this.typeOfLyrics.postValue(typeOfLyrics)
 
     fun setLyricLanguages(lyricLanguages: LyricLanguages) = lyricLanguagesFlow.tryEmit(lyricLanguages)
+
+    fun applyTranslations(translations: List<Translation>) = translationsFlow.tryEmit(translations)
 
     fun searchWord(word: String) {
         val formattedWord = getFormattedWord(word)
@@ -134,23 +129,27 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository): Vie
     private fun getFormattedWord(word: String?) =
             word?.trim()?.replace(Regex("[*.?]"), "")
 
-    fun postNewValues() {
-        val sizeOfShowedLyrics = updateNumberOfShowedLyricItems()
+    fun postNewValues(newNumber: Boolean = false) {
+        allLyricItems = allLyricItems.take(10)
+        val sizeOfShowedLyrics = updateNumberOfShowedLyricItems(newNumber)
         lyricItems.postValue(allLyricItems.take(sizeOfShowedLyrics))
         resultsAvailable.postValue(allLyricItems.isNotEmpty())
         thereAreMoreResults.postValue(currentShowedLyrics < allLyricItems.size)
         searching.postValue(false)
     }
 
-    private fun updateNumberOfShowedLyricItems(): Int {
+    fun setupTranslations() {
+        allLyricItems = spanBuilder.getSortedLyricItemsWithTranslationSpan(allLyricItems, translationsFlow.value)
+    }
+
+    private fun updateNumberOfShowedLyricItems(newNumber: Boolean): Int {
         if(resultsHidden.value!!) return currentShowedLyrics
-        if(getDifference(allLyricItems) < numberOfShowingLyrics * 2)
-            currentShowedLyrics += numberOfShowingLyrics
+        if(newNumber) currentShowedLyrics = 1
+        if(shouldShowMoreResults()) currentShowedLyrics += numberOfShowingLyrics
         currentShowedLyrics += numberOfShowingLyrics
         return currentShowedLyrics
     }
 
-    private fun getDifference(lyricItems: List<LyricItem>) =
-            lyricItems.size.minus(currentShowedLyrics)
-
+    private fun shouldShowMoreResults() =
+            allLyricItems.size.minus(currentShowedLyrics) < numberOfShowingLyrics * 2
 }

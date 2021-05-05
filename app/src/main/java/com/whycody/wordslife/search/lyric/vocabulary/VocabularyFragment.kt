@@ -11,11 +11,11 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
+import com.whycody.wordslife.databinding.FragmentVocabularyBinding
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.lyric.LyricViewModel
 import com.whycody.wordslife.search.lyric.header.HeaderFragment
 import com.whycody.wordslife.search.lyric.vocabulary.recycler.VocabularyAdapter
-import kotlinx.android.synthetic.main.fragment_vocabulary.view.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -26,12 +26,12 @@ class VocabularyFragment : Fragment(), VocabularyInteractor {
     private val vocabularyViewModel: VocabularyViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_vocabulary, container, false)
+                              savedInstanceState: Bundle?): View {
+        val binding = FragmentVocabularyBinding.inflate(inflater)
         if(savedInstanceState == null) addHeader()
         observeExtendedLyricItem()
-        setupRecycler(view.vocabularyRecycler)
-        return view
+        setupRecycler(binding.vocabularyRecycler)
+        return binding.root
     }
 
     private fun addHeader() {

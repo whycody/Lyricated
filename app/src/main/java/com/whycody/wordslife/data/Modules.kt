@@ -2,6 +2,7 @@ package com.whycody.wordslife.data
 
 import android.app.Application
 import androidx.room.Room
+import com.whycody.wordslife.R
 import com.whycody.wordslife.choose.language.ChooseLanguageViewModel
 import com.whycody.wordslife.data.language.ChooseLanguageRepository
 import com.whycody.wordslife.data.language.LanguageDao
@@ -19,8 +20,11 @@ import com.whycody.wordslife.search.lyric.movie.MovieViewModel
 import com.whycody.wordslife.search.lyric.translation.LyricTranslationViewModel
 import com.whycody.wordslife.search.lyric.vocabulary.VocabularyViewModel
 import com.whycody.wordslife.search.result.SearchResultViewModel
+import com.whycody.wordslife.search.result.span.builder.SearchResultSpanBuilder
+import com.whycody.wordslife.search.result.span.builder.SearchResultSpanBuilderImpl
 import com.whycody.wordslife.search.translation.TranslationViewModel
 import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -64,11 +68,15 @@ val queryModule = module {
     single { TranslationDao(get()) }
 }
 
+val utilsModule = module {
+    single<SearchResultSpanBuilder> { SearchResultSpanBuilderImpl(androidContext().resources.getColor(R.color.light_yellow)) }
+}
+
 val viewModelsModule = module {
     viewModel { HomeViewModel(get(), get(), get()) }
     viewModel { ChooseLanguageViewModel(get()) }
     viewModel { SearchViewModel(get(), get()) }
-    viewModel { SearchResultViewModel(get()) }
+    viewModel { SearchResultViewModel(get(), get()) }
     viewModel { LyricViewModel(get()) }
     viewModel { MovieViewModel(get()) }
     viewModel { VocabularyViewModel() }

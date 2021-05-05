@@ -14,31 +14,28 @@ import androidx.databinding.DataBindingUtil
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentSearchFieldBinding
 import com.whycody.wordslife.search.SearchViewModel
-import kotlinx.android.synthetic.main.fragment_search_field.*
-import kotlinx.android.synthetic.main.fragment_search_field.view.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class SearchFieldFragment : Fragment(), TextWatcher {
 
-    private lateinit var layoutView: View
     private val searchViewModel: SearchViewModel by sharedViewModel()
+    private lateinit var binding: FragmentSearchFieldBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding: FragmentSearchFieldBinding = DataBindingUtil.inflate(inflater,
+        binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_search_field, container, false)
         binding.lifecycleOwner = activity
         binding.viewModel = searchViewModel
-        layoutView = binding.root
+        binding.searchWordInput.addTextChangedListener(this)
+        binding.clearBtn.setOnClickListener{ binding.searchWordInput.setText("") }
         setupSearchWordInputAction()
-        layoutView.searchWordInput.addTextChangedListener(this)
-        layoutView.clearBtn.setOnClickListener{ searchWordInput.setText("") }
-        return layoutView
+        return binding.root
     }
 
     private fun setupSearchWordInputAction() =
-        layoutView.searchWordInput.setOnEditorActionListener { _, actionId, _ ->
-            val searchWord = layoutView.searchWordInput.text.toString()
+        binding.searchWordInput.setOnEditorActionListener { _, actionId, _ ->
+            val searchWord = binding.searchWordInput.text.toString()
             if(actionId == EditorInfo.IME_ACTION_SEARCH && wordIsCorrect(searchWord))
                 searchWord(searchWord)
             true
@@ -52,7 +49,7 @@ class SearchFieldFragment : Fragment(), TextWatcher {
     private fun hideKeyboard() {
         val imm = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) ?: return
         (imm as InputMethodManager).hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
-        layoutView.clearFocus()
+        binding.root.clearFocus()
     }
 
     private fun wordIsCorrect(word: String) =
@@ -65,7 +62,7 @@ class SearchFieldFragment : Fragment(), TextWatcher {
     }
 
     private fun setClearBtnVisibility(s: CharSequence?) {
-        layoutView.clearBtn.visibility =
+        binding.clearBtn.visibility =
             if(s.isNullOrBlank()) View.INVISIBLE
             else View.VISIBLE
     }

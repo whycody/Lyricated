@@ -105,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="6dp"
             android:layout_margin="@dimen/app_padding"
-            android:visibility="@{searchViewModel.searching &amp;&amp; !searchViewModel.resultsHidden ? View.VISIBLE : View.GONE}"/>
+            android:visibility="@{searchViewModel.searching &amp;&amp; searchViewModel.resultsAvailable &amp;&amp; !searchViewModel.resultsHidden ? View.VISIBLE : View.GONE}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchResultRecycler"

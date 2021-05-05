@@ -12,12 +12,12 @@ import com.whycody.wordslife.R
 import com.whycody.wordslife.data.LyricLanguages
 import com.whycody.wordslife.data.SharedPreferenceStringLiveData
 import com.whycody.wordslife.data.language.LanguageDaoImpl
+import com.whycody.wordslife.databinding.FragmentLyricBinding
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.lyric.movie.MovieFragment
 import com.whycody.wordslife.search.lyric.quote.QuoteFragment
 import com.whycody.wordslife.search.lyric.translation.LyricTranslationFragment
 import com.whycody.wordslife.search.lyric.vocabulary.VocabularyFragment
-import kotlinx.android.synthetic.main.fragment_lyric.view.*
 import kotlinx.coroutines.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -30,14 +30,14 @@ class LyricFragment : BottomSheetDialogFragment() {
     private val searchViewModel: SearchViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_lyric, container, false)
+                              savedInstanceState: Bundle?): View {
+        val binding = FragmentLyricBinding.inflate(inflater)
         lyricId = arguments?.getInt(LYRIC_ID, 0)!!
-        view.lyricHeader.setOnClickListener{ dismiss() }
+        binding.lyricHeader.setOnClickListener{ dismiss() }
         checkSavedInstanceState(savedInstanceState)
         observeCurrentLanguages()
         observeSearchWord()
-        return view
+        return binding.root
     }
 
     override fun getTheme() = R.style.Theme_NoWiredStrapInNavigationBar

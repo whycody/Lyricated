@@ -16,12 +16,10 @@ import com.whycody.wordslife.R
 import com.whycody.wordslife.choose.language.recycler.ChooseLanguageAdapter
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.databinding.FragmentChooseLanguageBinding
-import kotlinx.android.synthetic.main.fragment_choose_language.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ChooseLanguageFragment : Fragment() {
 
-    private lateinit var layoutView: View
     private val viewModel: ChooseLanguageViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -31,10 +29,9 @@ class ChooseLanguageFragment : Fragment() {
         val mainLanguage = arguments?.getBoolean(LanguageDaoImpl.MAIN_LANGUAGE, true)!!
         binding.mainLanguage = mainLanguage
         viewModel.setMainLanguage(mainLanguage)
-        layoutView = binding.root
-        setupRecycler()
+        setupRecycler(binding.chooseLanguageRecycler)
         hideKeyboard()
-        return layoutView
+        return binding.root
     }
 
     fun newInstance(mainLanguage: Boolean): ChooseLanguageFragment {
@@ -52,19 +49,19 @@ class ChooseLanguageFragment : Fragment() {
         view?.clearFocus()
     }
 
-    private fun setupRecycler() {
+    private fun setupRecycler(recyclerView: RecyclerView) {
         val adapter = ChooseLanguageAdapter(viewModel)
-        observeLanguagesList(adapter)
-        loadLayoutAnimation(layoutView.chooseLanguageRecycler)
-        layoutView.chooseLanguageRecycler.layoutManager = LinearLayoutManager(context)
-        layoutView.chooseLanguageRecycler.adapter = adapter
+        observeLanguagesList(adapter, recyclerView)
+        loadLayoutAnimation(recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = adapter
     }
 
-    private fun observeLanguagesList(adapter: ChooseLanguageAdapter) {
+    private fun observeLanguagesList(adapter: ChooseLanguageAdapter, recyclerView: RecyclerView) {
         viewModel.getLanguages().observe(activity as MainActivity, {
             if(adapter.currentList.size != 0) activity?.onBackPressed()
             adapter.submitList(it)
-            layoutView.chooseLanguageRecycler.scheduleLayoutAnimation()
+            recyclerView.scheduleLayoutAnimation()
         })
     }
 

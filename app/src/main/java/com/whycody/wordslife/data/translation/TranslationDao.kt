@@ -40,7 +40,7 @@ class TranslationDao(private val languageDao: LanguageDao) {
     @Throws(IOException::class)
     private fun getMultipleTranslations(phrase: String): List<Translation>? {
         val formBody: RequestBody = FormEncodingBuilder().add("request", getRequestBody(phrase)).build()
-        val request = Request.Builder().url("http://translate.lyricated.com/api/translate").post(formBody).build()
+        val request = Request.Builder().url("https://translate.lyricated.com/api/translate").post(formBody).build()
         val response = client.newCall(request).execute()
         return Klaxon().parse<TranslationQuery>(response.body().string())?.result?.map { getTranslation(it) }
     }
