@@ -1,4 +1,4 @@
-package com.whycody.wordslife.home.banner
+package com.whycody.wordslife.home.banner.main
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

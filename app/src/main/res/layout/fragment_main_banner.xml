@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="225dp">
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="225dp"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:src="@drawable/banner_no_stars"
@@ -17,7 +17,7 @@
     <ImageView
         android:id="@+id/bannerStarsOne"
         android:layout_width="match_parent"
-        android:layout_height="225dp"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_stars_one"
@@ -27,7 +27,7 @@
     <ImageView
         android:id="@+id/bannerStarsTwo"
         android:layout_width="match_parent"
-        android:layout_height="225dp"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_stars_two"
@@ -37,7 +37,7 @@
     <ImageView
         android:id="@+id/bannerStarsThree"
         android:layout_width="match_parent"
-        android:layout_height="225dp"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_stars_three"
@@ -47,7 +47,7 @@
     <ImageView
         android:id="@+id/bannerStarsFour"
         android:layout_width="match_parent"
-        android:layout_height="225dp"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_stars_four"

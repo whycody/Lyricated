@@ -25,10 +25,10 @@
             android:orientation="vertical">
 
             <fragment
-                android:id="@+id/mainBannerFragment"
-                android:name="com.whycody.wordslife.home.banner.MainBannerFragment"
+                android:id="@+id/lyricatedBannerFragment"
+                android:name="com.whycody.wordslife.home.banner.lyricated.LyricatedBannerFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="200dp"/>
 
             <fragment
                 android:id="@+id/currentLanguageFragment"
@@ -58,6 +58,7 @@
                     android:id="@+id/dot"
                     android:layout_width="9dp"
                     android:layout_height="9dp"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/circle"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/headerText"
@@ -70,8 +71,10 @@
                     app:layout_constraintLeft_toRightOf="@id/dot"
                     app:layout_constraintTop_toTopOf="parent"
                     android:textSize="15sp"
-                    android:textColor="@color/header_gray"
-                    android:padding="10dp"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:paddingHorizontal="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
                     android:textStyle="bold"
                     android:text="@string/previous_words"/>
 
