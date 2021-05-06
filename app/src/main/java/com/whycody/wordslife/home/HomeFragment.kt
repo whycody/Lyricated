@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.MainNavigation
-import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentHomeBinding
 import com.whycody.wordslife.home.history.HistoryAdapter
 import com.whycody.wordslife.search.SearchFragment
@@ -27,7 +25,6 @@ class HomeFragment : Fragment() {
         observeSearchWord()
         observeClickedWord()
         setupRecycler(binding)
-        startAnimations(binding)
         return binding.root
     }
 
@@ -65,15 +62,5 @@ class HomeFragment : Fragment() {
                 binding.historyRecycler.scheduleLayoutAnimation()
             historyAdapter.submitList(it)
         })
-
-    private fun startAnimations(binding: FragmentHomeBinding) {
-        val context = activity?.applicationContext
-        with(binding) {
-            bannerStarsOne.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_one))
-            bannerStarsTwo.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_two))
-            bannerStarsThree.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_three))
-            bannerStarsFour.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_four))
-        }
-    }
 
 }
