@@ -30,6 +30,7 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <ImageView
+                android:id="@+id/lyricatedIllustration"
                 android:layout_width="wrap_content"
                 android:layout_height="77dp"
                 android:adjustViewBounds="true"
