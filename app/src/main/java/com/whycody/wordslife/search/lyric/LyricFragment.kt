@@ -15,7 +15,6 @@ import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.databinding.FragmentLyricBinding
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.lyric.movie.MovieFragment
-import com.whycody.wordslife.search.lyric.quote.QuoteFragment
 import com.whycody.wordslife.search.lyric.translation.LyricTranslationFragment
 import com.whycody.wordslife.search.lyric.vocabulary.VocabularyFragment
 import kotlinx.coroutines.*
@@ -62,10 +61,12 @@ class LyricFragment : BottomSheetDialogFragment() {
 
     private fun addFragments() {
         val fragmentTransaction = childFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.fragmentsContainer, QuoteFragment())
+        fragmentTransaction.add(R.id.fragmentsContainer,
+            LyricTranslationFragment.newInstance(LyricTranslationFragment.MAIN_PHRASE))
+        fragmentTransaction.add(R.id.fragmentsContainer,
+            LyricTranslationFragment.newInstance(LyricTranslationFragment.TRANSLATION_PHRASE))
         fragmentTransaction.add(R.id.fragmentsContainer, MovieFragment())
         fragmentTransaction.add(R.id.fragmentsContainer, VocabularyFragment())
-        fragmentTransaction.add(R.id.fragmentsContainer, LyricTranslationFragment())
         fragmentTransaction.commit()
     }
 

@@ -12,8 +12,15 @@ class LyricTranslationViewModel(private val languageDao: LanguageDao): ViewModel
 
     fun getTranslationItem() = translationItem
 
-    fun findTranslation(extendedLyricItem: ExtendedLyricItem) =
-        translationItem.postValue(getTranslationItemFromLyric(extendedLyricItem))
+    fun findTranslation(extendedLyricItem: ExtendedLyricItem, typeOfPhrase: String) =
+        if(typeOfPhrase == LyricTranslationFragment.MAIN_PHRASE)
+            translationItem.postValue(getMainItemFromLyric(extendedLyricItem))
+        else translationItem.postValue(getTranslationItemFromLyric(extendedLyricItem))
+
+    private fun getMainItemFromLyric(extendedLyricItem: ExtendedLyricItem) =
+        TranslationItem(
+            languageDao.getLanguage(extendedLyricItem.languages.mainLangId)!!.drawable,
+            extendedLyricItem.mainLangSentence)
 
     private fun getTranslationItemFromLyric(extendedLyricItem: ExtendedLyricItem) =
         TranslationItem(
