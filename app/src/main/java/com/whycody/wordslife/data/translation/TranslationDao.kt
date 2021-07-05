@@ -5,7 +5,6 @@ import com.squareup.okhttp.*
 import com.whycody.wordslife.data.Translation
 import com.whycody.wordslife.data.TranslationQuery
 import com.whycody.wordslife.data.language.LanguageDao
-import java.io.IOException
 
 class TranslationDao(private val languageDao: LanguageDao) {
 
@@ -13,13 +12,14 @@ class TranslationDao(private val languageDao: LanguageDao) {
 
     fun tryTranslate(phrase: String): List<Translation>? {
         return try {
-            val multipleTranslations = getMultipleTranslations(phrase)
-            if(multipleTranslations.isNullOrEmpty()) translate(phrase)
+            val formattedPhrase = phrase.trim().replace("\"`~\\|<>{}[]°•○●□■♤♡◇♧☆▪︎¤《》¡¿", "")
+            val multipleTranslations = getMultipleTranslations(formattedPhrase)
+            if(multipleTranslations.isNullOrEmpty()) translate(formattedPhrase)
             else multipleTranslations
-        } catch(_: IOException) { null }
+        } catch(_: Exception) { null }
     }
 
-    @Throws(IOException::class)
+    @Throws(Exception::class)
     private fun translate(phrase: String): List<Translation> {
         getMultipleTranslations(phrase)
         val mediaType = MediaType.parse("application/json")
@@ -37,12 +37,14 @@ class TranslationDao(private val languageDao: LanguageDao) {
         return listOf(translatedPhrase!!)
     }
 
-    @Throws(IOException::class)
-    private fun getMultipleTranslations(phrase: String): List<Translation>? {
+    @Throws(Exception::class)
+    private fun getMultipleTranslations(phrase: String): List<Translation> {
         val formBody: RequestBody = FormEncodingBuilder().add("request", getRequestBody(phrase)).build()
         val request = Request.Builder().url("https://translate.lyricated.com/api/translate").post(formBody).build()
         val response = client.newCall(request).execute()
-        return Klaxon().parse<TranslationQuery>(response.body().string())?.result?.map { getTranslation(it) }
+        val translationQuery = Klaxon().parse<TranslationQuery>(response.body().string())
+        return if(translationQuery?.status?.toInt() == 0) translationQuery.result!!.map { getTranslation(it) }
+        else emptyList()
     }
 
     private fun getRequestBody(phrase: String) =

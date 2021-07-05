@@ -33,6 +33,7 @@
             android:background="@android:color/transparent"
             android:paddingHorizontal="6dp"
             android:paddingVertical="15dp"
+            android:maxLength="200"
             android:inputType="text"
             android:textSize="16sp"
             android:maxLines="1"

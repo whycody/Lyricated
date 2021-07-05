@@ -127,7 +127,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
     }
 
     private fun getFormattedWord(word: String?) =
-            word?.trim()?.replace(Regex("[*.?]"), "")
+            word?.trim()?.replace(Regex("[+×÷=/_€£¥₩#\$%^*.?`~<>{}\\[\\]°•○●□■♤♡◇♧☆▪︎¤《》¡¿\"]"), "")
 
     fun postNewValues(newNumber: Boolean = false) {
         val sizeOfShowedLyrics = updateNumberOfShowedLyricItems(newNumber)

@@ -33,7 +33,7 @@ data class Translation(
 data class TranslationQuery(
         val status: String,
         val message: String,
-        val result: List<String>)
+        val result: List<String>? = null)
 
 data class LyricItem(
         val lyricId: Int,
