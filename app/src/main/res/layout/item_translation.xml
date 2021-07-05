@@ -5,6 +5,9 @@
         <variable
             name="translation"
             type="com.whycody.wordslife.data.Translation" />
+        <variable
+            name="interactor"
+            type="com.whycody.wordslife.search.translation.TranslationInteractor" />
     </data>
 
     <LinearLayout
@@ -22,6 +25,7 @@
             android:clickable="true"
             android:focusable="true"
             android:textSize="15sp"
+            android:onClick="@{()->interactor.translationClicked(translation)}"
             android:paddingHorizontal="11dp"
             android:paddingVertical="8dp"
             android:textColor="@color/dark_blue"

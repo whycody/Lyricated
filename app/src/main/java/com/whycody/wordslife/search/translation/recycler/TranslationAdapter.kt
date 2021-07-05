@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.whycody.wordslife.BR
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.Translation
+import com.whycody.wordslife.search.translation.TranslationInteractor
 import com.whycody.wordslife.search.translation.TranslationViewModel
 
-class TranslationAdapter: ListAdapter<Translation, RecyclerView.ViewHolder>(TranslationDiffCallback()) {
+class TranslationAdapter(private val interactor: TranslationInteractor):
+    ListAdapter<Translation, RecyclerView.ViewHolder>(TranslationDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -43,6 +45,7 @@ class TranslationAdapter: ListAdapter<Translation, RecyclerView.ViewHolder>(Tran
         fun setupData(translation: Translation) {
             binding.setVariable(BR.translation, translation)
             binding.setVariable(BR.position, adapterPosition)
+            binding.setVariable(BR.interactor, interactor)
             binding.executePendingBindings()
         }
     }
