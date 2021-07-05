@@ -15,7 +15,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#AC2929</color>
-    <color name="astronaut_red">#C13030</color>
+    <color name="astronaut_red">#C52A2A</color>
     <color name="astronaut_blue">#33aef1</color>
     <color name="astronaut_yellow">#ffce00</color>
 </resources>
