@@ -2,6 +2,7 @@ package com.whycody.wordslife
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.whycody.wordslife.home.HomeFragment
 import com.whycody.wordslife.search.SearchFragment
@@ -11,6 +12,7 @@ class MainActivity : AppCompatActivity(), MainNavigation {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         if(savedInstanceState == null) showHomeFragment()
     }
 
