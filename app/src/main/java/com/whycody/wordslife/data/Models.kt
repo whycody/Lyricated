@@ -85,6 +85,14 @@ data class UserAction(
         val actionType: Int = SearchFragment.NO_ACTION,
         val actionId: Int = SearchFragment.NO_ACTION)
 
+data class SortItem(
+        val headerName: String,
+        val options: List<SortOption>)
+
+data class SortOption(
+        val id: String,
+        val name: String)
+
 @Entity(tableName = "lyrics")
 data class Lyric(
         @ColumnInfo(name = "lyric_id") @PrimaryKey val lyricId: Int,

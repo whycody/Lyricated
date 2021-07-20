@@ -28,4 +28,9 @@
     <string name="translation">Traducción</string>
     <string name="lyric">Letra</string>
     <string name="details">Detalles de la letra</string>
+    <string name="match">Ajuste</string>
+    <string name="best">El mejor</string>
+    <string name="length_of_phrase">Longitud de la oración</string>
+    <string name="from_the_longest">Desde las más largas</string>
+    <string name="from_the_shortest">Desde las más cortas</string>
 </resources>

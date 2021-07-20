@@ -28,4 +28,9 @@
     <string name="translation">Translation</string>
     <string name="lyric">Lyric</string>
     <string name="details">Details of the lyric</string>
+    <string name="match">Match</string>
+    <string name="best">Best</string>
+    <string name="length_of_phrase">Length of phrase</string>
+    <string name="from_the_longest">From the longest</string>
+    <string name="from_the_shortest">From the shortest</string>
 </resources>
