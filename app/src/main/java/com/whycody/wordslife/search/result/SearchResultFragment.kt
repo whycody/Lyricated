@@ -2,7 +2,6 @@ package com.whycody.wordslife.search.result
 
 import android.animation.LayoutTransition
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,13 +11,12 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.data.LyricItem
-import com.whycody.wordslife.data.LyricLanguages
-import com.whycody.wordslife.data.SharedPreferenceStringLiveData
-import com.whycody.wordslife.data.language.LanguageDaoImpl
+import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.databinding.FragmentSearchResultBinding
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.result.recycler.SearchResultAdapter
 import kotlinx.coroutines.*
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -29,6 +27,7 @@ class SearchResultFragment : Fragment() {
     private var job: Job? = null
     private val searchResultViewModel: SearchResultViewModel by viewModel()
     private val searchViewModel: SearchViewModel by sharedViewModel()
+    private val searchConfigurationDao: SearchConfigurationDao by inject()
     private lateinit var resultAdapter: SearchResultAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -135,27 +134,8 @@ class SearchResultFragment : Fragment() {
             currentLyricItems.isNotEmpty() && newLyricItems.isNotEmpty()
 
     private fun observeCurrentLanguages() {
-        val sharedPrefs: SharedPreferences = activity!!.applicationContext
-                .getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
-        observeMainLanguage(sharedPrefs)
-        observeTranslationLanguage(sharedPrefs)
-    }
-
-    private fun observeMainLanguage(sharedPrefs: SharedPreferences) {
-        SharedPreferenceStringLiveData(sharedPrefs, LanguageDaoImpl.MAIN_LANGUAGE,
-                LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE).observe(activity as MainActivity, {
-            searchResultViewModel.setLyricLanguages(LyricLanguages(it,
-                    sharedPrefs.getString(LanguageDaoImpl.TRANSLATION_LANGUAGE,
-                            LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE)!!))
-        })
-    }
-
-    private fun observeTranslationLanguage(sharedPrefs: SharedPreferences) {
-        SharedPreferenceStringLiveData(sharedPrefs, LanguageDaoImpl.TRANSLATION_LANGUAGE,
-                LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE).observe(activity as MainActivity, {
-            searchResultViewModel.setLyricLanguages(LyricLanguages(
-                    sharedPrefs.getString(LanguageDaoImpl.MAIN_LANGUAGE,
-                            LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE)!!, it))
+        searchConfigurationDao.getSearchConfigurationLiveData().observe(activity as MainActivity, {
+            searchResultViewModel.setLyricLanguages(searchConfigurationDao.getLyricLanguages())
         })
     }
 

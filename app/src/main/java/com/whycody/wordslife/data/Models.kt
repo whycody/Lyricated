@@ -24,6 +24,9 @@ data class HistoryItem(
         var translationLanguage: Drawable,
         var saved: Boolean = false)
 
+data class SearchConfiguration(
+        var lyricLanguages: LyricLanguages = LyricLanguages())
+
 data class Translation(
         @Json(name = "text") val translatedPhrase: String? = null,
         @Json(ignored = true) var numberOfUsages: Int = 0,
@@ -75,8 +78,8 @@ data class TranslationItem(
         val translatedSentence: String?)
 
 data class LyricLanguages(
-        val mainLangId: String = LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE,
-        val translationLangId: String = LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE)
+        var mainLangId: String = LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE,
+        var translationLangId: String = LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE)
 
 data class UserAction(
         val actionType: Int = SearchFragment.NO_ACTION,

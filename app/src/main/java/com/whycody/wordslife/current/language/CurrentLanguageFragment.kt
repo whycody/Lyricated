@@ -12,15 +12,15 @@ import android.view.animation.AnimationUtils
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.choose.language.ChooseLanguageFragment
-import com.whycody.wordslife.data.SharedPreferenceStringLiveData
 import com.whycody.wordslife.data.language.LanguageDao
-import com.whycody.wordslife.data.language.LanguageDaoImpl
+import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.databinding.FragmentCurrentLanguageBinding
 import org.koin.android.ext.android.inject
 
 class CurrentLanguageFragment : Fragment() {
 
     private val languageDao: LanguageDao by inject()
+    private val searchConfigurationDao: SearchConfigurationDao by inject()
     private lateinit var binding: FragmentCurrentLanguageBinding
     private lateinit var sharedPrefs: SharedPreferences
     private lateinit var rotateAnimation: Animation
@@ -29,7 +29,7 @@ class CurrentLanguageFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
         binding = FragmentCurrentLanguageBinding.inflate(inflater)
         sharedPrefs = context?.getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)!!
-        rotateAnimation = AnimationUtils.loadAnimation(context!!, R.anim.arrows_rotation)
+        rotateAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.arrows_rotation)
         observeCurrentLanguages()
         setupViews()
         return binding.root
@@ -53,22 +53,9 @@ class CurrentLanguageFragment : Fragment() {
         (activity as MainActivity).navigateTo(ChooseLanguageFragment().newInstance(mainLanguage))
 
     private fun observeCurrentLanguages() {
-        observeMainLanguage()
-        observeTranslationLanguage()
+        searchConfigurationDao.getSearchConfigurationLiveData().observe(activity as MainActivity, {
+            binding.mainLanguage = languageDao.getCurrentMainLanguage()
+            binding.translationLanguage = languageDao.getCurrentTranslationLanguage()
+        })
     }
-
-    private fun observeMainLanguage() =
-        SharedPreferenceStringLiveData(sharedPrefs,
-                LanguageDaoImpl.MAIN_LANGUAGE, LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE)
-                .observe(activity as MainActivity, {
-                    binding.mainLanguage = languageDao.getLanguage(it)
-                })
-
-    private fun observeTranslationLanguage() =
-        SharedPreferenceStringLiveData(sharedPrefs,
-                LanguageDaoImpl.TRANSLATION_LANGUAGE, LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE)
-                .observe(activity as MainActivity, {
-                    binding.translationLanguage = languageDao.getLanguage(it)
-                })
-
 }

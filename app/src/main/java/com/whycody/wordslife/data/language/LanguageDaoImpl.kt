@@ -1,16 +1,14 @@
 package com.whycody.wordslife.data.language
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.core.content.ContextCompat
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.Language
+import com.whycody.wordslife.data.LyricLanguages
+import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 
-class LanguageDaoImpl(private val context: Context): LanguageDao {
-
-    private val sharedPrefs: SharedPreferences =
-            context.getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
-    private val prefsEditor = sharedPrefs.edit()
+class LanguageDaoImpl(private val context: Context,
+                      private val searchConfigurationDao: SearchConfigurationDao): LanguageDao {
 
     override fun getLanguage(id: String) =
             getAllLanguages().find { language -> language.id == id }
@@ -42,10 +40,10 @@ class LanguageDaoImpl(private val context: Context): LanguageDao {
                     translationLangId != getCurrentTranslationLanguage().id
 
     override fun getCurrentMainLanguage() =
-            getLanguage(sharedPrefs.getString(MAIN_LANGUAGE, DEFAULT_MAIN_LANGUAGE)!!)!!
+        getLanguage(searchConfigurationDao.getSearchConfiguration().lyricLanguages.mainLangId)!!
 
     override fun getCurrentTranslationLanguage() =
-            getLanguage(sharedPrefs.getString(TRANSLATION_LANGUAGE, DEFAULT_TRANSLATION_LANGUAGE)!!)!!
+        getLanguage(searchConfigurationDao.getSearchConfiguration().lyricLanguages.translationLangId)!!
 
     override fun setCurrentMainLanguage(id: String) {
         if(getCurrentTranslationLanguage().id != id) saveCurrentMainLanguage(id)
@@ -53,8 +51,9 @@ class LanguageDaoImpl(private val context: Context): LanguageDao {
     }
 
     private fun saveCurrentMainLanguage(id: String) {
-        prefsEditor.putString(MAIN_LANGUAGE, id)
-        prefsEditor.commit()
+        val searchConfiguration = searchConfigurationDao.getSearchConfiguration()
+        searchConfiguration.lyricLanguages.mainLangId = id
+        searchConfigurationDao.setSearchConfiguration(searchConfiguration)
     }
 
     override fun setCurrentTranslationLanguage(id: String) {
@@ -63,14 +62,17 @@ class LanguageDaoImpl(private val context: Context): LanguageDao {
     }
 
     private fun saveCurrentTranslationLanguage(id: String) {
-        prefsEditor.putString(TRANSLATION_LANGUAGE, id)
-        prefsEditor.commit()
+        val searchConfiguration = searchConfigurationDao.getSearchConfiguration()
+        searchConfiguration.lyricLanguages.translationLangId = id
+        searchConfigurationDao.setSearchConfiguration(searchConfiguration)
     }
 
     override fun switchCurrentLanguages() {
-        prefsEditor.putString(MAIN_LANGUAGE, getCurrentTranslationLanguage().id)
-        prefsEditor.putString(TRANSLATION_LANGUAGE, getCurrentMainLanguage().id)
-        prefsEditor.commit()
+        val searchConfiguration = searchConfigurationDao.getSearchConfiguration()
+        val currentLanguages = searchConfiguration.lyricLanguages
+        searchConfiguration.lyricLanguages =
+            LyricLanguages(currentLanguages.translationLangId, currentLanguages.mainLangId)
+        searchConfigurationDao.setSearchConfiguration(searchConfiguration)
     }
 
     companion object {
