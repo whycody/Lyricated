@@ -16,6 +16,8 @@ import com.whycody.wordslife.databinding.FragmentSearchBinding
 import com.whycody.wordslife.search.lyric.LyricFragment
 import com.whycody.wordslife.search.content.SearchContentFragment
 import com.whycody.wordslife.search.content.SearchContentView
+import com.whycody.wordslife.search.filter.FilterFragment
+import com.whycody.wordslife.search.sort.SortFragment
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.lang.Exception
 
@@ -29,6 +31,8 @@ class SearchFragment : Fragment(), IOnBackPressed {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val binding = FragmentSearchBinding.inflate(inflater)
+        binding.sortBtn.setOnClickListener { SortFragment().show(childFragmentManager, "Sort")}
+        binding.filterBtn.setOnClickListener { FilterFragment().show(childFragmentManager, "Filter")}
         searchWord = arguments?.getString(SEARCH_WORD, "")!!
         searchAppBar = binding.searchAppBar
         checkSavedInstanceState(savedInstanceState)
