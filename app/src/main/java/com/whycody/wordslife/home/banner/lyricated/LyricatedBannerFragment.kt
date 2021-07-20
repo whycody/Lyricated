@@ -21,6 +21,7 @@ class LyricatedBannerFragment : Fragment() {
 
     private lateinit var binding: FragmentLyricatedBannerBinding
     private lateinit var vector: VectorChildFinder
+    private var lastPath: VectorDrawableCompat.VFullPath? = null
     private var job: Job? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +30,8 @@ class LyricatedBannerFragment : Fragment() {
         val pulseAnim = AnimationUtils.loadAnimation(context, R.anim.pulse_anim)
         binding.astronautIllustration.startAnimation(pulseAnim)
         vector = VectorChildFinder(context, R.drawable.il_lyricated, binding.lyricatedIllustration)
-        getDownLettersPaths().forEach { it.fillColor = getRandomColor(it.fillColor) }
+        lastPath = getRandomPath()
+        lastPath!!.fillColor = getRandomColor(lastPath!!.fillColor)
         binding.lyricatedIllustration.invalidate()
         startAnimation(binding)
         return binding.root
@@ -44,19 +46,19 @@ class LyricatedBannerFragment : Fragment() {
         job = CoroutineScope(IO).launch {
             delay(5000)
             CoroutineScope(Main).launch {
-                getDownLettersPaths().forEach { getAnim(it).start() }
+                if(lastPath != null) getAnim(lastPath!!, ContextCompat.getColor(context!!, R.color.background_gray)).start()
+                val randomPath = getRandomPath()
+                lastPath = randomPath
+                getAnim(randomPath).start()
                 startAnimation(binding)
             }
         }
     }
 
-    private fun getAnim(path: VectorDrawableCompat.VFullPath): ValueAnimator {
-        val currentColor = path.fillColor
-        val randomColor = getRandomColor(currentColor)
-        val anim = ValueAnimator.ofArgb(currentColor, randomColor).setDuration(1000)
+    private fun getAnim(path: VectorDrawableCompat.VFullPath, color: Int = getRandomColor(path.fillColor)): ValueAnimator {
+        val anim = ValueAnimator.ofArgb(path.fillColor, color).setDuration(1000)
         anim.addUpdateListener {
-            if(path.pathName == FIRST_LETTER) refreshImageView(it, path)
-            else setFillColor(it, path)
+            refreshImageView(it, path)
         }
         return anim
     }
@@ -74,6 +76,11 @@ class LyricatedBannerFragment : Fragment() {
         val pathsList = mutableListOf<VectorDrawableCompat.VFullPath>()
         for(i in 6..9) pathsList.add(vector.findPathByName("letter$i"))
         return pathsList
+    }
+
+    private fun getRandomPath(): VectorDrawableCompat.VFullPath {
+        val randomPath = vector.findPathByName("letter${Random.nextInt(1, 10)}")
+        return if(lastPath == null || randomPath != lastPath) randomPath else getRandomPath()
     }
 
     private fun getRandomColor(fillColor: Int): Int {
