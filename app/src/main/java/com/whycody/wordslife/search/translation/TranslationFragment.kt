@@ -10,11 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.whycody.wordslife.MainActivity
-import com.whycody.wordslife.data.LyricLanguages
-import com.whycody.wordslife.data.SharedPreferenceStringLiveData
 import com.whycody.wordslife.data.Translation
 import com.whycody.wordslife.data.language.LanguageDao
-import com.whycody.wordslife.data.language.LanguageDaoImpl
+import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.databinding.FragmentTranslationBinding
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.translation.recycler.TranslationAdapter
@@ -28,6 +26,7 @@ class TranslationFragment : Fragment(), TranslationInteractor {
 
     private var job: Job? = null
     private val languageDao: LanguageDao by inject()
+    private val searchConfigDao: SearchConfigurationDao by inject()
     private val translationViewModel: TranslationViewModel by viewModel()
     private val searchViewModel: SearchViewModel by sharedViewModel()
     private lateinit var sharedPrefs: SharedPreferences
@@ -35,7 +34,7 @@ class TranslationFragment : Fragment(), TranslationInteractor {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val binding = FragmentTranslationBinding.inflate(inflater)
-        sharedPrefs = activity!!.applicationContext.getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
+        sharedPrefs = requireActivity().applicationContext.getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
         binding.lifecycleOwner = activity
         binding.translationViewModel = translationViewModel
         setupRecycler(binding.translationRecycler)
@@ -64,7 +63,7 @@ class TranslationFragment : Fragment(), TranslationInteractor {
             adapter = translationAdapter
             itemAnimator = null
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            addItemDecoration(TranslationItemDecoration(context!!.applicationContext))
+            addItemDecoration(TranslationItemDecoration(requireContext()))
         }
     }
 
@@ -81,25 +80,9 @@ class TranslationFragment : Fragment(), TranslationInteractor {
             })
 
     private fun observeCurrentLanguages() {
-        observeMainLanguage()
-        observeTranslationLanguage()
-    }
-
-    private fun observeMainLanguage() {
-        SharedPreferenceStringLiveData(sharedPrefs, LanguageDaoImpl.MAIN_LANGUAGE,
-                LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE).observe(activity as MainActivity, {
-            translationViewModel.setLyricLanguages(LyricLanguages(it,
-                    sharedPrefs.getString(LanguageDaoImpl.TRANSLATION_LANGUAGE,
-                            LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE)!!))
-                })
-    }
-
-    private fun observeTranslationLanguage() {
-        SharedPreferenceStringLiveData(sharedPrefs, LanguageDaoImpl.TRANSLATION_LANGUAGE,
-                LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE).observe(activity as MainActivity, {
-            translationViewModel.setLyricLanguages(LyricLanguages(sharedPrefs.getString(
-                    LanguageDaoImpl.MAIN_LANGUAGE, LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE)!!, it))
-                })
+        searchConfigDao.getSearchConfigurationLiveData().observe(requireActivity(), {
+            translationViewModel.setLyricLanguages(searchConfigDao.getLyricLanguages())
+        })
     }
 
     private fun observeSearchWord() = searchViewModel.getSearchWord()

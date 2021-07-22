@@ -27,6 +27,7 @@ import com.whycody.wordslife.search.lyric.vocabulary.VocabularyViewModel
 import com.whycody.wordslife.search.result.SearchResultViewModel
 import com.whycody.wordslife.search.result.span.builder.SearchResultSpanBuilder
 import com.whycody.wordslife.search.result.span.builder.SearchResultSpanBuilderImpl
+import com.whycody.wordslife.search.sort.SortViewModel
 import com.whycody.wordslife.search.translation.TranslationViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -69,13 +70,13 @@ val languageModule = module {
 }
 
 val queryModule = module {
-    single<LyricsQueryBuilder> { LyricsQueryBuilderImpl() }
+    single<LyricsQueryBuilder> { LyricsQueryBuilderImpl(get()) }
     single { TranslationDao(get()) }
 }
 
 val configurationModule = module {
     single<SearchConfigurationDao> { SearchConfigurationDaoImpl(get()) }
-    single<SortDao> { SortDaoImpl(get()) }
+    single<SortDao> { SortDaoImpl(get(), get()) }
 }
 
 val utilsModule = module {
@@ -92,4 +93,5 @@ val viewModelsModule = module {
     viewModel { VocabularyViewModel() }
     viewModel { LyricTranslationViewModel(get()) }
     viewModel { TranslationViewModel(get()) }
+    viewModel { SortViewModel(get(), get()) }
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.whycody.wordslife.data.LyricItem
 import com.whycody.wordslife.data.LyricLanguages
+import com.whycody.wordslife.data.SearchConfiguration
 import com.whycody.wordslife.data.Translation
 import com.whycody.wordslife.data.lyrics.LyricsQueryBuilderImpl
 import com.whycody.wordslife.data.lyrics.LyricsRepository
@@ -28,7 +29,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
     private val numberOfShowingLyrics = 5
     private var allLyricItems = emptyList<LyricItem>()
     private val searchWordFlow = MutableStateFlow("")
-    private val lyricLanguagesFlow = MutableStateFlow(LyricLanguages())
+    private val searchConfigFlow = MutableStateFlow(SearchConfiguration())
     private val translationsFlow = MutableStateFlow(emptyList<Translation>())
 
     fun getLyricItems() = lyricItems
@@ -44,10 +45,10 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
     }
 
     private fun flowLyricItems(): Flow<List<LyricItem>> =
-            searchWordFlow.combine(lyricLanguagesFlow) { word, languages ->
+            searchWordFlow.combine(searchConfigFlow) { word, searchConfig ->
                 if(!wordIsNotCorrect(word)) {
                     setResultsReady(false)
-                    getLyricItemsList(word, languages)
+                    getLyricItemsList(word, searchConfig.lyricLanguages)
                 } else emptyList()
             }
 
@@ -115,7 +116,7 @@ class SearchResultViewModel(private val lyricsRepository: LyricsRepository,
 
     fun setTypeOfLyrics(typeOfLyrics: String) = this.typeOfLyrics.postValue(typeOfLyrics)
 
-    fun setLyricLanguages(lyricLanguages: LyricLanguages) = lyricLanguagesFlow.tryEmit(lyricLanguages)
+    fun setSearchConfig(searchConfig: SearchConfiguration) = searchConfigFlow.tryEmit(searchConfig)
 
     fun applyTranslations(translations: List<Translation>) = translationsFlow.tryEmit(translations)
 

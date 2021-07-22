@@ -8,6 +8,7 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.beust.klaxon.Json
 import com.whycody.wordslife.data.language.LanguageDaoImpl
+import com.whycody.wordslife.data.sort.SortDaoImpl
 import com.whycody.wordslife.search.SearchFragment
 import com.whycody.wordslife.search.translation.TranslationViewModel
 import java.util.*
@@ -25,7 +26,8 @@ data class HistoryItem(
         var saved: Boolean = false)
 
 data class SearchConfiguration(
-        var lyricLanguages: LyricLanguages = LyricLanguages())
+        var lyricLanguages: LyricLanguages = LyricLanguages(),
+        var sortOptionId: String = SortDaoImpl.BEST_MATCH)
 
 data class Translation(
         @Json(name = "text") val translatedPhrase: String? = null,
@@ -91,7 +93,8 @@ data class SortItem(
 
 data class SortOption(
         val id: String,
-        val name: String)
+        val name: String,
+        var isChecked: Boolean = false)
 
 @Entity(tableName = "lyrics")
 data class Lyric(

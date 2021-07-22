@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import com.whycody.wordslife.data.LastSearch
 import com.whycody.wordslife.data.Translation
 import com.whycody.wordslife.data.UserAction
-import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.last.searches.LastSearchRepository
+import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 
 class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
-                      private val languageDao: LanguageDao): ViewModel() {
+                      private val searchConfigurationDao: SearchConfigurationDao): ViewModel() {
 
     private val searchWord = MutableLiveData<String>()
     private val userAction = MutableLiveData(UserAction())
@@ -81,7 +81,7 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
                     lsOne.translationLanguageId == lsTwo.translationLanguageId
 
     private fun getLastSearch(word: String) = LastSearch(
-            mainLanguageId = languageDao.getCurrentMainLanguage().id,
-            translationLanguageId = languageDao.getCurrentTranslationLanguage().id,
+            mainLanguageId = searchConfigurationDao.getLyricLanguages().mainLangId,
+            translationLanguageId = searchConfigurationDao.getLyricLanguages().translationLangId,
             text = word)
 }

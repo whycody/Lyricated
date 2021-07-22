@@ -9,7 +9,6 @@
     android:overScrollMode="never">
 
     <LinearLayout
-        android:id="@+id/fragmentsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="30dp"
@@ -41,6 +40,12 @@
                 android:src="@drawable/ic_arrow_down"/>
 
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sortRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </LinearLayout>
 

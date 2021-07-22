@@ -12,5 +12,7 @@ interface SearchConfigurationDao {
 
     fun setSearchConfiguration(searchConfiguration: SearchConfiguration)
 
+    fun setSortingOption(sortOptionId: String)
+
     fun getLyricLanguages(): LyricLanguages
 }

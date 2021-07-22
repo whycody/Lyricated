@@ -5,23 +5,45 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.R
+import com.whycody.wordslife.data.SearchConfiguration
+import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.databinding.FragmentSortBinding
+import com.whycody.wordslife.search.sort.recycler.SortItemAdapter
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class SortFragment : BottomSheetDialogFragment() {
 
+    private val sortViewModel: SortViewModel by viewModel()
+    private val searchConfigDao: SearchConfigurationDao by inject()
+    private lateinit var lastSearchConfig: SearchConfiguration
+    private lateinit var binding: FragmentSortBinding
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                           savedInstanceState: Bundle?): View {
-        val binding = FragmentSortBinding.inflate(inflater)
+        binding = FragmentSortBinding.inflate(inflater)
         binding.sortHeader.setOnClickListener { dismiss() }
+        lastSearchConfig = searchConfigDao.getSearchConfiguration()
+        searchConfigDao.getSearchConfigurationLiveData().observe(requireActivity(), {
+            if(lastSearchConfig != searchConfigDao.getSearchConfiguration()) dismiss()
+        })
+        setupRecycler()
         return binding.root
     }
 
-    override fun getTheme() = R.style.Theme_NoWiredStrapInNavigationBar
-
-    companion object {
-        const val BEST_MATCH = "best_match"
-        const val SHORTEST = "shortest"
-        const val LONGEST = "longest"
+    private fun setupRecycler() {
+        val sortItemAdapter = SortItemAdapter(sortViewModel)
+        binding.sortRecycler.adapter = sortItemAdapter
+        observeSortItems(sortItemAdapter)
     }
+
+    private fun observeSortItems(adapter: SortItemAdapter) {
+        sortViewModel.getSortItems().observe(activity as MainActivity, {
+            adapter.submitList(it)
+        })
+    }
+
+    override fun getTheme() = R.style.Theme_NoWiredStrapInNavigationBar
 }

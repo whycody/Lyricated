@@ -135,7 +135,7 @@ class SearchResultFragment : Fragment() {
 
     private fun observeCurrentLanguages() {
         searchConfigurationDao.getSearchConfigurationLiveData().observe(activity as MainActivity, {
-            searchResultViewModel.setLyricLanguages(searchConfigurationDao.getLyricLanguages())
+            searchResultViewModel.setSearchConfig(searchConfigurationDao.getSearchConfiguration())
         })
     }
 

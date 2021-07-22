@@ -28,6 +28,12 @@ class SearchConfigurationDaoImpl(context: Context): SearchConfigurationDao {
         prefsEditor.commit()
     }
 
+    override fun setSortingOption(sortOptionId: String) {
+        val searchConfig = getSearchConfiguration()
+        searchConfig.sortOptionId = sortOptionId
+        setSearchConfiguration(searchConfig)
+    }
+
     override fun getLyricLanguages(): LyricLanguages = getSearchConfiguration().lyricLanguages
 
     companion object {
