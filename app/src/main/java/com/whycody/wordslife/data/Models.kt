@@ -88,8 +88,10 @@ data class UserAction(
         val actionId: Int = SearchFragment.NO_ACTION)
 
 data class SortItem(
+        val id: String,
         val headerName: String,
-        val options: List<SortOption>)
+        val options: List<SortOption>,
+        val expanded: Boolean = true)
 
 data class SortOption(
         val id: String,

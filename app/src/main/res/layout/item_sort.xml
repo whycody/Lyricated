@@ -5,6 +5,9 @@
         <variable
             name="header"
             type="java.lang.String" />
+        <variable
+            name="itemIsCollapsed"
+            type="boolean" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -18,6 +21,7 @@
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/headerLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/app_padding"
@@ -47,6 +51,18 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/headerArrow"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:alpha="0.9"
+                    app:tint="@color/black"
+                    android:src="@drawable/ic_arrow_down"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <TextView
                     android:id="@+id/invisibleTextView"

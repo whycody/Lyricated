@@ -11,9 +11,13 @@ class SortDaoImpl(private val context: Context,
 
     override fun getSortItems(): List<SortItem> {
         val sortItems = mutableListOf<SortItem>()
-        sortItems.add(SortItem(context.getString(R.string.match),
+        sortItems.add(SortItem(
+            MATCH,
+            context.getString(R.string.match),
             listOf(SortOption(BEST_MATCH, context.getString(R.string.best)))))
-        sortItems.add(SortItem(context.getString(R.string.length_of_phrase),
+        sortItems.add(SortItem(
+            LENGTH,
+            context.getString(R.string.length_of_phrase),
             listOf(SortOption(LONGEST, context.getString(R.string.from_the_longest)),
                 SortOption(SHORTEST, context.getString(R.string.from_the_shortest)))))
         checkCurrentSortingOption(sortItems)
@@ -26,7 +30,9 @@ class SortDaoImpl(private val context: Context,
     }
 
     companion object {
+        const val MATCH = "match"
         const val BEST_MATCH = "best_match"
+        const val LENGTH = "length"
         const val SHORTEST = "shortest"
         const val LONGEST = "longest"
     }
