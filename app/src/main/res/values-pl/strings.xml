@@ -33,4 +33,9 @@
     <string name="length_of_phrase">Długość zdania</string>
     <string name="from_the_longest">Od najdłuższych</string>
     <string name="from_the_shortest">Od najkrótszych</string>
+    <string name="type">Rodzaj</string>
+    <string name="only_movies">Tylko filmy</string>
+    <string name="only_series">Tylko seriale</string>
+    <string name="curses">Przekleństwa</string>
+    <string name="without_curses">Bez przekleństw</string>
 </resources>

@@ -5,6 +5,8 @@ import androidx.core.content.ContextCompat
 import androidx.room.Room
 import com.whycody.wordslife.R
 import com.whycody.wordslife.choose.language.ChooseLanguageViewModel
+import com.whycody.wordslife.data.filter.FilterDao
+import com.whycody.wordslife.data.filter.FilterDaoImpl
 import com.whycody.wordslife.data.language.ChooseLanguageRepository
 import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.language.LanguageDaoImpl
@@ -20,6 +22,7 @@ import com.whycody.wordslife.data.sort.SortDaoImpl
 import com.whycody.wordslife.data.translation.TranslationDao
 import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.search.SearchViewModel
+import com.whycody.wordslife.search.filter.FilterViewModel
 import com.whycody.wordslife.search.lyric.LyricViewModel
 import com.whycody.wordslife.search.lyric.movie.MovieViewModel
 import com.whycody.wordslife.search.lyric.translation.LyricTranslationViewModel
@@ -77,6 +80,7 @@ val queryModule = module {
 val configurationModule = module {
     single<SearchConfigurationDao> { SearchConfigurationDaoImpl(get()) }
     single<SortDao> { SortDaoImpl(get(), get()) }
+    single<FilterDao> { FilterDaoImpl(get(), get()) }
 }
 
 val utilsModule = module {
@@ -94,4 +98,5 @@ val viewModelsModule = module {
     viewModel { LyricTranslationViewModel(get()) }
     viewModel { TranslationViewModel(get()) }
     viewModel { SortViewModel(get(), get()) }
+    viewModel { FilterViewModel(get(), get()) }
 }
