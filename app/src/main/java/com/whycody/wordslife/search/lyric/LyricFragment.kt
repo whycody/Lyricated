@@ -23,17 +23,19 @@ class LyricFragment : BottomSheetDialogFragment() {
     private var lyricId = 0
     private var job: Job? = null
     private var searchWord = ""
+    private lateinit var binding: FragmentLyricBinding
     private val lyricViewModel: LyricViewModel by sharedViewModel()
     private val searchViewModel: SearchViewModel by sharedViewModel()
     private val searchConfigurationDao: SearchConfigurationDao by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding = FragmentLyricBinding.inflate(inflater)
+        binding = FragmentLyricBinding.inflate(inflater)
         lyricId = arguments?.getInt(LYRIC_ID, 0)!!
         binding.lyricHeader.setOnClickListener{ dismiss() }
         checkSavedInstanceState(savedInstanceState)
         observeCurrentLanguages()
+        observeExtendedLyricItem()
         observeSearchWord()
         return binding.root
     }
@@ -74,6 +76,11 @@ class LyricFragment : BottomSheetDialogFragment() {
             lyricViewModel.setLyricLanguages(searchConfigurationDao.getLyricLanguages())
         })
     }
+
+    private fun observeExtendedLyricItem() =
+        lyricViewModel.getCurrentExtendedLyricItem().observe(activity as MainActivity, {
+            binding.lyricId = it.lyricId
+        })
 
     private fun observeSearchWord() = searchViewModel.getSearchWord()
             .observe(activity as MainActivity) {
