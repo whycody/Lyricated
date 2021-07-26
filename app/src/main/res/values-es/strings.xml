@@ -38,4 +38,5 @@
     <string name="only_series">Solo series</string>
     <string name="curses">Maldiciones</string>
     <string name="without_curses">Sin maldiciones</string>
+    <string name="clear">Limpiar</string>
 </resources>

@@ -3,6 +3,7 @@ package com.whycody.wordslife.search.filter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.whycody.wordslife.data.filter.FilterDao
+import com.whycody.wordslife.data.filter.FilterDaoImpl
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.search.sort.recycler.SortItemInteractor
 
@@ -21,6 +22,13 @@ class FilterViewModel(private val filterDao: FilterDao,
             currentFilters.add(sortOptionId)
         } else currentFilters.remove(sortOptionId)
         searchConf.checkedFilters = currentFilters
+        searchConfigurationDao.setSearchConfiguration(searchConf)
+        filterItems.postValue(filterDao.getFilterItems())
+    }
+
+    fun clearFilters() {
+        val searchConf = searchConfigurationDao.getSearchConfiguration()
+        searchConf.checkedFilters = FilterDaoImpl.DEFAULT_FILTERS
         searchConfigurationDao.setSearchConfiguration(searchConf)
         filterItems.postValue(filterDao.getFilterItems())
     }

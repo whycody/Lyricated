@@ -35,5 +35,6 @@ class FilterDaoImpl(private val context: Context,
         const val ONLY_SERIES = "only series"
         const val CURSES = "curses"
         const val WITHOUT_CURSES = "without curses"
+        val DEFAULT_FILTERS = emptyList<String>()
     }
 }

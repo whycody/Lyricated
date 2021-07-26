@@ -29,7 +29,7 @@ data class HistoryItem(
 data class SearchConfiguration(
         var lyricLanguages: LyricLanguages = LyricLanguages(),
         var sortOptionId: String = SortDaoImpl.BEST_MATCH,
-        var checkedFilters: List<String> = listOf(FilterDaoImpl.WITHOUT_CURSES))
+        var checkedFilters: List<String> = FilterDaoImpl.DEFAULT_FILTERS)
 
 data class Translation(
         @Json(name = "text") val translatedPhrase: String? = null,
