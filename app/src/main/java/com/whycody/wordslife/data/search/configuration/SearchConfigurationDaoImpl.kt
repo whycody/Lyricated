@@ -3,9 +3,13 @@ package com.whycody.wordslife.data.search.configuration
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import com.whycody.wordslife.data.ConfigurationItem
 import com.whycody.wordslife.data.LyricLanguages
 import com.whycody.wordslife.data.SharedPreferenceStringLiveData
 import com.whycody.wordslife.data.SearchConfiguration
+import com.whycody.wordslife.data.filter.FilterDao
+import com.whycody.wordslife.data.sort.SortDao
+import com.whycody.wordslife.data.sort.SortDaoImpl
 
 class SearchConfigurationDaoImpl(context: Context): SearchConfigurationDao {
 
@@ -38,5 +42,7 @@ class SearchConfigurationDaoImpl(context: Context): SearchConfigurationDao {
 
     companion object {
         const val SEARCH_CONFIGURATION = "search_configuration"
+        const val SORT_TYPE = "sort type"
+        const val FILTER_TYPE = "filter type"
     }
 }

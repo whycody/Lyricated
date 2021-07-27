@@ -22,6 +22,7 @@ import com.whycody.wordslife.data.sort.SortDaoImpl
 import com.whycody.wordslife.data.translation.TranslationDao
 import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.search.SearchViewModel
+import com.whycody.wordslife.search.configuration.ConfigurationViewModel
 import com.whycody.wordslife.search.filter.FilterViewModel
 import com.whycody.wordslife.search.lyric.LyricViewModel
 import com.whycody.wordslife.search.lyric.movie.MovieViewModel
@@ -78,9 +79,9 @@ val queryModule = module {
 }
 
 val configurationModule = module {
-    single<SearchConfigurationDao> { SearchConfigurationDaoImpl(get()) }
     single<SortDao> { SortDaoImpl(get(), get()) }
     single<FilterDao> { FilterDaoImpl(get(), get()) }
+    single<SearchConfigurationDao> { SearchConfigurationDaoImpl(get()) }
 }
 
 val utilsModule = module {
@@ -99,4 +100,5 @@ val viewModelsModule = module {
     viewModel { TranslationViewModel(get()) }
     viewModel { SortViewModel(get(), get()) }
     viewModel { FilterViewModel(get(), get()) }
+    viewModel { ConfigurationViewModel(get(), get(), get()) }
 }

@@ -8,6 +8,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentSearchContentBinding
+import com.whycody.wordslife.search.configuration.ConfigurationItemsFragment
 import com.whycody.wordslife.search.result.SearchResultFragment
 
 class SearchContentFragment: Fragment(), SearchContentView {
@@ -24,6 +25,7 @@ class SearchContentFragment: Fragment(), SearchContentView {
 
     private fun addFragments() {
         val fragmentTransaction = childFragmentManager.beginTransaction()
+        fragmentTransaction.add(R.id.fragmentsContainer, ConfigurationItemsFragment())
         fragmentTransaction.add(R.id.fragmentsContainer,
             SearchResultFragment.newInstance(SearchResultFragment.MAIN_LYRICS))
         fragmentTransaction.add(R.id.fragmentsContainer,

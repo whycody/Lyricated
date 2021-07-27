@@ -31,6 +31,11 @@ data class SearchConfiguration(
         var sortOptionId: String = SortDaoImpl.BEST_MATCH,
         var checkedFilters: List<String> = FilterDaoImpl.DEFAULT_FILTERS)
 
+data class ConfigurationItem(
+        var name: String,
+        var confId: String,
+        val type: String)
+
 data class Translation(
         @Json(name = "text") val translatedPhrase: String? = null,
         @Json(ignored = true) var numberOfUsages: Int = 0,

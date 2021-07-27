@@ -22,7 +22,8 @@ class FilterFragment : BottomSheetDialogFragment() {
                               container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFilterBinding.inflate(inflater)
         binding.filterHeader.setOnClickListener { dismiss() }
-        searchConfDao.getSearchConfigurationLiveData().observe(requireActivity(), {binding.filtersAreChanged = searchConfDao.getSearchConfiguration().checkedFilters.isNotEmpty()})
+        searchConfDao.getSearchConfigurationLiveData().observe(requireActivity(), {
+            binding.filtersAreChanged = searchConfDao.getSearchConfiguration().checkedFilters.isNotEmpty() })
         binding.clearFiltersBtn.setOnClickListener{ filterViewModel.clearFilters() }
         setupRecycler()
         return binding.root
