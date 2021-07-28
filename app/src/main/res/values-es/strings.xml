@@ -33,9 +33,10 @@
     <string name="length_of_phrase">Longitud de la oración</string>
     <string name="from_the_longest">Desde las más largas</string>
     <string name="from_the_shortest">Desde las más cortas</string>
-    <string name="type">Tipo</string>
+    <string name="source">Fuente</string>
     <string name="only_movies">Solo películas</string>
     <string name="only_series">Solo series</string>
+    <string name="choose_source">Elegir película o serie</string>
     <string name="curses">Maldiciones</string>
     <string name="without_curses">Sin maldiciones</string>
     <string name="clear">Limpiar</string>

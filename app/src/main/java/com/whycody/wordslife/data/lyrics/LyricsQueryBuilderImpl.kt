@@ -17,6 +17,7 @@ class LyricsQueryBuilderImpl(private val searchConfigurationDao: SearchConfigura
         val searchConfig = searchConfigurationDao.getSearchConfiguration()
         val onlySeries = searchConfig.checkedFilters.contains(FilterDaoImpl.ONLY_SERIES)
         val onlyMovies = searchConfig.checkedFilters.contains(FilterDaoImpl.ONLY_MOVIES)
+        val chooseSource = searchConfig.checkedFilters.contains(FilterDaoImpl.CHOOSE_SOURCE)
         val typeOfProductionFilter = onlyMovies || onlySeries
         with(StringBuilder()) {
             if(typeOfProductionFilter) append(getStartOfQueryWithMovies(languages))
@@ -25,6 +26,7 @@ class LyricsQueryBuilderImpl(private val searchConfigurationDao: SearchConfigura
             append(getDefaultConditions(word, languages))
             if(onlySeries) append(getOnlySeriesCondition())
             if(onlyMovies) append(getOnlyMoviesCondition())
+            if(chooseSource) append(getChooseSourceCondition(searchConfig.chosenSource!!))
             append(getDefaultGrouping(languages.mainLangId))
             append(getOrderingQuery(searchConfig, languages))
             if(queryLimit) append(getDefaultLimit())
@@ -47,6 +49,8 @@ class LyricsQueryBuilderImpl(private val searchConfigurationDao: SearchConfigura
     private fun getOnlySeriesCondition() = " AND movies.type = \"serie\""
 
     private fun getOnlyMoviesCondition() = " AND movies.type = \"movie\""
+
+    private fun getChooseSourceCondition(id: String) = " AND lyrics.movie_id = \"$id\""
 
     private fun getDefaultGrouping(mainLangId: String) =
             " GROUP BY LOWER(lyrics.$mainLangId)"

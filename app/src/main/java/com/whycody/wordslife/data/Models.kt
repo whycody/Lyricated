@@ -29,7 +29,8 @@ data class HistoryItem(
 data class SearchConfiguration(
         var lyricLanguages: LyricLanguages = LyricLanguages(),
         var sortOptionId: String = SortDaoImpl.BEST_MATCH,
-        var checkedFilters: List<String> = FilterDaoImpl.DEFAULT_FILTERS)
+        var checkedFilters: List<String> = FilterDaoImpl.DEFAULT_FILTERS,
+        var chosenSource: String? = null)
 
 data class ConfigurationItem(
         var name: String,
@@ -73,6 +74,12 @@ data class MovieItem(
         val type: String,
         val episodeItem: EpisodeItem?,
         val time: String?)
+
+data class MovieListItem(
+        val id: String,
+        val title: String,
+        val allTitles: String,
+        var isChecked: Boolean = false)
 
 data class EpisodeItem(
         val season: Int,

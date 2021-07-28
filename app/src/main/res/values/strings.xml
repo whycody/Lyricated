@@ -33,12 +33,11 @@
     <string name="length_of_phrase">Length of phrase</string>
     <string name="from_the_longest">From the longest</string>
     <string name="from_the_shortest">From the shortest</string>
-    <string name="type">Type</string>
+    <string name="source">Source</string>
     <string name="only_movies">Only movies</string>
     <string name="only_series">Only series</string>
+    <string name="choose_source">Choose movie or serie</string>
     <string name="curses">Curses</string>
     <string name="without_curses">Without curses</string>
     <string name="clear">Clear</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

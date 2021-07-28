@@ -7,6 +7,7 @@ import com.whycody.wordslife.R
 import com.whycody.wordslife.choose.language.ChooseLanguageViewModel
 import com.whycody.wordslife.data.filter.FilterDao
 import com.whycody.wordslife.data.filter.FilterDaoImpl
+import com.whycody.wordslife.data.filter.choose.source.ChooseSourceViewModel
 import com.whycody.wordslife.data.language.ChooseLanguageRepository
 import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.language.LanguageDaoImpl
@@ -80,7 +81,7 @@ val queryModule = module {
 
 val configurationModule = module {
     single<SortDao> { SortDaoImpl(get(), get()) }
-    single<FilterDao> { FilterDaoImpl(get(), get()) }
+    single<FilterDao> { FilterDaoImpl(get(), get(), get()) }
     single<SearchConfigurationDao> { SearchConfigurationDaoImpl(get()) }
 }
 
@@ -101,4 +102,5 @@ val viewModelsModule = module {
     viewModel { SortViewModel(get(), get()) }
     viewModel { FilterViewModel(get(), get()) }
     viewModel { ConfigurationViewModel(get(), get(), get()) }
+    viewModel { ChooseSourceViewModel(get(), get()) }
 }

@@ -3,13 +3,10 @@ package com.whycody.wordslife.data.search.configuration
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.whycody.wordslife.data.ConfigurationItem
 import com.whycody.wordslife.data.LyricLanguages
 import com.whycody.wordslife.data.SharedPreferenceStringLiveData
 import com.whycody.wordslife.data.SearchConfiguration
-import com.whycody.wordslife.data.filter.FilterDao
-import com.whycody.wordslife.data.sort.SortDao
-import com.whycody.wordslife.data.sort.SortDaoImpl
+import com.whycody.wordslife.data.filter.FilterDaoImpl
 
 class SearchConfigurationDaoImpl(context: Context): SearchConfigurationDao {
 
@@ -27,9 +24,15 @@ class SearchConfigurationDaoImpl(context: Context): SearchConfigurationDao {
         SharedPreferenceStringLiveData(sharedPrefs,
             SEARCH_CONFIGURATION, gson.toJson(SearchConfiguration()))
 
-    override fun setSearchConfiguration(searchConfiguration: SearchConfiguration) {
-        prefsEditor.putString(SEARCH_CONFIGURATION, gson.toJson(searchConfiguration))
+    override fun setSearchConfiguration(searchConf: SearchConfiguration) {
+        removeChosenSource(searchConf)
+        prefsEditor.putString(SEARCH_CONFIGURATION, gson.toJson(searchConf))
         prefsEditor.commit()
+    }
+
+    private fun removeChosenSource(searchConf: SearchConfiguration) {
+        if(!searchConf.checkedFilters.contains(FilterDaoImpl.CHOOSE_SOURCE))
+            searchConf.chosenSource = null
     }
 
     override fun setSortingOption(sortOptionId: String) {
