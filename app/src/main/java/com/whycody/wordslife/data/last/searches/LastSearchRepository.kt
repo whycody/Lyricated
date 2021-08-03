@@ -9,6 +9,8 @@ class LastSearchRepository(private val lastSearchDao: LastSearchDao) {
 
     fun flowFourLastSearches() = lastSearchDao.flowFourLastSearches()
 
+    fun flowAllLastSearches() = lastSearchDao.flowAllLastSearches()
+
     fun updateLastSearchSaved(id: Int, saved: Boolean) = lastSearchDao.updateLastSearchSaved(saved, id)
 
     fun refreshTime(id: Int) = lastSearchDao.refreshTime(Calendar.getInstance().timeInMillis, id)

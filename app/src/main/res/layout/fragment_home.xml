@@ -82,9 +82,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="13dp"
-                    android:layout_marginStart="@dimen/app_padding"
-                    android:layout_marginEnd="@dimen/app_padding"
-                    android:background="@drawable/s_search_button"
                     android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
