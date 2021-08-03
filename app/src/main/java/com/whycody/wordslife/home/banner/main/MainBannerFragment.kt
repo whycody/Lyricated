@@ -7,24 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import com.whycody.wordslife.R
-import com.whycody.wordslife.databinding.FragmentMainBannerBinding
+import com.whycody.wordslife.databinding.FragmentMainBinding
 
 class MainBannerFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding = FragmentMainBannerBinding.inflate(inflater)
-        startAnimations(binding)
+        val binding = FragmentMainBinding.inflate(inflater)
+        val pulseAnim = AnimationUtils.loadAnimation(context, R.anim.pulse_anim)
+        binding.astronautIllustration.startAnimation(pulseAnim)
         return binding.root
-    }
-
-    private fun startAnimations(binding: FragmentMainBannerBinding) {
-        val context = activity?.applicationContext
-        with(binding) {
-            bannerStarsOne.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_one))
-            bannerStarsTwo.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_two))
-            bannerStarsThree.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_three))
-            bannerStarsFour.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_stars_four))
-        }
     }
 }

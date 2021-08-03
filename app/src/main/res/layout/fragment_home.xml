@@ -27,9 +27,9 @@
 
             <fragment
                 android:id="@+id/lyricatedBannerFragment"
-                android:name="com.whycody.wordslife.home.banner.lyricated.LyricatedBannerFragment"
+                android:name="com.whycody.wordslife.home.banner.main.MainBannerFragment"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+                android:layout_height="wrap_content"/>
 
             <fragment
                 android:id="@+id/currentLanguageFragment"
