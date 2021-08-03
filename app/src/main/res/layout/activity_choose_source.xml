@@ -1,15 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".data.filter.choose.source.ChooseSourceActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/movieRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/searchAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSecondary"
+            app:elevation="0dp">
 
-</LinearLayout>
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlways|snap">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="53dp"
+                    android:background="@drawable/s_search_button"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginHorizontal="@dimen/app_padding"
+                    tools:context=".search.field.SearchFieldFragment">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_search"
+                        android:alpha="0.6"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="4dp"
+                        android:background="@android:color/transparent"/>
+
+                    <EditText
+                        android:id="@+id/searchMovieInput"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/search"
+                        android:imeOptions="actionSearch"
+                        android:background="@android:color/transparent"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="15dp"
+                        android:maxLength="200"
+                        android:inputType="text"
+                        android:textSize="16sp"
+                        android:maxLines="1" />
+
+                    <ImageButton
+                        android:id="@+id/clearBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_clear"
+                        android:visibility="invisible"
+                        android:alpha="0.6"
+                        android:paddingEnd="16dp"
+                        android:paddingStart="4dp"
+                        android:background="@android:color/transparent"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movieRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            app:layout_anchor="@id/searchAppBar"
+            app:layout_anchorGravity="bottom"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

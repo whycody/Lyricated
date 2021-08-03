@@ -2,24 +2,44 @@ package com.whycody.wordslife.data.filter.choose.source
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ImageView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.filter.choose.source.recycler.MovieListItemAdapter
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
+import com.whycody.wordslife.databinding.ActivityChooseSourceBinding
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ChooseSourceActivity : AppCompatActivity() {
+class ChooseSourceActivity : AppCompatActivity(), TextWatcher {
 
     private val searchConfDao: SearchConfigurationDao by inject()
     private val chooseSourceViewModel: ChooseSourceViewModel by viewModel()
+    private lateinit var binding: ActivityChooseSourceBinding
     private var lastSearchConf = searchConfDao.getSearchConfiguration()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_choose_source)
-        setupRecycler(findViewById(R.id.movieRecycler))
+        binding = ActivityChooseSourceBinding.inflate(layoutInflater)
+        setupRecycler(binding.movieRecycler)
+        binding.searchMovieInput.addTextChangedListener(this)
+        binding.clearBtn.setOnClickListener{ binding.searchMovieInput.setText("") }
         observeSearchConf()
+        setContentView(binding.root)
+    }
+
+    override fun onBackPressed() {
+        if((binding.movieRecycler.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() != 0) {
+            binding.searchAppBar.setExpanded(true)
+            binding.movieRecycler.smoothScrollToPosition(0)
+        } else finish()
     }
 
     private fun setupRecycler(recycler: RecyclerView) {
@@ -40,4 +60,13 @@ class ChooseSourceActivity : AppCompatActivity() {
             lastSearchConf = currentSearchConf
         })
     }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        chooseSourceViewModel.searchTextChanged(s!!.toString())
+        binding.clearBtn.visibility = if(s.isNullOrEmpty()) View.INVISIBLE else View.VISIBLE
+    }
+
+    override fun afterTextChanged(s: Editable?) { }
 }

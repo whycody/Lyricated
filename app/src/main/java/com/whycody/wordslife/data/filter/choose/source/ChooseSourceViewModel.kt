@@ -1,5 +1,6 @@
 package com.whycody.wordslife.data.filter.choose.source
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.whycody.wordslife.data.Movie
@@ -16,6 +17,15 @@ class ChooseSourceViewModel(private val movieDao: MovieDao,
 
     fun getMovieListItems() = movieListItems
 
+    fun searchTextChanged(newText: String?) {
+        if(!newText.isNullOrEmpty())
+            movieListItems.postValue(getMovieListItemsFromDao().filter {
+                Log.d("MOJTAG", it.allTitles)
+                it.allTitles.contains(newText.lowercase())
+            })
+        else movieListItems.postValue(getMovieListItemsFromDao())
+    }
+
     private fun getMovieListItemsFromDao(): List<MovieListItem> {
         val currentSearchConf = searchConfDao.getSearchConfiguration()
         return movieDao.getAllMovies().map { MovieListItem(
@@ -27,8 +37,8 @@ class ChooseSourceViewModel(private val movieDao: MovieDao,
     }
 
     private fun getAllTitlesFromMovie(movie: Movie): String {
-        val allTitles = with(movie) { "$eng $esp $fr $ger $it $pl $pt" }
-        allTitles.replace("null", "")
+        var allTitles = with(movie) { "$eng $esp $fr $ger $it $pl $pt" }
+        allTitles = allTitles.replace("null", "").lowercase()
         return allTitles
     }
 
