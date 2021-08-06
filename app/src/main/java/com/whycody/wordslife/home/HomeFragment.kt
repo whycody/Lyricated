@@ -1,12 +1,19 @@
 package com.whycody.wordslife.home
 
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.text.color
 import androidx.fragment.app.Fragment
 import com.whycody.wordslife.MainActivity
 import com.whycody.wordslife.MainNavigation
+import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentHomeBinding
 import com.whycody.wordslife.home.history.HistoryAdapter
 import com.whycody.wordslife.search.SearchFragment
@@ -22,10 +29,22 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val binding = FragmentHomeBinding.inflate(inflater)
+        binding.headerText.text = getHeaderTextStringSpannable()
         observeSearchWord()
         observeClickedWord()
         setupRecycler(binding)
         return binding.root
+    }
+
+    private fun getHeaderTextStringSpannable(): SpannableStringBuilder {
+        val prevWords = getString(R.string.previous_words)
+        val prev = getString(R.string.previous)
+        val spanBuilder = SpannableStringBuilder(prevWords)
+        val indexStart = prevWords.indexOf(prev)
+        val indexEnd = indexStart + prev.length
+        spanBuilder.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.light_blue)),
+            indexStart, indexEnd, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+        return spanBuilder
     }
 
     private fun observeSearchWord() = searchViewModel.getSearchWord()

@@ -9,6 +9,7 @@
     <string name="french">french</string>
     <string name="search">Search</string>
     <string name="previous_words">Back to previous words</string>
+    <string name="previous">previous</string>
     <string name="choose_main_language">Choose language that you\'re learning</string>
     <string name="choose_translation_language">Choose translation language</string>
     <string name="show_more_results">Show more results</string>
