@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.whycody.wordslife.MainActivity
+import com.whycody.wordslife.main.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.SearchConfiguration
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao

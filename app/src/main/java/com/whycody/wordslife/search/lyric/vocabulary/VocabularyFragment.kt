@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import com.whycody.wordslife.MainActivity
+import com.whycody.wordslife.main.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentVocabularyBinding
 import com.whycody.wordslife.search.SearchViewModel

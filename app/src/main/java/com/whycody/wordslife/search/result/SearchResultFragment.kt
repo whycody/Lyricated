@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.whycody.wordslife.MainActivity
+import com.whycody.wordslife.main.MainActivity
 import com.whycody.wordslife.data.LyricItem
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.databinding.FragmentSearchResultBinding

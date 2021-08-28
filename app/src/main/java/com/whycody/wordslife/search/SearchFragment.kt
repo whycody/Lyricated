@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.google.android.material.appbar.AppBarLayout
 import com.whycody.wordslife.IOnBackPressed
-import com.whycody.wordslife.MainActivity
+import com.whycody.wordslife.main.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentSearchBinding
 import com.whycody.wordslife.search.lyric.LyricFragment

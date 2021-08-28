@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.whycody.wordslife.MainActivity
+import com.whycody.wordslife.main.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentLyricTranslationBinding
 import com.whycody.wordslife.search.lyric.LyricViewModel

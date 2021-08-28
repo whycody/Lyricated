@@ -41,4 +41,5 @@
     <string name="curses">Curses</string>
     <string name="without_curses">Without curses</string>
     <string name="clear">Clear</string>
+    <string name="library">Library</string>
 </resources>

@@ -1,10 +1,11 @@
-package com.whycody.wordslife
+package com.whycody.wordslife.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import com.whycody.wordslife.home.HomeFragment
+import com.whycody.wordslife.IOnBackPressed
+import com.whycody.wordslife.R
 import com.whycody.wordslife.search.SearchFragment
 
 class MainActivity : AppCompatActivity(), MainNavigation {
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity(), MainNavigation {
     private fun showHomeFragment() {
         supportFragmentManager
                 .beginTransaction()
-                .add(R.id.container, HomeFragment())
+                .add(R.id.container, MainFragment())
                 .commit()
     }
 

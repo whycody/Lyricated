@@ -1,4 +1,4 @@
-package com.whycody.wordslife
+package com.whycody.wordslife.main
 
 import androidx.fragment.app.Fragment
 

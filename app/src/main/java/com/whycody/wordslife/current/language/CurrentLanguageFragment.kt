@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import com.whycody.wordslife.MainActivity
+import com.whycody.wordslife.main.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.choose.language.ChooseLanguageFragment
 import com.whycody.wordslife.data.language.LanguageDao
