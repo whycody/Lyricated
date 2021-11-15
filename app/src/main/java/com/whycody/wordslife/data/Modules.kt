@@ -12,6 +12,8 @@ import com.whycody.wordslife.data.language.ChooseLanguageRepository
 import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.data.last.searches.LastSearchRepository
+import com.whycody.wordslife.data.library.LibraryDao
+import com.whycody.wordslife.data.library.LibraryDaoImpl
 import com.whycody.wordslife.data.lyrics.LyricsQueryBuilder
 import com.whycody.wordslife.data.lyrics.LyricsQueryBuilderImpl
 import com.whycody.wordslife.data.lyrics.LyricsRepository
@@ -22,6 +24,7 @@ import com.whycody.wordslife.data.sort.SortDao
 import com.whycody.wordslife.data.sort.SortDaoImpl
 import com.whycody.wordslife.data.translation.TranslationDao
 import com.whycody.wordslife.home.HomeViewModel
+import com.whycody.wordslife.library.LibraryViewModel
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.configuration.ConfigurationViewModel
 import com.whycody.wordslife.search.filter.FilterViewModel
@@ -74,6 +77,10 @@ val languageModule = module {
     single<LanguageDao> { LanguageDaoImpl(get(), get()) }
 }
 
+val libraryModule = module {
+    single<LibraryDao> { LibraryDaoImpl(get()) }
+}
+
 val queryModule = module {
     single<LyricsQueryBuilder> { LyricsQueryBuilderImpl(get()) }
     single { TranslationDao(get()) }
@@ -103,4 +110,5 @@ val viewModelsModule = module {
     viewModel { FilterViewModel(get(), get()) }
     viewModel { ConfigurationViewModel(get(), get(), get()) }
     viewModel { ChooseSourceViewModel(get(), get()) }
+    viewModel { LibraryViewModel(get()) }
 }

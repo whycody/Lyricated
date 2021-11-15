@@ -42,4 +42,12 @@
     <string name="without_curses">Bez przekleństw</string>
     <string name="clear">Wyczyść</string>
     <string name="library">Biblioteka</string>
+    <string name="history">Historia</string>
+    <string name="history_desc">Wróć do wcześniej wyszukiwanych wyrażeń</string>
+    <string name="saved">Zapisane</string>
+    <string name="saved_desc">Wróć do zapisanych wyszukiwań</string>
+    <string name="study_mode">Nauka</string>
+    <string name="study_mode_desc">Przypomnij sobie wyszukiwane słówka</string>
+    <string name="settings">Ustawienia</string>
+    <string name="settings_desc">Dopasuj aplikację do twoich preferencji</string>
 </resources>

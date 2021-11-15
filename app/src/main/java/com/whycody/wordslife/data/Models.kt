@@ -37,6 +37,11 @@ data class ConfigurationItem(
         var confId: String,
         val type: String)
 
+data class LibraryItem(
+        val id: String,
+        val title: String,
+        val desc: String)
+
 data class Translation(
         @Json(name = "text") val translatedPhrase: String? = null,
         @Json(ignored = true) var numberOfUsages: Int = 0,

@@ -42,4 +42,12 @@
     <string name="without_curses">Sin maldiciones</string>
     <string name="clear">Limpiar</string>
     <string name="library">Biblioteca</string>
+    <string name="history">Historia</string>
+    <string name="history_desc">Volver a las frases buscadas anteriores</string>
+    <string name="saved">Guardados</string>
+    <string name="saved_desc">Volver a las frases guardadas</string>
+    <string name="study_mode">Estudio</string>
+    <string name="study_mode_desc">Recordarse frases que buscaste antes</string>
+    <string name="settings">Ajustes</string>
+    <string name="settings_desc">Ajusta nuestra aplicación a tus preferencias</string>
 </resources>

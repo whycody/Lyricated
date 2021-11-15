@@ -42,4 +42,12 @@
     <string name="without_curses">Without curses</string>
     <string name="clear">Clear</string>
     <string name="library">Library</string>
+    <string name="history">History</string>
+    <string name="history_desc">Back to previous searched phrases</string>
+    <string name="saved">Saved</string>
+    <string name="saved_desc">Back to saved searches</string>
+    <string name="study_mode">Study mode</string>
+    <string name="study_mode_desc">Remember phrases you\'ve searched for before</string>
+    <string name="settings">Settings</string>
+    <string name="settings_desc">Adjust our app to your preferences</string>
 </resources>

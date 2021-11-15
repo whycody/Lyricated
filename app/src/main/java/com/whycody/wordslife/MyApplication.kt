@@ -11,7 +11,7 @@ class MyApplication: Application() {
         super.onCreate()
         GlobalContext.startKoin {
             androidContext(this@MyApplication)
-            modules(dataModule, repositoryModule, languageModule, queryModule,
+            modules(dataModule, repositoryModule, languageModule, libraryModule, queryModule,
                 configurationModule, utilsModule, viewModelsModule)
         }
     }

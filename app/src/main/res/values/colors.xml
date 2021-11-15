@@ -18,4 +18,5 @@
     <color name="astronaut_red">#C52A2A</color>
     <color name="astronaut_blue">#33aef1</color>
     <color name="astronaut_yellow">#ffce00</color>
+    <color name="blue_alpha">#E1E7FF</color>
 </resources>

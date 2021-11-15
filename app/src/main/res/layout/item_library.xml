@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="libraryInteractor"
+            type="com.whycody.wordslife.library.recycler.LibraryInteractor" />
+        <variable
+            name="libraryItem"
+            type="com.whycody.wordslife.data.LibraryItem" />
+        <variable
+            name="position"
+            type="int" />
+    </data>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="25dp"
+    android:onClick="@{()->libraryInteractor.libraryItemClicked(libraryItem.id)}"
+    android:background="@{position%2 == 0 ? @color/white : @color/gray}">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingStart="@dimen/app_padding"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{libraryItem.title}"
+            android:textColor="@color/header_gray"
+            android:textStyle="bold"
+            android:paddingBottom="3dp"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="@{libraryItem.desc}"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/ic_light_arrowright"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="20dp"/>
+
+</LinearLayout>
+
+</layout>
