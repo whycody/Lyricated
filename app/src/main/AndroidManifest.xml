@@ -12,8 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WordsLife">
-        <activity android:name=".data.filter.choose.source.ChooseSourceActivity"></activity>
-        <activity android:name=".main.MainActivity">
+        <activity
+            android:name=".data.filter.choose.source.ChooseSourceActivity"
+            android:exported="false">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".main.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

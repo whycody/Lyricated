@@ -49,5 +49,6 @@
     <string name="study_mode">Nauka</string>
     <string name="study_mode_desc">Przypomnij sobie wyszukiwane słówka</string>
     <string name="settings">Ustawienia</string>
-    <string name="settings_desc">Dopasuj aplikację do twoich preferencji</string>
+    <string name="settings_desc">Dopasuj aplikację do swoich preferencji</string>
+    <string name="latest_movie">W Lyricated znajdziesz napisy z:</string>
 </resources>

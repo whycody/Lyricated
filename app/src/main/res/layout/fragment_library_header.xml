@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="movie"
+            type="java.lang.String" />
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray"
+        android:paddingHorizontal="@dimen/app_padding"
+        android:paddingVertical="60dp"
+        tools:context=".library.most.viewed.LibraryHeaderFragment"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/latest_movie"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/movieView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{movie}"
+            android:textColor="?attr/colorPrimary"
+            android:textStyle="bold"
+            android:textSize="23sp"
+            android:maxLines="1" />
+
+    </LinearLayout>
+
+</layout>

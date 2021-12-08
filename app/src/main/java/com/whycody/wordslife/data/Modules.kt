@@ -25,6 +25,7 @@ import com.whycody.wordslife.data.sort.SortDaoImpl
 import com.whycody.wordslife.data.translation.TranslationDao
 import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.library.LibraryViewModel
+import com.whycody.wordslife.library.most.viewed.MostViewedViewModel
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.configuration.ConfigurationViewModel
 import com.whycody.wordslife.search.filter.FilterViewModel
@@ -111,4 +112,5 @@ val viewModelsModule = module {
     viewModel { ConfigurationViewModel(get(), get(), get()) }
     viewModel { ChooseSourceViewModel(get(), get()) }
     viewModel { LibraryViewModel(get()) }
+    viewModel { MostViewedViewModel(get()) }
 }
