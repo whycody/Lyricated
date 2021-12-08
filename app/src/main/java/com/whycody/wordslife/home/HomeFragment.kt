@@ -29,6 +29,7 @@ class HomeFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
         val binding = FragmentHomeBinding.inflate(inflater)
         binding.headerText.text = getHeaderTextStringSpannable()
+        homeViewModel.loadHistoryItems()
         setupRecycler(binding)
         return binding.root
     }

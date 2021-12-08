@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.whycody.wordslife.data.HistoryItem
 import com.whycody.wordslife.data.LastSearch
-import com.whycody.wordslife.data.language.ChooseLanguageRepository
 import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.last.searches.LastSearchRepository
 import kotlinx.coroutines.flow.Flow
@@ -14,18 +13,24 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
-                    private val chooseLanguageRepository: ChooseLanguageRepository,
                     private val languageDao: LanguageDao):
         ViewModel(), HistoryInteractor {
 
-    private val historyItemsFlow = lastSearchRepository.flowFourLastSearches()
+    private lateinit var historyItemsFlow: Flow<List<LastSearch>>
     private val historyItems = MutableLiveData<List<HistoryItem>>()
     private val clickedWord = MutableLiveData<String>()
 
-    init {
+    fun loadHistoryItems(all: Boolean = false, onlySaved: Boolean = false) {
+        setHistoryItemsFlowValue(all, onlySaved)
         viewModelScope.launch {
             collectHistoryItems()
         }
+    }
+
+    private fun setHistoryItemsFlowValue(all: Boolean, onlySaved: Boolean) {
+        historyItemsFlow = if(!all) lastSearchRepository.flowFourLastSearches()
+        else if(!onlySaved) lastSearchRepository.flowAllLastSearches()
+        else lastSearchRepository.flowAllSavedLastSearches()
     }
 
     private suspend fun collectHistoryItems() = flowHistoryItems().collect {
@@ -55,10 +60,8 @@ class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
         postNewValues(lastSearch)
     }
 
-    private fun updateCurrentLanguages(lastSearch: LastSearch) {
-        chooseLanguageRepository.setCurrentMainLanguage(lastSearch.mainLanguageId)
-        chooseLanguageRepository.setCurrentTranslationLanguage(lastSearch.translationLanguageId)
-    }
+    private fun updateCurrentLanguages(lastSearch: LastSearch) =
+        languageDao.setCurrentLanguages(lastSearch.mainLanguageId, lastSearch.translationLanguageId)
 
     private fun postNewValues(lastSearch: LastSearch) = clickedWord.postValue(lastSearch.text)
 

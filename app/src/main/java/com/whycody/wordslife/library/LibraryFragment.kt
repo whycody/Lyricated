@@ -5,11 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.whycody.wordslife.data.library.LibraryDaoImpl
 import com.whycody.wordslife.databinding.FragmentLibraryBinding
+import com.whycody.wordslife.library.history.HistoryFragment
 import com.whycody.wordslife.library.recycler.LibraryAdapter
+import com.whycody.wordslife.library.recycler.LibraryInteractor
+import com.whycody.wordslife.main.MainNavigation
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class LibraryFragment : Fragment() {
+class LibraryFragment : Fragment(), LibraryInteractor {
 
     private lateinit var binding: FragmentLibraryBinding
     private val libraryViewModel: LibraryViewModel by viewModel()
@@ -22,7 +26,7 @@ class LibraryFragment : Fragment() {
     }
 
     private fun setupRecycler() {
-        val adapter = LibraryAdapter(libraryViewModel)
+        val adapter = LibraryAdapter(this)
         binding.libraryRecycler.adapter = adapter
         observeLibraryItems(adapter)
     }
@@ -30,4 +34,10 @@ class LibraryFragment : Fragment() {
     private fun observeLibraryItems(adapter: LibraryAdapter) =
         libraryViewModel.getLibraryItems().observe(requireActivity(), { adapter.submitList(it) })
 
+    override fun libraryItemClicked(libraryItemId: String) {
+        when(libraryItemId) {
+            LibraryDaoImpl.HISTORY -> (activity as MainNavigation).navigateTo(HistoryFragment.newInstance(false))
+            LibraryDaoImpl.SAVED -> (activity as MainNavigation).navigateTo(HistoryFragment.newInstance(true))
+        }
+    }
 }

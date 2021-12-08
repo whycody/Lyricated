@@ -21,6 +21,9 @@ interface LastSearchDao {
     @Query("SELECT * FROM last_searches ORDER BY time DESC")
     fun flowAllLastSearches(): Flow<List<LastSearch>>
 
+    @Query("SELECT * FROM last_searches WHERE saved=1 ORDER BY time DESC")
+    fun flowAllSavedLastSearches(): Flow<List<LastSearch>>
+
     @Query("UPDATE last_searches SET saved = :saved WHERE id = :id")
     fun updateLastSearchSaved(saved: Boolean, id: Int)
 

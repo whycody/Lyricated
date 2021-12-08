@@ -26,7 +26,7 @@ class LibraryAdapter(private val libraryInteractor: LibraryInteractor):
     inner class LibraryHolder(private val binding: ViewDataBinding): RecyclerView.ViewHolder(binding.root) {
         fun setupData(libraryItem: LibraryItem) {
             binding.setVariable(BR.libraryItem, libraryItem)
-            binding.setVariable(BR.interactor, libraryInteractor)
+            binding.setVariable(BR.libraryInteractor, libraryInteractor)
             binding.setVariable(BR.position, layoutPosition)
             binding.executePendingBindings()
         }
