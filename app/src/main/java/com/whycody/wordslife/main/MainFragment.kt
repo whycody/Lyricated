@@ -37,12 +37,12 @@ class MainFragment : Fragment(), NavigationBarView.OnItemSelectedListener {
         val fragManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragManager.beginTransaction()
         val curFrag = fragManager.primaryNavigationFragment
-        if(curFrag != null) fragmentTransaction.detach(curFrag)
+        if(curFrag != null) fragmentTransaction.hide(curFrag)
         var frag = fragManager.findFragmentByTag(menuId.toString())
         if(frag == null) {
             frag = if(menuId == R.id.search) homeFragment else libraryFragment
             fragmentTransaction.add(R.id.mainFrameLayout, frag, menuId.toString())
-        } else fragmentTransaction.attach(frag)
+        } else fragmentTransaction.show(frag)
 
         fragmentTransaction.setPrimaryNavigationFragment(frag)
         fragmentTransaction.setReorderingAllowed(true)

@@ -54,11 +54,11 @@ class FilterDaoImpl(private val context: Context,
 
     companion object {
         const val TYPE = "type"
-        const val ONLY_MOVIES = "only movies"
-        const val ONLY_SERIES = "only series"
-        const val CHOOSE_SOURCE = "choose source"
+        const val ONLY_MOVIES = "only_movies"
+        const val ONLY_SERIES = "only_series"
+        const val CHOOSE_SOURCE = "choose_source"
         const val CURSES = "curses"
-        const val WITHOUT_CURSES = "without curses"
+        const val WITHOUT_CURSES = "without_curses"
         val DEFAULT_FILTERS = emptyList<String>()
     }
 }
