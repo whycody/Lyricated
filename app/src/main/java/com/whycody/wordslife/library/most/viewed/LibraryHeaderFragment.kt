@@ -18,7 +18,7 @@ class LibraryHeaderFragment : Fragment() {
 
     private lateinit var binding: FragmentLibraryHeaderBinding
     private lateinit var movieAnim: Animation
-    private val viewModel: MostViewedViewModel by viewModel()
+    private val viewModel: LibraryHeaderViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -28,16 +28,13 @@ class LibraryHeaderFragment : Fragment() {
         return binding.root
     }
 
-    private fun observeMovie() {
-        viewModel.latestMovie.observe(requireActivity(), { updateMovie(it.eng!!) })
-    }
+    private fun observeMovie() =
+        viewModel.latestMovie.observe(requireActivity(), { updateMovie(it.en!!) })
 
     private fun updateMovie(movie: String) {
         MainScope().launch {
-            if(binding.movie != null) {
-                binding.movieView.startAnimation(movieAnim)
-                delay(400)
-            }
+            binding.movieView.startAnimation(movieAnim)
+            delay(400)
             binding.movie = movie
         }
     }

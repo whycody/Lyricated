@@ -1,12 +1,13 @@
 package com.whycody.wordslife.data
 
 import android.app.Application
-import android.content.res.Configuration
-import android.util.Log
-import androidx.core.content.ContextCompat
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import androidx.room.Room
-import com.whycody.wordslife.R
 import com.whycody.wordslife.choose.language.ChooseLanguageViewModel
+import com.whycody.wordslife.data.api.ApiService
+import com.whycody.wordslife.data.api.BASE_URL
 import com.whycody.wordslife.data.filter.FilterDao
 import com.whycody.wordslife.data.filter.FilterDaoImpl
 import com.whycody.wordslife.data.filter.choose.source.ChooseSourceViewModel
@@ -27,7 +28,7 @@ import com.whycody.wordslife.data.sort.SortDaoImpl
 import com.whycody.wordslife.data.translation.TranslationDao
 import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.library.LibraryViewModel
-import com.whycody.wordslife.library.most.viewed.MostViewedViewModel
+import com.whycody.wordslife.library.most.viewed.LibraryHeaderViewModel
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.configuration.ConfigurationViewModel
 import com.whycody.wordslife.search.filter.FilterViewModel
@@ -40,10 +41,14 @@ import com.whycody.wordslife.search.result.span.builder.SearchResultSpanBuilder
 import com.whycody.wordslife.search.result.span.builder.SearchResultSpanBuilderImpl
 import com.whycody.wordslife.search.sort.SortViewModel
 import com.whycody.wordslife.search.translation.TranslationViewModel
+import okhttp3.Cache
+import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 val dataModule = module {
 
@@ -67,6 +72,49 @@ val dataModule = module {
     single { provideLyricsDao(get()) }
     single { provideMovieDao(get()) }
     single { provideEpisodeDao(get()) }
+}
+
+val retrofitModule = module {
+
+    single<Retrofit> {
+        return@single Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(getOkHttpClient(androidContext()))
+            .build()
+    }
+
+    single<ApiService> {
+        get<Retrofit>().create(ApiService::class.java)
+    }
+}
+
+private fun getOkHttpClient(context: Context) =
+    OkHttpClient.Builder()
+        .cache(getCache(context))
+        .addInterceptor { chain ->
+            var request = chain.request()
+            request =
+                if (hasNetwork(context))
+                    request.newBuilder().header("Cache-Control",
+                        "public, max-age= 5").build()
+                else request.newBuilder().header("Cache-Control",
+                    "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7).build()
+            chain.proceed(request)
+        }.build()
+
+private fun getCache(context: Context): Cache {
+    val cacheSize = (5 * 1024 * 1024).toLong()
+    return Cache(context.cacheDir, cacheSize)
+}
+
+private fun hasNetwork(context: Context): Boolean {
+    var isConnected = false
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+    if(activeNetwork != null && activeNetwork.isConnected)
+        isConnected = true
+    return isConnected
 }
 
 val repositoryModule = module {
@@ -114,5 +162,5 @@ val viewModelsModule = module {
     viewModel { ConfigurationViewModel(get(), get(), get()) }
     viewModel { ChooseSourceViewModel(get(), get()) }
     viewModel { LibraryViewModel(get()) }
-    viewModel { MostViewedViewModel(get()) }
+    viewModel { LibraryHeaderViewModel(get()) }
 }

@@ -5,13 +5,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.AppBarLayout
-import com.whycody.wordslife.R
 import com.whycody.wordslife.data.filter.choose.source.recycler.MovieListItemAdapter
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.databinding.ActivityChooseSourceBinding
@@ -36,7 +31,7 @@ class ChooseSourceActivity : AppCompatActivity(), TextWatcher {
     }
 
     override fun onBackPressed() {
-        if((binding.movieRecycler.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() != 0) {
+        if((binding.movieRecycler.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() > 0) {
             binding.searchAppBar.setExpanded(true)
             binding.movieRecycler.smoothScrollToPosition(0)
         } else finish()

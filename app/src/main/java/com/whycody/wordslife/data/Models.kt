@@ -145,6 +145,24 @@ data class Movie(
         val it: String?,
         val pt: String?)
 
+data class MoviesResponse(
+        val movies: List<MovieApi>
+)
+
+data class MovieApi(
+        val id: String,
+        val original_lang: String,
+        val type: String,
+        val minutes: Int,
+        val en: String?,
+        val pl: String?,
+        val esp: String?,
+        val fr: String?,
+        val ger: String?,
+        val it: String?,
+        val pt: String?
+)
+
 @Entity(tableName = "episodes")
 data class Episode(
         @ColumnInfo(name = "episode_id") @PrimaryKey val episodeId: Int,
