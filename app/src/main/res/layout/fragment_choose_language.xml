@@ -28,7 +28,7 @@
                 android:id="@+id/dot"
                 android:layout_width="6dp"
                 android:layout_height="0dp"
-                android:background="?attr/colorPrimary"
+                android:background="?attr/colorAccent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/headerText"
                 app:layout_constraintBottom_toBottomOf="@id/headerText" />

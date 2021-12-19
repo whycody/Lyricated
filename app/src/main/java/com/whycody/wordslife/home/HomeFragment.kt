@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,7 +47,9 @@ class HomeFragment : Fragment() {
         val spanBuilder = SpannableStringBuilder(prevWords)
         val indexStart = prevWords.indexOf(prev)
         val indexEnd = indexStart + prev.length
-        spanBuilder.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.light_blue)),
+        val typedValue = TypedValue()
+        requireContext().theme.resolveAttribute(R.attr.colorPrimary, typedValue, true)
+        spanBuilder.setSpan(ForegroundColorSpan(typedValue.data),
             indexStart, indexEnd, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         return spanBuilder
     }

@@ -19,7 +19,7 @@
     android:layout_height="wrap_content"
     android:paddingVertical="25dp"
     android:onClick="@{()->libraryInteractor.libraryItemClicked(libraryItem.id)}"
-    android:background="@{position%2 == 0 ? @color/white : @color/gray}">
+    android:background="@{position%2 == 0 ? @color/background_gray : @color/gray}">
 
     <LinearLayout
         android:layout_width="0dp"

@@ -17,7 +17,7 @@
         android:layout_height="50dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         app:menu="@menu/bottom_tabs_menu"
-        android:background="@color/gray"
+        android:background="?attr/colorSecondaryVariant"
         app:itemIconSize="25dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -12,7 +12,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray"
+        android:background="?attr/colorSecondaryVariant"
         android:paddingHorizontal="@dimen/app_padding"
         android:paddingVertical="60dp"
         tools:context=".library.most.viewed.LibraryHeaderFragment"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{movie}"
-            android:textColor="?attr/colorPrimary"
+            android:textColor="?attr/colorAccent"
             android:textStyle="bold"
             android:textSize="23sp"
             android:maxLines="1" />

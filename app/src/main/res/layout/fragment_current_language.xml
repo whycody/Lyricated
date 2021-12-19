@@ -29,7 +29,8 @@
             <TextView
                 style="@style/LanguageTextStyle"
                 android:text="@{mainLanguage.name}"
-                android:paddingStart="10dp"/>
+                android:paddingStart="10dp"
+                android:textColor="?attr/colorPrimaryVariant"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -73,7 +74,8 @@
             <TextView
                 style="@style/LanguageTextStyle"
                 android:text="@{translationLanguage.name}"
-                android:paddingEnd="10dp"/>
+                android:paddingEnd="10dp"
+                android:textColor="?attr/colorPrimaryVariant"/>
 
         </LinearLayout>
 

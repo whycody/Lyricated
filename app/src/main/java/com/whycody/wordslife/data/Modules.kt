@@ -1,6 +1,8 @@
 package com.whycody.wordslife.data
 
 import android.app.Application
+import android.content.res.Configuration
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.room.Room
 import com.whycody.wordslife.R
@@ -94,7 +96,7 @@ val configurationModule = module {
 }
 
 val utilsModule = module {
-    single<SearchResultSpanBuilder> { SearchResultSpanBuilderImpl(ContextCompat.getColor(androidContext(), R.color.light_yellow)) }
+    single<SearchResultSpanBuilder> { SearchResultSpanBuilderImpl(get()) }
 }
 
 val viewModelsModule = module {

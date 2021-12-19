@@ -80,7 +80,7 @@
                             android:text="@string/filter"
                             android:textStyle="bold"
                             android:textSize="15sp"
-                            android:textColor="@color/light_blue"/>
+                            android:textColor="?attr/colorAccent"/>
 
                     </LinearLayout>
 
@@ -109,7 +109,7 @@
                             android:text="@string/sort"
                             android:textStyle="bold"
                             android:textSize="15sp"
-                            android:textColor="@color/light_blue"/>
+                            android:textColor="?attr/colorAccent"/>
 
                     </LinearLayout>
 
@@ -125,7 +125,7 @@
         android:id="@+id/downCornersContentFragment"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="@color/gray"
+        android:background="?attr/colorSecondaryVariant"
         app:layout_anchor="@id/fragmentsContainer"
         app:layout_anchorGravity="bottom"/>
 
@@ -133,7 +133,7 @@
         android:id="@+id/fragmentsContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="@color/gray"
+        app:cardBackgroundColor="?attr/colorSecondaryVariant"
         app:cardCornerRadius="30dp"
         app:cardElevation="0dp"
         app:layout_anchor="@+id/searchAppBar"

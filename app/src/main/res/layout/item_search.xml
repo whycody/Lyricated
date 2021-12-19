@@ -121,7 +121,7 @@
             android:clickable="@{!viewModel.searching}"
             android:onClick="@{()->viewModel.showMoreResultsClicked()}"
             android:visibility="@{viewModel.thereAreMoreResults &amp;&amp; !viewModel.resultsHidden &amp;&amp;position==(viewModel.lyricItems.size()-1) ? View.VISIBLE : View.GONE}"
-            android:textColor="?attr/colorPrimary"
+            android:textColor="?attr/colorAccent"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

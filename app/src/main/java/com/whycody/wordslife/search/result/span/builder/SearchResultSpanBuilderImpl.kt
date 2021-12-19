@@ -1,14 +1,20 @@
 package com.whycody.wordslife.search.result.span.builder
 
+import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.BackgroundColorSpan
 import android.text.style.StyleSpan
+import androidx.core.content.ContextCompat
+import com.whycody.wordslife.R
 import com.whycody.wordslife.data.LyricItem
 import com.whycody.wordslife.data.Translation
+import org.koin.android.ext.koin.androidContext
 
-class SearchResultSpanBuilderImpl(private val color: Int): SearchResultSpanBuilder {
+class SearchResultSpanBuilderImpl(private val context: Context): SearchResultSpanBuilder {
 
     override fun setMainSentenceSpan(regex: Regex, lyric: LyricItem) {
         val stb = SpannableStringBuilder(lyric.mainSentence)
@@ -58,9 +64,16 @@ class SearchResultSpanBuilderImpl(private val color: Int): SearchResultSpanBuild
     private fun fillFoundResult(foundResult: MatchResult, translation: Translation,
                                 translationStb: SpannableStringBuilder): Int {
         if(foundResult.value.length > translation.translatedPhrase?.length!!*2) return 0
-        translationStb.setSpan(BackgroundColorSpan(color), foundResult.range.first,
+        translationStb.setSpan(BackgroundColorSpan(getSpanColor()), foundResult.range.first,
                 foundResult.range.last + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         return 1
+    }
+
+    private fun getSpanColor(): Int {
+        val nightModeFlags = context.resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK
+        return if(nightModeFlags == UI_MODE_NIGHT_YES) ContextCompat.getColor(context, R.color.dark_yellow)
+        else ContextCompat.getColor(context, R.color.light_yellow)
     }
 
     private fun getNumberOfSpansInSent(stb: SpannableStringBuilder)

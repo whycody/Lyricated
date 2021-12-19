@@ -2,21 +2,24 @@
 <resources>
     <color name="dark_gray">#F1F1F1</color>
     <color name="background_gray">#FDFDFD</color>
+    <color name="background_gray_night">#252524</color>
     <color name="light_gray">#E7E7E7</color>
+    <color name="light_gray_night">#1C1C1C</color>
     <color name="gray">#F4F4F4</color>
+    <color name="gray_night">#1E1E1E</color>
     <color name="lyric_gray">#E6E6E6</color>
+    <color name="lyric_gray_night">#161616</color>
     <color name="lyric_gray_dark">#AEAEAE</color>
     <color name="header_gray">#232323</color>
+    <color name="header_gray_night">#DDDDDD</color>
     <color name="paragraph_gray">#4A4A4A</color>
+    <color name="paragraph_gray_night">#BCBCBC</color>
     <color name="translation_gray">#636363</color>
     <color name="light_yellow">#FFFADB</color>
+    <color name="dark_yellow">#3A390A</color>
     <color name="light_blue">#0052B4</color>
+    <color name="light_blue_night">#1981FF</color>
     <color name="dark_blue">#0E0E4C</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="red">#AC2929</color>
-    <color name="astronaut_red">#C52A2A</color>
-    <color name="astronaut_blue">#33aef1</color>
-    <color name="astronaut_yellow">#ffce00</color>
-    <color name="blue_alpha">#E1E7FF</color>
 </resources>

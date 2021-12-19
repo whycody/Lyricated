@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity(), MainNavigation {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         if(savedInstanceState == null) showHomeFragment()
     }
 
