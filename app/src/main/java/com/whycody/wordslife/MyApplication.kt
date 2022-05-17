@@ -12,7 +12,7 @@ class MyApplication: Application() {
         GlobalContext.startKoin {
             androidContext(this@MyApplication)
             modules(dataModule, retrofitModule, repositoryModule, languageModule, libraryModule,
-                queryModule, configurationModule, utilsModule, viewModelsModule)
+                configurationModule, utilsModule, viewModelsModule)
         }
     }
 }
