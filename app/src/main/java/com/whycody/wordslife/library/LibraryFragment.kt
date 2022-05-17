@@ -10,7 +10,6 @@ import com.whycody.wordslife.databinding.FragmentLibraryBinding
 import com.whycody.wordslife.library.history.HistoryFragment
 import com.whycody.wordslife.library.recycler.LibraryAdapter
 import com.whycody.wordslife.library.recycler.LibraryInteractor
-import com.whycody.wordslife.main.MainNavigation
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LibraryFragment : Fragment(), LibraryInteractor {
@@ -32,12 +31,14 @@ class LibraryFragment : Fragment(), LibraryInteractor {
     }
 
     private fun observeLibraryItems(adapter: LibraryAdapter) =
-        libraryViewModel.getLibraryItems().observe(requireActivity(), { adapter.submitList(it) })
+        libraryViewModel.getLibraryItems().observe(requireActivity()) { adapter.submitList(it) }
 
     override fun libraryItemClicked(libraryItemId: String) {
         when(libraryItemId) {
-            LibraryDaoImpl.HISTORY -> (activity as MainNavigation).navigateTo(HistoryFragment.newInstance(false))
-            LibraryDaoImpl.SAVED -> (activity as MainNavigation).navigateTo(HistoryFragment.newInstance(true))
+            LibraryDaoImpl.HISTORY ->
+                HistoryFragment.newInstance(false).show(childFragmentManager, "History")
+            LibraryDaoImpl.SAVED ->
+                HistoryFragment.newInstance(true).show(childFragmentManager, "Saved")
         }
     }
 }

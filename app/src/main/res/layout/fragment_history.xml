@@ -11,27 +11,44 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/colorSecondary"
+        android:layout_height="wrap_content"
         android:overScrollMode="never"
+        android:fillViewport="true"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".library.history.HistoryFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="30dp"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/sortHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{onlySaved ? @string/saved : @string/history}"
-                android:background="?attr/colorSecondaryVariant"
-                android:textColor="?attr/colorAccent"
-                android:textStyle="bold"
-                android:textSize="23sp"
+                android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/app_padding"
-                android:paddingVertical="60dp"/>
+                android:layout_marginBottom="30dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:gravity="center|start"
+                    android:layout_weight="1"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:textSize="17sp"
+                    android:text="@{onlySaved ? @string/saved : @string/history}" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_arrow_down"/>
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/historyRecycler"
