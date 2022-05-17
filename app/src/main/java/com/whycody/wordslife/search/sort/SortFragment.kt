@@ -26,9 +26,9 @@ class SortFragment : BottomSheetDialogFragment() {
         binding = FragmentSortBinding.inflate(inflater)
         binding.sortHeader.setOnClickListener { dismiss() }
         lastSearchConfig = searchConfigDao.getSearchConfiguration()
-        searchConfigDao.getSearchConfigurationLiveData().observe(requireActivity(), {
-            if(lastSearchConfig != searchConfigDao.getSearchConfiguration()) dismiss()
-        })
+        searchConfigDao.getSearchConfigurationLiveData().observe(requireActivity()) {
+            if (lastSearchConfig != searchConfigDao.getSearchConfiguration()) dismiss()
+        }
         setupRecycler()
         return binding.root
     }
@@ -40,9 +40,9 @@ class SortFragment : BottomSheetDialogFragment() {
     }
 
     private fun observeSortItems(adapter: SortItemAdapter) {
-        sortViewModel.getSortItems().observe(activity as MainActivity, {
+        sortViewModel.getSortItems().observe(activity as MainActivity) {
             adapter.submitList(it)
-        })
+        }
     }
 
     override fun getTheme() = R.style.Theme_NoWiredStrapInNavigationBar

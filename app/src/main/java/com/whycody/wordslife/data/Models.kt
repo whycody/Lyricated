@@ -7,11 +7,13 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.beust.klaxon.Json
+import com.google.gson.annotations.SerializedName
 import com.whycody.wordslife.data.filter.FilterDaoImpl
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.data.sort.SortDaoImpl
 import com.whycody.wordslife.search.SearchFragment
 import com.whycody.wordslife.search.translation.TranslationViewModel
+import java.io.Serializable
 import java.util.*
 
 data class Language(
@@ -57,12 +59,21 @@ data class LyricItem(
         val lyricId: Int,
         val mainSentence: String,
         val translatedSentence: String,
+        val movieId: String,
+        val time: String,
+        var season: Int,
+        var episode: Int,
+        val mainLangId: String,
+        val translationLangId: String,
         @Ignore var mainSentenceSpan: SpannableStringBuilder?,
-        @Ignore var translatedSentenceSpan: SpannableStringBuilder?,
-        @Ignore var translationAvailable: Boolean = false) {
+        @Ignore var translatedSentenceSpan: SpannableStringBuilder?) {
 
-    constructor(lyricId: Int, mainSentence: String, translatedSentence: String) :
-            this(lyricId, mainSentence, translatedSentence, null, SpannableStringBuilder(translatedSentence))
+    constructor(lyricId: Int, mainSentence: String, translatedSentence: String,
+                movieId: String, time:String, season: Int, episode: Int,
+                mainLangId: String, translationLangId: String) :
+            this(lyricId, mainSentence, translatedSentence, movieId, time, season, episode,
+                    mainLangId, translationLangId, mainSentenceSpan = null,
+                    translatedSentenceSpan = null)
 }
 
 data class ExtendedLyricItem(
@@ -71,7 +82,9 @@ data class ExtendedLyricItem(
         val translatedSentence: String?,
         val movieId: String,
         val time: String,
-        val languages: LyricLanguages)
+        val season: Int,
+        val episode: Int,
+        val languages: LyricLanguages): Serializable
 
 data class MovieItem(
         val mainTitle: String,
@@ -104,7 +117,8 @@ data class LyricLanguages(
 
 data class UserAction(
         val actionType: Int = SearchFragment.NO_ACTION,
-        val actionId: Int = SearchFragment.NO_ACTION)
+        val actionId: Int = SearchFragment.NO_ACTION,
+        var clickedExtendedLyricItem: ExtendedLyricItem? = null)
 
 data class SortItem(
         val id: String,
@@ -116,19 +130,6 @@ data class SortOption(
         val id: String,
         val name: String,
         var isChecked: Boolean = false)
-
-@Entity(tableName = "lyrics")
-data class Lyric(
-        @ColumnInfo(name = "lyric_id") @PrimaryKey val lyricId: Int,
-        @ColumnInfo(name = "movie_id") val movieId: String,
-        val time: String,
-        val en: String?,
-        val pl: String?,
-        val es: String?,
-        val fr: String?,
-        val de: String?,
-        val it: String?,
-        val pt: String?)
 
 @Entity(tableName = "movies")
 data class Movie(
@@ -151,7 +152,8 @@ data class MoviesResponse(
 
 data class MovieApi(
         val id: String,
-        val original_lang: String,
+        @SerializedName("original_lang")
+        val lang: String,
         val type: String,
         val minutes: Int,
         val en: String?,
@@ -163,14 +165,53 @@ data class MovieApi(
         val pt: String?
 )
 
-@Entity(tableName = "episodes")
+data class FindLyricsResponse(
+        @SerializedName("main_language_id")
+        val mainLanguageId: String,
+        @SerializedName("translation_language_id")
+        val translationLanguageId: String,
+        @SerializedName("search_word")
+        val searchWord: String,
+        @SerializedName("translations")
+        val translations: List<String>,
+        @SerializedName("main_results")
+        val mainResults: List<Lyric>,
+        @SerializedName("similar_results")
+        val similarResults: List<Lyric>
+)
+
+data class FindLyricsBody(
+        @SerializedName("searched_phrase")
+        var searchedPhrase: String,
+        @SerializedName("main_language_id")
+        var mainLanguageId: String,
+        @SerializedName("translation_language_id")
+        var translationLanguageId: String,
+        @SerializedName("sorting_mode")
+        var sortingMode: String = SortDaoImpl.BEST_MATCH,
+        @SerializedName("curses")
+        var curses: Boolean = true,
+        @SerializedName("source")
+        var source: String? = null,
+        @SerializedName("movie_id")
+        var movieId: String? = null
+)
+
+data class Lyric(
+        @SerializedName("id")
+        val lyricId: Int,
+        @SerializedName("main_sentence")
+        val mainSentence: String,
+        @SerializedName("translated_sentence")
+        val translatedSentence: String,
+        val time: String,
+        val movie: MovieApi,
+        val episode: Episode?)
+
 data class Episode(
-        @ColumnInfo(name = "episode_id") @PrimaryKey val episodeId: Int,
-        @ColumnInfo(name = "series_id") val seriesId: String,
-        @ColumnInfo(name = "first_lyric_id") val firstLyricId: Int,
-        @ColumnInfo(name = "last_lyric_id") val lastLyricId: Int,
         val season: Int,
-        val episode: Int)
+        val episode: Int
+)
 
 @Entity(tableName = "last_searches")
 data class LastSearch(

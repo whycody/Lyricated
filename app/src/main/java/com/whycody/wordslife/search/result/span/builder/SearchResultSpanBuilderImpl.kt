@@ -11,62 +11,46 @@ import android.text.style.StyleSpan
 import androidx.core.content.ContextCompat
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.LyricItem
-import com.whycody.wordslife.data.Translation
-import org.koin.android.ext.koin.androidContext
 
 class SearchResultSpanBuilderImpl(private val context: Context): SearchResultSpanBuilder {
 
-    override fun setMainSentenceSpan(regex: Regex, lyric: LyricItem) {
-        val stb = SpannableStringBuilder(lyric.mainSentence)
-        regex.findAll(lyric.mainSentence).forEach { stb.setSpan(StyleSpan(Typeface.BOLD),
-                it.range.first, it.range.last + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE) }
-        lyric.mainSentenceSpan = stb
+    override fun setLyricItemSpans(lyricItem: LyricItem) {
+        setSentenceSpan(lyricItem, mainSentence = true)
+        setSentenceSpan(lyricItem, mainSentence = false)
     }
 
-    override fun getSortedLyricItemsWithTranslationSpan(lyricItems: List<LyricItem>,
-                                                        translations: List<Translation>): List<LyricItem> {
-        lyricItems.forEach {
-            it.translationAvailable = setTranslatedSpansInLyric(it,
-                getFormatTranslations(translations)) >= 1
-        }
-        return lyricItems.sortedByDescending { it.translationAvailable }
+    private fun setSentenceSpan(lyricItem: LyricItem, mainSentence: Boolean) {
+        val sentence = if(mainSentence) lyricItem.mainSentence else lyricItem.translatedSentence
+        val specialCharIndexes = getSpecialCharIndexes(sentence)
+        val builder = SpannableStringBuilder(sentence.replace("¦", ""))
+        setSpansInBuilder(specialCharIndexes, builder, mainSentence)
+        if(mainSentence) lyricItem.mainSentenceSpan = builder
+        else lyricItem.translatedSentenceSpan = builder
     }
 
-    private fun getFormatTranslations(translations: List<Translation>) =
-        translations.map {
-            Translation(
-                it.translatedPhrase?.replace("(", "\\(")?.replace(")", "\\)"),
-                it.numberOfUsages, it.translationLangId, it.type
-            )
+    private fun setSpansInBuilder(specialCharIndexes: List<Int>, builder: SpannableStringBuilder,
+                                  mainSentence: Boolean) {
+        for(i in specialCharIndexes.indices step 2) {
+            builder.setSpan(getSpanStyle(mainSentence),
+                specialCharIndexes[i]-i,
+                specialCharIndexes[i+1]-i-1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
-
-    private fun setTranslatedSpansInLyric(lyricItem: LyricItem, translations: List<Translation>): Int {
-        lyricItem.translatedSentenceSpan = SpannableStringBuilder(lyricItem.translatedSentence)
-        val numberOfSpansInMainSent = getNumberOfSpansInSent(lyricItem.mainSentenceSpan!!)
-        var numberOfSpansInTranslatedSent = 0
-        translations.forEach { translation ->
-            if(numberOfSpansInTranslatedSent >= numberOfSpansInMainSent!!) return@forEach
-            numberOfSpansInTranslatedSent += setStbWithTranslation(lyricItem, translation)
-        }
-        return numberOfSpansInTranslatedSent
     }
 
-    private fun setStbWithTranslation(lyricItem: LyricItem, translation: Translation): Int {
-        var numberOfSpansInTranslatedSent = 0
-        val regex = Regex(getTranslatedSentencePattern(translation.translatedPhrase!!), RegexOption.IGNORE_CASE)
-        val foundResults = regex.findAll(lyricItem.translatedSentence)
-        foundResults.forEach {
-            numberOfSpansInTranslatedSent += fillFoundResult(it, translation, lyricItem.translatedSentenceSpan!!)
-        }
-        return numberOfSpansInTranslatedSent
+    private fun getSpanStyle(mainSentence: Boolean): Any {
+        return if(mainSentence) StyleSpan(Typeface.BOLD)
+        else BackgroundColorSpan(getSpanColor())
     }
 
-    private fun fillFoundResult(foundResult: MatchResult, translation: Translation,
-                                translationStb: SpannableStringBuilder): Int {
-        if(foundResult.value.length > translation.translatedPhrase?.length!!*2) return 0
-        translationStb.setSpan(BackgroundColorSpan(getSpanColor()), foundResult.range.first,
-                foundResult.range.last + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        return 1
+    private fun getSpecialCharIndexes(sentence: String): List<Int> {
+        val specialCharIndexes: MutableList<Int> = mutableListOf()
+        var index: Int = sentence.indexOf("¦")
+        while (index >= 0) {
+            specialCharIndexes.add(index)
+            index = sentence.indexOf("¦", index + 1)
+        }
+        return specialCharIndexes.toList()
     }
 
     private fun getSpanColor(): Int {
@@ -75,15 +59,4 @@ class SearchResultSpanBuilderImpl(private val context: Context): SearchResultSpa
         return if(nightModeFlags == UI_MODE_NIGHT_YES) ContextCompat.getColor(context, R.color.dark_yellow)
         else ContextCompat.getColor(context, R.color.light_yellow)
     }
-
-    private fun getNumberOfSpansInSent(stb: SpannableStringBuilder)
-            = stb.getSpans(0, stb.length, Any::class.java)?.size
-
-    private fun getTranslatedSentencePattern(word: String) =
-            when {
-                word.length > 5 -> "\\b\\S$word\\S*|\\b\\S?$word?\\S*|\\b${word.substring(0, word.length - 1)}\\b"
-                word.length == 5 -> "\\b\\S$word\\S*|\\b\\S?$word?\\S*"
-                else -> "\\b\\S$word\\S?[^\\s]*|\\b\\S?$word[^\\s]*"
-            }
-
 }

@@ -2,15 +2,10 @@ package com.whycody.wordslife.search.translation
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.whycody.wordslife.data.LyricLanguages
 import com.whycody.wordslife.data.Translation
-import com.whycody.wordslife.data.translation.TranslationDao
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
+import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 
-class TranslationViewModel(private val translationDao: TranslationDao): ViewModel() {
+class TranslationViewModel(private val searchConfDao: SearchConfigurationDao): ViewModel() {
 
     private val loadingList = listOf(
             Translation(translatedPhrase = "          ", type = LOADING),
@@ -19,30 +14,23 @@ class TranslationViewModel(private val translationDao: TranslationDao): ViewMode
             Translation(translatedPhrase = "                         ", type = LOADING))
     private val loading = MutableLiveData(true)
     private val translations = MutableLiveData(loadingList)
-    private val searchWordFlow = MutableStateFlow("")
-    private val lyricLanguagesFlow = MutableStateFlow(LyricLanguages())
+
+    fun submitTranslations(translations: List<String>) {
+        val currentTranslationLangId = searchConfDao.getLyricLanguages().translationLangId
+        this.translations.postValue(translations.map { Translation(it,
+            translationLangId = currentTranslationLangId)})
+    }
+
+    fun setResultsReady(findLyricsResultResponse: Boolean) {
+        if(!findLyricsResultResponse) {
+            loading.postValue(!findLyricsResultResponse)
+            translations.postValue(loadingList)
+        }
+    }
 
     fun getTranslations() = translations
 
     fun getLoading() = loading
-
-    suspend fun collectTranslations() = flowTranslations().collect {
-        if(it.isNotEmpty()) translations.postValue(it)
-        loading.postValue(false)
-    }
-
-    private fun flowTranslations(): Flow<List<Translation>> =
-        searchWordFlow.combine(lyricLanguagesFlow) { word, _ ->
-            loading.postValue(true)
-            translations.postValue(loadingList)
-            getTranslations(word)
-        }
-
-    private fun getTranslations(word: String) = translationDao.tryTranslate(word)?: emptyList()
-
-    fun searchWord(word: String) = searchWordFlow.tryEmit(word)
-
-    fun setLyricLanguages(lyricLanguages: LyricLanguages) = lyricLanguagesFlow.tryEmit(lyricLanguages)
 
     companion object {
         const val LOADING = 0

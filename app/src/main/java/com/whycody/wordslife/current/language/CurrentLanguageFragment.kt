@@ -53,9 +53,9 @@ class CurrentLanguageFragment : Fragment() {
         (activity as MainActivity).navigateTo(ChooseLanguageFragment().newInstance(mainLanguage))
 
     private fun observeCurrentLanguages() {
-        searchConfigurationDao.getSearchConfigurationLiveData().observe(activity as MainActivity, {
+        searchConfigurationDao.getSearchConfigurationLiveData().observe(activity as MainActivity) {
             binding.mainLanguage = languageDao.getCurrentMainLanguage()
             binding.translationLanguage = languageDao.getCurrentTranslationLanguage()
-        })
+        }
     }
 }

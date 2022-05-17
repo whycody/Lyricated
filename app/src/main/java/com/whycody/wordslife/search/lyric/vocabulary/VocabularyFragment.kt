@@ -11,11 +11,14 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.whycody.wordslife.main.MainActivity
 import com.whycody.wordslife.R
+import com.whycody.wordslife.data.ExtendedLyricItem
+import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.databinding.FragmentVocabularyBinding
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.lyric.LyricViewModel
 import com.whycody.wordslife.search.lyric.header.HeaderFragment
 import com.whycody.wordslife.search.lyric.vocabulary.recycler.VocabularyAdapter
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -24,6 +27,8 @@ class VocabularyFragment : Fragment(), VocabularyInteractor {
     private val searchViewModel: SearchViewModel by sharedViewModel()
     private val lyricViewModel: LyricViewModel by sharedViewModel()
     private val vocabularyViewModel: VocabularyViewModel by viewModel()
+    private lateinit var currentExtendedLyricItem: ExtendedLyricItem
+    private val languageDao: LanguageDao by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -58,10 +63,10 @@ class VocabularyFragment : Fragment(), VocabularyInteractor {
     }
 
     private fun observeVocabularyItems(adapter: VocabularyAdapter) = vocabularyViewModel
-        .getVocabularyItems().observe(activity as MainActivity, {
+        .getVocabularyItems().observe(activity as MainActivity) {
             adapter.submitList(it)
             setViewVisibility(!it.isNullOrEmpty())
-        })
+        }
 
     private fun setViewVisibility(vocabularyAvailable: Boolean) {
         if(!vocabularyAvailable) view?.visibility = View.GONE
@@ -69,8 +74,14 @@ class VocabularyFragment : Fragment(), VocabularyInteractor {
     }
 
     private fun observeExtendedLyricItem() = lyricViewModel.getCurrentExtendedLyricItem()
-        .observe(activity as MainActivity, { vocabularyViewModel.findVocabulary(it)} )
+        .observe(activity as MainActivity) {
+            currentExtendedLyricItem = it
+            vocabularyViewModel.findVocabulary(it)
+        }
 
-    override fun wordClicked(word: String) = searchViewModel.searchWord(word)
+    override fun wordClicked(word: String) {
+        languageDao.setCurrentMainLanguage(currentExtendedLyricItem.languages.mainLangId)
+        searchViewModel.searchWord(word)
+    }
 
 }

@@ -44,16 +44,16 @@ class ChooseSourceActivity : AppCompatActivity(), TextWatcher {
     }
 
     private fun observeMovieListItems(adapter: MovieListItemAdapter) =
-        chooseSourceViewModel.getMovieListItems().observe(this, {
+        chooseSourceViewModel.getMovieListItems().observe(this) {
             adapter.submitList(it)
-        })
+        }
 
     private fun observeSearchConf() {
-        searchConfDao.getSearchConfigurationLiveData().observe(this, {
+        searchConfDao.getSearchConfigurationLiveData().observe(this) {
             val currentSearchConf = searchConfDao.getSearchConfiguration()
-            if(currentSearchConf.chosenSource != lastSearchConf.chosenSource) finish()
+            if (currentSearchConf.chosenSource != lastSearchConf.chosenSource) finish()
             lastSearchConf = currentSearchConf
-        })
+        }
     }
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }

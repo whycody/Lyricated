@@ -29,7 +29,7 @@ class LibraryHeaderFragment : Fragment() {
     }
 
     private fun observeMovie() =
-        viewModel.latestMovie.observe(requireActivity(), { updateMovie(it.en!!) })
+        viewModel.randomMovie.observe(requireActivity(), { updateMovie(it.en!!) })
 
     private fun updateMovie(movie: String) {
         MainScope().launch {

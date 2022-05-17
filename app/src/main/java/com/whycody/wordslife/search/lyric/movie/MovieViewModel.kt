@@ -25,11 +25,9 @@ class MovieViewModel(private val movieRepository: MovieRepository): ViewModel() 
             extendedLyricItem.time)
     }
 
-    private fun getEpisodeItemFromMovie(extendedLyricItem: ExtendedLyricItem): EpisodeItem? {
-        val episode = movieRepository.getEpisodeWithLyricId(extendedLyricItem.lyricId)
-        return if(episode == null) null
-        else EpisodeItem(episode.season, episode.episode)
-    }
+    private fun getEpisodeItemFromMovie(extendedLyricItem: ExtendedLyricItem) =
+        if(extendedLyricItem.season == 0) null
+        else EpisodeItem(extendedLyricItem.season, extendedLyricItem.episode)
 
     private fun getTitleFromMovieInLang(langId: String, movie: Movie, main: Boolean): String? {
         val originalTitle = getTitleInLang(movie.lang, movie)

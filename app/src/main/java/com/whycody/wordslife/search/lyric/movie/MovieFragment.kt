@@ -29,9 +29,9 @@ class MovieFragment : Fragment() {
     }
 
     private fun observeExtendedLyricItem() =
-        lyricViewModel.getCurrentExtendedLyricItem().observe(activity as MainActivity, {
+        lyricViewModel.getCurrentExtendedLyricItem().observe(activity as MainActivity) {
             movieViewModel.findMovie(it)
-        })
+        }
 
     private fun addHeader() {
         val fragmentTransaction = childFragmentManager.beginTransaction()

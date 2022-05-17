@@ -23,6 +23,6 @@ class VocabularyViewModel: ViewModel() {
     }
 
     private fun getFormattedWord(word: String) = word
-            .toLowerCase(Locale.ROOT)
+            .lowercase(Locale.ROOT)
             .replace(Regex("^\\W*|\\W*\\B\$"), "")
 }

@@ -10,14 +10,17 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.google.android.material.appbar.AppBarLayout
 import com.whycody.wordslife.IOnBackPressed
-import com.whycody.wordslife.main.MainActivity
 import com.whycody.wordslife.R
+import com.whycody.wordslife.data.ExtendedLyricItem
+import com.whycody.wordslife.data.SearchConfiguration
+import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.databinding.FragmentSearchBinding
 import com.whycody.wordslife.search.lyric.LyricFragment
 import com.whycody.wordslife.search.content.SearchContentFragment
 import com.whycody.wordslife.search.content.SearchContentView
 import com.whycody.wordslife.search.filter.FilterFragment
 import com.whycody.wordslife.search.sort.SortFragment
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.lang.Exception
 
@@ -25,8 +28,10 @@ class SearchFragment : Fragment(), IOnBackPressed {
 
     private var searchWord = ""
     private val searchViewModel: SearchViewModel by sharedViewModel()
+    private val searchConfigurationDao: SearchConfigurationDao by inject()
     private lateinit var searchAppBar: AppBarLayout
     private var appBarLastStateIsExpanded = true
+    private var lastSearchConf: SearchConfiguration? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -38,6 +43,7 @@ class SearchFragment : Fragment(), IOnBackPressed {
         checkSavedInstanceState(savedInstanceState)
         enableAnimation(binding.searchContainer)
         observeSearchWord()
+        observeCurrentLanguages()
         observeUserAction()
         return binding.root
     }
@@ -51,21 +57,31 @@ class SearchFragment : Fragment(), IOnBackPressed {
     private fun enableAnimation(linearLayout: LinearLayout) =
             linearLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
-    private fun observeSearchWord() = searchViewModel.getSearchWord().observe(activity as MainActivity, {
-        if(it == searchWord) return@observe
-        if(!currentFragmentIsSearchContent()) scrollToTopTheWholeFragment()
+    private fun observeSearchWord() = searchViewModel.getSearchWord().observe(viewLifecycleOwner) {
+        if (it == null) return@observe
+        if (!currentFragmentIsSearchContent()) scrollToTopTheWholeFragment()
+        searchViewModel.tryFindLyricsFromApi()
         searchWord = it
-    })
+    }
 
-    private fun observeUserAction() = searchViewModel.getUserAction().observe(activity as MainActivity, {
-        if(it.actionType == NO_ACTION) return@observe
-        if(it.actionType == LYRIC_CLICKED) tryShowLyricFragment(it.actionId)
+    private fun observeCurrentLanguages() = searchConfigurationDao.getSearchConfigurationLiveData()
+        .observe(viewLifecycleOwner) {
+            val searchConf = searchConfigurationDao.getSearchConfiguration()
+            if (lastSearchConf != null && lastSearchConf != searchConf)
+                searchViewModel.tryFindLyricsFromApi()
+            lastSearchConf = searchConf
+        }
+
+    private fun observeUserAction() = searchViewModel.getUserAction().observe(viewLifecycleOwner) {
+        if (it.actionType == NO_ACTION) return@observe
+        if (it.actionType == LYRIC_CLICKED) tryShowLyricFragment(it.clickedExtendedLyricItem!!)
         appBarLastStateIsExpanded = appBarIsExpanded()
         searchViewModel.resetUserAction()
-    })
+    }
 
-    private fun tryShowLyricFragment(lyricId: Int) {
-        try { LyricFragment.newInstance(lyricId).show(childFragmentManager, "Lyric") }
+    private fun tryShowLyricFragment(extendedLyricItem: ExtendedLyricItem) {
+        try { LyricFragment.newInstance(extendedLyricItem)
+            .show(childFragmentManager, "Lyric") }
         catch (_: Exception) { }
     }
 
@@ -102,7 +118,8 @@ class SearchFragment : Fragment(), IOnBackPressed {
 
     private fun scrollToTopTheWholeFragment() {
         searchAppBar.postDelayed({ searchAppBar.setExpanded(true) }, 100)
-        (childFragmentManager.fragments.find { it is SearchContentFragment } as SearchContentView).scrollToTop()
+        if(childFragmentManager.fragments.any { it is SearchContentFragment })
+                (childFragmentManager.fragments.find { it is SearchContentFragment } as SearchContentView).scrollToTop()
     }
 
     override fun onDestroy() {

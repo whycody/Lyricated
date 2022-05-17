@@ -5,8 +5,5 @@ import com.whycody.wordslife.data.Translation
 
 interface SearchResultSpanBuilder {
 
-    fun getSortedLyricItemsWithTranslationSpan(lyricItems: List<LyricItem>,
-                                               translations: List<Translation>): List<LyricItem>
-
-    fun setMainSentenceSpan(regex: Regex, lyric: LyricItem)
+    fun setLyricItemSpans(lyricItem: LyricItem)
 }

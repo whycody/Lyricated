@@ -56,11 +56,11 @@ class ChooseLanguageFragment : Fragment() {
     }
 
     private fun observeLanguagesList(adapter: ChooseLanguageAdapter, recyclerView: RecyclerView) {
-        viewModel.getLanguages().observe(activity as MainActivity, {
-            if(adapter.currentList.size != 0) activity?.onBackPressed()
+        viewModel.getLanguages().observe(activity as MainActivity) {
+            if (adapter.currentList.size != 0) activity?.onBackPressed()
             adapter.submitList(it)
             recyclerView.scheduleLayoutAnimation()
-        })
+        }
     }
 
     private fun loadLayoutAnimation(recyclerView: RecyclerView) {

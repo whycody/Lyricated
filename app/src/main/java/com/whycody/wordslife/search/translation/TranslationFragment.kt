@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.whycody.wordslife.main.MainActivity
 import com.whycody.wordslife.data.Translation
 import com.whycody.wordslife.data.language.LanguageDao
-import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.databinding.FragmentTranslationBinding
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.translation.recycler.TranslationAdapter
@@ -26,7 +25,6 @@ class TranslationFragment : Fragment(), TranslationInteractor {
 
     private var job: Job? = null
     private val languageDao: LanguageDao by inject()
-    private val searchConfigDao: SearchConfigurationDao by inject()
     private val translationViewModel: TranslationViewModel by viewModel()
     private val searchViewModel: SearchViewModel by sharedViewModel()
     private lateinit var sharedPrefs: SharedPreferences
@@ -35,20 +33,13 @@ class TranslationFragment : Fragment(), TranslationInteractor {
                               savedInstanceState: Bundle?): View {
         val binding = FragmentTranslationBinding.inflate(inflater)
         sharedPrefs = requireActivity().applicationContext.getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
-        binding.lifecycleOwner = activity
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.translationViewModel = translationViewModel
         setupRecycler(binding.translationRecycler)
         observeLoading()
-        observeCurrentLanguages()
-        observeSearchWord()
+        observeFindLyricsResponse()
+        observeFindLyricsResponseReady()
         return binding.root
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        job = MainScope().launch(Dispatchers.Main) {
-            withContext(Dispatchers.IO) { translationViewModel.collectTranslations() }
-        }
     }
 
     override fun onDestroy() {
@@ -67,31 +58,28 @@ class TranslationFragment : Fragment(), TranslationInteractor {
         }
     }
 
+    private fun observeFindLyricsResponse() = searchViewModel.getFindLyricsResponse()
+        .observe(viewLifecycleOwner) { translationViewModel.submitTranslations(it.translations) }
+
+    private fun observeFindLyricsResponseReady() = searchViewModel.getFindLyricsResponseReady()
+        .observe(viewLifecycleOwner) { translationViewModel.setResultsReady(it) }
+
     private fun observeTranslations(adapter: TranslationAdapter) = translationViewModel
-        .getTranslations().observe(activity as MainActivity, {
-                if(it == adapter.currentList) return@observe
-                adapter.submitList(it)
-                searchViewModel.setTranslations(it)
-            })
+        .getTranslations().observe(viewLifecycleOwner) {
+            if (it == adapter.currentList) return@observe
+            adapter.submitList(it)
+            searchViewModel.setTranslations(it)
+        }
 
     private fun observeLoading() = translationViewModel
-            .getLoading().observe(activity as MainActivity, {
-                searchViewModel.setTranslationsLoading(it)
-            })
-
-    private fun observeCurrentLanguages() {
-        searchConfigDao.getSearchConfigurationLiveData().observe(requireActivity(), {
-            translationViewModel.setLyricLanguages(searchConfigDao.getLyricLanguages())
-        })
-    }
-
-    private fun observeSearchWord() = searchViewModel.getSearchWord()
-        .observe(activity as MainActivity) {
-            translationViewModel.searchWord(it)
+        .getLoading().observe(activity as MainActivity) {
+            searchViewModel.setTranslationsLoading(it)
         }
 
     override fun translationClicked(translation: Translation) {
-        languageDao.switchCurrentLanguages()
-        searchViewModel.searchWord(translation.translatedPhrase!!)
+        if(translation.translationLangId != languageDao.getCurrentMainLanguage().id)
+            languageDao.setCurrentMainLanguage(translation.translationLangId!!)
+        searchViewModel.setCurrentInputText(translation.translatedPhrase!!)
+        searchViewModel.searchWord(translation.translatedPhrase)
     }
 }

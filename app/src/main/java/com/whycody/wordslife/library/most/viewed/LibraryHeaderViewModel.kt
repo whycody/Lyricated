@@ -11,18 +11,19 @@ import kotlinx.coroutines.launch
 class LibraryHeaderViewModel(private val apiService: ApiService): ViewModel() {
 
     private val allMovies = MutableLiveData<List<MovieApi>>()
-    val latestMovie = MutableLiveData<MovieApi>()
+    val randomMovie = MutableLiveData<MovieApi>()
 
     init {
         MainScope().launch {
-            allMovies.value = apiService.getAllMovies().body()!!.movies
-            latestMovie.postValue(allMovies.value!!.random())
+            val allMoviesResponse = apiService.getAllMovies().body()
+            allMovies.value = allMoviesResponse?.movies
+            randomMovie.postValue(allMovies.value?.random())
             while(true) refreshMovie()
         }
     }
 
     private suspend fun refreshMovie() {
         delay(5000)
-        latestMovie.postValue(allMovies.value!!.random())
+        randomMovie.postValue(allMovies.value?.random())
     }
 }

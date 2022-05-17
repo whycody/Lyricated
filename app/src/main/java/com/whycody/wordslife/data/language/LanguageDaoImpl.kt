@@ -87,6 +87,5 @@ class LanguageDaoImpl(private val context: Context,
         const val DEFAULT_MAIN_LANGUAGE = EN
         const val DEFAULT_TRANSLATION_LANGUAGE = PL
         const val MAIN_LANGUAGE = "main_language"
-        const val TRANSLATION_LANGUAGE = "translation_language"
     }
 }
