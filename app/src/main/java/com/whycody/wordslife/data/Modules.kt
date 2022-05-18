@@ -116,7 +116,7 @@ val utilsModule = module {
 val viewModelsModule = module {
     viewModel { HomeViewModel(get(), get()) }
     viewModel { ChooseLanguageViewModel(get()) }
-    viewModel { SearchViewModel(get(), get(), get(), get()) }
+    viewModel { SearchViewModel(get(), get(), get(), get(), get()) }
     viewModel { SearchResultViewModel(get()) }
     viewModel { LyricViewModel() }
     viewModel { MovieViewModel(get()) }

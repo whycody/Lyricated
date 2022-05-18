@@ -5,15 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.whycody.wordslife.data.*
 import com.whycody.wordslife.data.api.ApiService
+import com.whycody.wordslife.data.app.configuration.AppConfigurationDao
 import com.whycody.wordslife.data.filter.FilterDaoImpl
 import com.whycody.wordslife.data.last.searches.LastSearchRepository
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
+import com.whycody.wordslife.data.settings.SettingsDaoImpl
 import com.whycody.wordslife.search.mapper.LyricItemMapper
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
                       private val searchConfigurationDao: SearchConfigurationDao,
+                      private val appConfigurationDao: AppConfigurationDao,
                       private val apiService: ApiService,
                       private val lyricItemMapper: LyricItemMapper): ViewModel() {
 
@@ -27,7 +30,12 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
 
     fun searchWord(word: String) {
         searchWord.value = word
-        if(word.isNotEmpty()) insertLastSearch(word)
+        if(word.isNotEmpty() && !historyIsTurnedOut()) insertLastSearch(word)
+    }
+
+    private fun historyIsTurnedOut(): Boolean {
+        val currentAppConfig = appConfigurationDao.getAppConfiguration()
+        return currentAppConfig.history == SettingsDaoImpl.DONT_SAVE_HISTORY
     }
 
     fun tryFindLyricsFromApi() {
@@ -43,8 +51,8 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
     private suspend fun sendInquiryToApi() {
         findLyricsResponseReady.value = false
         val body = getFindLyricsBody()
-        val queryResponse = apiService.findLyrics(body).body()
-        if(queryResponse?.mainLanguageId != searchConfigurationDao.getLyricLanguages().mainLangId
+        val queryResponse = apiService.findLyrics(body).body()!!
+        if(queryResponse.mainLanguageId != searchConfigurationDao.getLyricLanguages().mainLangId
             || queryResponse.searchWord != searchWord.value) return
         findLyricsResponse.value = queryResponse
         findLyricsResponseReady.value = true
