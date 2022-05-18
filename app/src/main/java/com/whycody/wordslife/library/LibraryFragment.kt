@@ -10,6 +10,7 @@ import com.whycody.wordslife.databinding.FragmentLibraryBinding
 import com.whycody.wordslife.library.history.HistoryFragment
 import com.whycody.wordslife.library.recycler.LibraryAdapter
 import com.whycody.wordslife.library.recycler.LibraryInteractor
+import com.whycody.wordslife.library.settings.SettingsFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LibraryFragment : Fragment(), LibraryInteractor {
@@ -39,6 +40,8 @@ class LibraryFragment : Fragment(), LibraryInteractor {
                 HistoryFragment.newInstance(false).show(childFragmentManager, "History")
             LibraryDaoImpl.SAVED ->
                 HistoryFragment.newInstance(true).show(childFragmentManager, "Saved")
+            LibraryDaoImpl.SETTINGS ->
+                SettingsFragment().show(childFragmentManager, "Settings")
         }
     }
 }

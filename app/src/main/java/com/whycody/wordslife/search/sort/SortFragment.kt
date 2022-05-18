@@ -40,7 +40,7 @@ class SortFragment : BottomSheetDialogFragment() {
     }
 
     private fun observeSortItems(adapter: SortItemAdapter) {
-        sortViewModel.getSortItems().observe(activity as MainActivity) {
+        sortViewModel.getSortItems().observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
     }

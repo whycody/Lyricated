@@ -41,27 +41,28 @@ class FilterFragment : BottomSheetDialogFragment() {
     }
 
     private fun observeFilterItems(sortItemAdapter: SortItemAdapter) {
-        filterViewModel.getFilterItems().observe(requireActivity(), {
+        filterViewModel.getFilterItems().observe(viewLifecycleOwner) {
             sortItemAdapter.submitList(it)
-        })
+        }
     }
 
     private fun observeSearchConf() {
-        searchConfDao.getSearchConfigurationLiveData().observe(requireActivity(), {
+        searchConfDao.getSearchConfigurationLiveData().observe(requireActivity()) {
             val currentSearchConf = searchConfDao.getSearchConfiguration()
-            binding.filtersAreChanged = searchConfDao.getSearchConfiguration().checkedFilters.isNotEmpty()
-            if(currentSearchConf.chosenSource != lastSearchConf.chosenSource)
+            binding.filtersAreChanged =
+                searchConfDao.getSearchConfiguration().checkedFilters.isNotEmpty()
+            if (currentSearchConf.chosenSource != lastSearchConf.chosenSource)
                 filterViewModel.refreshSortOptions()
             lastSearchConf = currentSearchConf
-        })
+        }
     }
 
     private fun observeUserAction() {
-        filterViewModel.getUserAction().observe(requireActivity(), {
-            if(it.actionType == SearchFragment.NO_ACTION) return@observe
+        filterViewModel.getUserAction().observe(requireActivity()) {
+            if (it.actionType == SearchFragment.NO_ACTION) return@observe
             startChooseSourceActivity()
             filterViewModel.resetUserAction()
-        })
+        }
     }
 
     private fun startChooseSourceActivity() =

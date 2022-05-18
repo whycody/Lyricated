@@ -10,6 +10,7 @@ import com.beust.klaxon.Json
 import com.google.gson.annotations.SerializedName
 import com.whycody.wordslife.data.filter.FilterDaoImpl
 import com.whycody.wordslife.data.language.LanguageDaoImpl
+import com.whycody.wordslife.data.settings.SettingsDaoImpl
 import com.whycody.wordslife.data.sort.SortDaoImpl
 import com.whycody.wordslife.search.SearchFragment
 import com.whycody.wordslife.search.translation.TranslationViewModel
@@ -29,10 +30,16 @@ data class HistoryItem(
         var saved: Boolean = false)
 
 data class SearchConfiguration(
+        var educationalMaterials: String = SettingsDaoImpl.SHOW_EDU,
         var lyricLanguages: LyricLanguages = LyricLanguages(),
         var sortOptionId: String = SortDaoImpl.BEST_MATCH,
         var checkedFilters: List<String> = FilterDaoImpl.DEFAULT_FILTERS,
         var chosenSource: String? = null)
+
+data class AppConfiguration(
+        var appearance: String = SettingsDaoImpl.DEFAULT,
+        var educationalMaterials: String = SettingsDaoImpl.SHOW_EDU,
+        var history: String = SettingsDaoImpl.HISTORY)
 
 data class ConfigurationItem(
         var name: String,

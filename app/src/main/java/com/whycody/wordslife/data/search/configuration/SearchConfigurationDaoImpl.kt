@@ -24,9 +24,9 @@ class SearchConfigurationDaoImpl(context: Context): SearchConfigurationDao {
         SharedPreferenceStringLiveData(sharedPrefs,
             SEARCH_CONFIGURATION, gson.toJson(SearchConfiguration()))
 
-    override fun setSearchConfiguration(searchConf: SearchConfiguration) {
-        removeChosenSource(searchConf)
-        prefsEditor.putString(SEARCH_CONFIGURATION, gson.toJson(searchConf))
+    override fun setSearchConfiguration(searchConfiguration: SearchConfiguration) {
+        removeChosenSource(searchConfiguration)
+        prefsEditor.putString(SEARCH_CONFIGURATION, gson.toJson(searchConfiguration))
         prefsEditor.commit()
     }
 

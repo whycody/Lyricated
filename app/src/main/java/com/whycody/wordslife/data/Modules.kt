@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.whycody.wordslife.choose.language.ChooseLanguageViewModel
 import com.whycody.wordslife.data.api.ApiService
 import com.whycody.wordslife.data.api.BASE_URL
+import com.whycody.wordslife.data.app.configuration.AppConfigurationDao
+import com.whycody.wordslife.data.app.configuration.AppConfigurationDaoImpl
 import com.whycody.wordslife.data.filter.FilterDao
 import com.whycody.wordslife.data.filter.FilterDaoImpl
 import com.whycody.wordslife.data.filter.choose.source.ChooseSourceViewModel
@@ -17,11 +19,14 @@ import com.whycody.wordslife.data.library.LibraryDaoImpl
 import com.whycody.wordslife.data.movie.MovieRepository
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDaoImpl
+import com.whycody.wordslife.data.settings.SettingsDao
+import com.whycody.wordslife.data.settings.SettingsDaoImpl
 import com.whycody.wordslife.data.sort.SortDao
 import com.whycody.wordslife.data.sort.SortDaoImpl
 import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.library.LibraryViewModel
 import com.whycody.wordslife.library.most.viewed.LibraryHeaderViewModel
+import com.whycody.wordslife.library.settings.SettingsViewModel
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.configuration.ConfigurationViewModel
 import com.whycody.wordslife.search.filter.FilterViewModel
@@ -92,6 +97,11 @@ val libraryModule = module {
     single<LibraryDao> { LibraryDaoImpl(get()) }
 }
 
+val settingsModule = module {
+    single<AppConfigurationDao> { AppConfigurationDaoImpl(get()) }
+    single<SettingsDao> { SettingsDaoImpl(get(), get(), get())}
+}
+
 val configurationModule = module {
     single<SortDao> { SortDaoImpl(get(), get()) }
     single<FilterDao> { FilterDaoImpl(get(), get(), get()) }
@@ -119,4 +129,5 @@ val viewModelsModule = module {
     viewModel { ChooseSourceViewModel(get(), get()) }
     viewModel { LibraryViewModel(get()) }
     viewModel { LibraryHeaderViewModel(get()) }
+    viewModel { SettingsViewModel(get(), get(), get()) }
 }
