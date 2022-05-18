@@ -40,7 +40,7 @@
     <string name="choose_source">Choose movie or serie</string>
     <string name="curses">Curses</string>
     <string name="without_curses">Without curses</string>
-    <string name="clear">Clear</string>
+    <string name="clear">Clear filters</string>
     <string name="library">Library</string>
     <string name="history">History</string>
     <string name="history_desc">Back to previous searched phrases</string>
@@ -51,4 +51,12 @@
     <string name="settings">Settings</string>
     <string name="settings_desc">Adjust our app to your preferences</string>
     <string name="latest_movie">In Lyricated you will find subtitles from:</string>
+    <string name="appearance">Appearance</string>
+    <string name="darkmode">Dark mode</string>
+    <string name="lightmode">Light mode</string>
+    <string name="edumaterials">Educational Materials</string>
+    <string name="show">Show</string>
+    <string name="dontshow">Don\'t show</string>
+    <string name="save">Save</string>
+    <string name="dontsave">Don\'t save</string>
 </resources>

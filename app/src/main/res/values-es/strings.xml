@@ -40,7 +40,7 @@
     <string name="choose_source">Elegir película o serie</string>
     <string name="curses">Maldiciones</string>
     <string name="without_curses">Sin maldiciones</string>
-    <string name="clear">Limpiar</string>
+    <string name="clear">Limpiar filtros</string>
     <string name="library">Biblioteca</string>
     <string name="history">Historia</string>
     <string name="history_desc">Volver a las frases buscadas anteriores</string>
@@ -51,4 +51,12 @@
     <string name="settings">Ajustes</string>
     <string name="settings_desc">Ajusta nuestra aplicación a tus preferencias</string>
     <string name="latest_movie">En Lyricated encontrarás subtítulos de:</string>
+    <string name="appearance">Apariencia</string>
+    <string name="darkmode">Modo oscuro</string>
+    <string name="lightmode">Modo claro</string>
+    <string name="edumaterials">Materiales educativos</string>
+    <string name="show">Mostrar</string>
+    <string name="dontshow">No mostrar</string>
+    <string name="save">Guardar</string>
+    <string name="dontsave">No guardar</string>
 </resources>
