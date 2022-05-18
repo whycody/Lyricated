@@ -8,6 +8,7 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.BackgroundColorSpan
 import android.text.style.StyleSpan
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.LyricItem
@@ -54,9 +55,13 @@ class SearchResultSpanBuilderImpl(private val context: Context): SearchResultSpa
     }
 
     private fun getSpanColor(): Int {
+        val currentNightMode = AppCompatDelegate.getDefaultNightMode()
+        val nightModeTurnedOn = currentNightMode == AppCompatDelegate.MODE_NIGHT_YES
+        val lightModeTurnedOn = currentNightMode == AppCompatDelegate.MODE_NIGHT_NO
         val nightModeFlags = context.resources.configuration.uiMode and
                 Configuration.UI_MODE_NIGHT_MASK
-        return if(nightModeFlags == UI_MODE_NIGHT_YES) ContextCompat.getColor(context, R.color.dark_yellow)
+        return if((nightModeFlags == UI_MODE_NIGHT_YES || nightModeTurnedOn) && !lightModeTurnedOn)
+            ContextCompat.getColor(context, R.color.dark_yellow)
         else ContextCompat.getColor(context, R.color.light_yellow)
     }
 }

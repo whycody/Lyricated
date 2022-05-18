@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.app.configuration.AppConfigurationDao
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
+import com.whycody.wordslife.data.settings.SettingsDaoImpl
 import com.whycody.wordslife.databinding.FragmentSettingsBinding
 import com.whycody.wordslife.search.sort.recycler.SortItemAdapter
 import org.koin.android.ext.android.inject
@@ -44,7 +46,22 @@ class SettingsFragment : BottomSheetDialogFragment() {
     }
 
     private fun observeAppConf() = appConfigurationDao.getAppConfigurationLiveData()
-        .observe(viewLifecycleOwner) { settingsViewModel.refreshSettingsItems() }
+        .observe(viewLifecycleOwner) {
+            settingsViewModel.refreshSettingsItems()
+            updateAppearance()
+        }
+
+    private fun updateAppearance() {
+        val currentAppConfig = appConfigurationDao.getAppConfiguration()
+        val defaultMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        val darkMode = AppCompatDelegate.MODE_NIGHT_YES
+        val lightMode = AppCompatDelegate.MODE_NIGHT_NO
+        when (currentAppConfig.appearance) {
+            SettingsDaoImpl.LIGHT -> AppCompatDelegate.setDefaultNightMode(lightMode)
+            SettingsDaoImpl.DARK -> AppCompatDelegate.setDefaultNightMode(darkMode)
+            else -> AppCompatDelegate.setDefaultNightMode(defaultMode)
+        }
+    }
 
     private fun observeSearchConf() = searchConfigurationDao.getSearchConfigurationLiveData()
         .observe(viewLifecycleOwner) { settingsViewModel.refreshSettingsItems() }

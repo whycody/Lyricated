@@ -2,19 +2,36 @@ package com.whycody.wordslife.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.whycody.wordslife.IOnBackPressed
 import com.whycody.wordslife.R
+import com.whycody.wordslife.data.app.configuration.AppConfigurationDao
+import com.whycody.wordslife.data.settings.SettingsDaoImpl
 import com.whycody.wordslife.search.SearchFragment
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity(), MainNavigation {
 
+    private val appConfigurationDao: AppConfigurationDao by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        updateAppearance()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if(savedInstanceState == null) showHomeFragment()
+    }
+
+    private fun updateAppearance() {
+        val currentAppConfig = appConfigurationDao.getAppConfiguration()
+        val defaultMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        val darkMode = AppCompatDelegate.MODE_NIGHT_YES
+        val lightMode = AppCompatDelegate.MODE_NIGHT_NO
+        when (currentAppConfig.appearance) {
+            SettingsDaoImpl.LIGHT -> AppCompatDelegate.setDefaultNightMode(lightMode)
+            SettingsDaoImpl.DARK -> AppCompatDelegate.setDefaultNightMode(darkMode)
+            else -> AppCompatDelegate.setDefaultNightMode(defaultMode)
+        }
     }
 
     override fun onBackPressed() {
