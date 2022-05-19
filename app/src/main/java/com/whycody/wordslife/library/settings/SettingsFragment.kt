@@ -35,7 +35,7 @@ class SettingsFragment : BottomSheetDialogFragment() {
     private fun setupRecycler() {
         val sortItemAdapter = SortItemAdapter(settingsViewModel)
         binding.settingsRecycler.adapter = sortItemAdapter
-        binding.settingsRecycler.itemAnimator?.changeDuration = 80
+        binding.settingsRecycler.itemAnimator?.changeDuration = 0
         observeSettingsItems(sortItemAdapter)
     }
 

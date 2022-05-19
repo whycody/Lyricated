@@ -19,7 +19,7 @@
         android:focusable="true"
         android:clickable="true"
         android:onClick="@{()->interactor.sortOptionClicked(sortOption.id)}"
-        android:background="@drawable/ripple_language_item">
+        android:background="?attr/colorSecondary">
 
         <LinearLayout
             android:layout_width="match_parent"

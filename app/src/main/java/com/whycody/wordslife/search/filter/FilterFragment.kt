@@ -36,7 +36,7 @@ class FilterFragment : BottomSheetDialogFragment() {
     private fun setupRecycler() {
         val sortItemAdapter = SortItemAdapter(filterViewModel)
         binding.filterRecycler.adapter = sortItemAdapter
-        binding.filterRecycler.itemAnimator?.changeDuration = 80
+        binding.filterRecycler.itemAnimator?.changeDuration = 0
         observeFilterItems(sortItemAdapter)
     }
 
