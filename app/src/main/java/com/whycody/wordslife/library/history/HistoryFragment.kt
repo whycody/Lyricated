@@ -20,15 +20,21 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class HistoryFragment : BottomSheetDialogFragment(), HistoryInteractor {
 
+    private val historyViewModel: HistoryViewModel by viewModel()
     private val homeViewModel: HomeViewModel by viewModel()
     private val searchViewModel: SearchViewModel by sharedViewModel()
+    private lateinit var binding: FragmentHistoryBinding
     private var onlySaved = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding = FragmentHistoryBinding.inflate(inflater)
+        binding = FragmentHistoryBinding.inflate(inflater)
         binding.sortHeader.setOnClickListener { dismiss() }
         onlySaved = arguments?.getBoolean(ONLY_SAVED, false)!!
+        binding.cleanListBtn.setOnClickListener {
+            historyViewModel.cleanListBtnClicked(onlySaved)
+            dismiss()
+        }
         binding.onlySaved = onlySaved
         loadHistoryItems()
         setupRecycler(binding)
@@ -53,6 +59,7 @@ class HistoryFragment : BottomSheetDialogFragment(), HistoryInteractor {
     private fun observeHistoryItems(historyAdapter: HistoryAdapter) =
         homeViewModel.getHistoryItems().observe(activity as MainActivity) {
             historyAdapter.submitList(it)
+            binding.listsAreFilled = it.isNotEmpty()
         }
 
     override fun getTheme() = R.style.Theme_NoWiredStrapInNavigationBar

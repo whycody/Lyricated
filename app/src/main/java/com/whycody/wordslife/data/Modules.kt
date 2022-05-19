@@ -25,6 +25,7 @@ import com.whycody.wordslife.data.sort.SortDao
 import com.whycody.wordslife.data.sort.SortDaoImpl
 import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.library.LibraryViewModel
+import com.whycody.wordslife.library.history.HistoryViewModel
 import com.whycody.wordslife.library.most.viewed.LibraryHeaderViewModel
 import com.whycody.wordslife.library.settings.SettingsViewModel
 import com.whycody.wordslife.main.MainViewModel
@@ -131,4 +132,5 @@ val viewModelsModule = module {
     viewModel { LibraryViewModel(get()) }
     viewModel { LibraryHeaderViewModel(get()) }
     viewModel { SettingsViewModel(get(), get(), get()) }
+    viewModel { HistoryViewModel(get()) }
 }

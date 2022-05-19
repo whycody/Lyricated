@@ -5,6 +5,10 @@
         <variable
             name="onlySaved"
             type="Boolean" />
+        <variable
+            name="listsAreFilled"
+            type="Boolean" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -49,6 +53,20 @@
                     android:src="@drawable/ic_arrow_down"/>
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/cleanListBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:paddingHorizontal="@dimen/app_padding"
+                android:text="@{onlySaved ? @string/deselectall : @string/deletehistory}"
+                android:textStyle="bold"
+                android:paddingVertical="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="@{listsAreFilled ? View.VISIBLE : View.GONE}"
+                android:background="@android:color/transparent"
+                android:textColor="@drawable/s_clear_btn"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/historyRecycler"

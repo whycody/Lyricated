@@ -60,4 +60,6 @@
     <string name="dontshow">Nie wyświetlaj</string>
     <string name="save">Zapisuj</string>
     <string name="dontsave">Nie zapisuj</string>
+    <string name="deletehistory">Wyczyść historię</string>
+    <string name="deselectall">Odznacz wszystkie</string>
 </resources>

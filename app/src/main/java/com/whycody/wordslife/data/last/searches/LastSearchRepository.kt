@@ -20,4 +20,8 @@ class LastSearchRepository(private val lastSearchDao: LastSearchDao) {
     fun insertLastSearch(lastSearch: LastSearch) = lastSearchDao.insertLastSearch(lastSearch)
 
     fun getLastSearchById(id: Int) = lastSearchDao.getLastSearchById(id)
+
+    fun deleteAllLastSearches() = lastSearchDao.deleteAllLastSearches()
+
+    fun deselectAllLastSearches() = lastSearchDao.deselectAllLastSearches()
 }

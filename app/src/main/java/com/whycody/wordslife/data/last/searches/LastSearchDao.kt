@@ -32,4 +32,10 @@ interface LastSearchDao {
 
     @Insert
     fun insertLastSearch(lastSearch: LastSearch)
+
+    @Query("DELETE FROM last_searches")
+    fun deleteAllLastSearches()
+
+    @Query("UPDATE last_searches SET saved = 0")
+    fun deselectAllLastSearches()
 }

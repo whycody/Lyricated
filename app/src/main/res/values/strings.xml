@@ -60,4 +60,6 @@
     <string name="dontshow">Don\'t show</string>
     <string name="save">Save</string>
     <string name="dontsave">Don\'t save</string>
+    <string name="deletehistory">Delete search history</string>
+    <string name="deselectall">Deselect all</string>
 </resources>
