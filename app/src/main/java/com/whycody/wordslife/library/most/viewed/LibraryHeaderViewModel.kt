@@ -2,28 +2,32 @@ package com.whycody.wordslife.library.most.viewed
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.whycody.wordslife.data.MovieApi
-import com.whycody.wordslife.data.api.ApiService
+import com.whycody.wordslife.data.movie.MovieDao
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class LibraryHeaderViewModel(private val apiService: ApiService): ViewModel() {
+class LibraryHeaderViewModel(private val movieDao: MovieDao): ViewModel() {
 
-    private val allMovies = MutableLiveData<List<MovieApi>>()
-    val randomMovie = MutableLiveData<MovieApi>()
+    private var allMovies = movieDao.getAllMovies()
+    val randomMovieTitle = MutableLiveData<String>()
 
     init {
         MainScope().launch {
-            val allMoviesResponse = apiService.getAllMovies().body()
-            allMovies.value = allMoviesResponse?.movies
-            randomMovie.postValue(allMovies.value?.random())
+            updateMovieTitle()
             while(true) refreshMovie()
         }
     }
 
     private suspend fun refreshMovie() {
         delay(5000)
-        randomMovie.postValue(allMovies.value?.random())
+        updateMovieTitle()
     }
+
+    private fun updateMovieTitle() =
+        if(allMovies.isEmpty()) {
+            allMovies = movieDao.getAllMovies()
+            randomMovieTitle.postValue("Enola Holmes")
+        } else randomMovieTitle.postValue(allMovies.random().eng!!)
+
 }

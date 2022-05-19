@@ -3,24 +3,24 @@ package com.whycody.wordslife.data.filter.choose.source
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.whycody.wordslife.data.Movie
 import com.whycody.wordslife.data.MovieApi
 import com.whycody.wordslife.data.MovieListItem
 import com.whycody.wordslife.data.api.ApiService
 import com.whycody.wordslife.data.filter.FilterDaoImpl
+import com.whycody.wordslife.data.movie.MovieDao
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import kotlinx.coroutines.launch
 
-class ChooseSourceViewModel(private val apiService: ApiService,
-                            private val searchConfDao: SearchConfigurationDao):
+class ChooseSourceViewModel(movieDao: MovieDao, private val searchConfDao: SearchConfigurationDao):
     ViewModel(), MovieItemInteractor {
 
     private var currentSearchText: String? = null
-    private val allMovies = MutableLiveData<List<MovieApi>>(emptyList())
+    private val allMovies = MutableLiveData(movieDao.getAllMovies())
     private val movieListItems = MutableLiveData(getMovieListItemsFromMovieItems())
 
     init {
         viewModelScope.launch {
-            allMovies.value = apiService.getAllMovies().body()!!.movies
             searchTextChanged(currentSearchText)
         }
     }
@@ -40,14 +40,14 @@ class ChooseSourceViewModel(private val apiService: ApiService,
         val currentSearchConf = searchConfDao.getSearchConfiguration()
         return allMovies.value?.map { MovieListItem(
             it.id,
-            it.en!!,
+            it.eng!!,
             getAllTitlesFromMovie(it),
             currentSearchConf.chosenSource == it.id)
         }!!.sortedBy { it.title }
     }
 
-    private fun getAllTitlesFromMovie(movie: MovieApi): String {
-        var allTitles = with(movie) { "$en $esp $fr $ger $it $pl $pt" }
+    private fun getAllTitlesFromMovie(movie: Movie): String {
+        var allTitles = with(movie) { "$eng $esp $fr $ger $it $pl $pt" }
         allTitles = allTitles.replace("null", "").lowercase()
         return allTitles
     }

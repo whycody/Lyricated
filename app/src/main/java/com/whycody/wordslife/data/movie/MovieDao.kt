@@ -1,7 +1,6 @@
 package com.whycody.wordslife.data.movie
 
-import androidx.room.Dao
-import androidx.room.Query
+import androidx.room.*
 import com.whycody.wordslife.data.Movie
 
 @Dao
@@ -15,4 +14,10 @@ interface MovieDao {
 
     @Query("SELECT * FROM movies")
     fun getAllMovies(): List<Movie>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMovies(movies: List<Movie>)
+
+    @Query("DELETE FROM movies")
+    fun deleteAllMovies()
 }

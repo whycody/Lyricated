@@ -10,13 +10,16 @@ import com.whycody.wordslife.data.app.configuration.AppConfigurationDao
 import com.whycody.wordslife.data.settings.SettingsDaoImpl
 import com.whycody.wordslife.search.SearchFragment
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), MainNavigation {
 
+    private val mainViewModel: MainViewModel by viewModel()
     private val appConfigurationDao: AppConfigurationDao by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         updateAppearance()
+        mainViewModel.checkDatabase()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if(savedInstanceState == null) showHomeFragment()

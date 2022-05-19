@@ -140,7 +140,7 @@ data class SortOption(
 
 @Entity(tableName = "movies")
 data class Movie(
-        @ColumnInfo(name = "movie_id") @PrimaryKey val movieId: String,
+        @ColumnInfo(name = "movie_id") @PrimaryKey val id: String,
         val lang: String,
         val type: String,
         val minutes: Int,
@@ -159,7 +159,6 @@ data class MoviesResponse(
 
 data class MovieApi(
         val id: String,
-        @SerializedName("original_lang")
         val lang: String,
         val type: String,
         val minutes: Int,

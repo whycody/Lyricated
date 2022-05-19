@@ -29,13 +29,13 @@ class LibraryHeaderFragment : Fragment() {
     }
 
     private fun observeMovie() =
-        viewModel.randomMovie.observe(requireActivity(), { updateMovie(it.en!!) })
+        viewModel.randomMovieTitle.observe(requireActivity()) { updateMovieTitle(it) }
 
-    private fun updateMovie(movie: String) {
+    private fun updateMovieTitle(movieTitle: String) {
         MainScope().launch {
             binding.movieView.startAnimation(movieAnim)
             delay(400)
-            binding.movie = movie
+            binding.movie = movieTitle
         }
     }
 

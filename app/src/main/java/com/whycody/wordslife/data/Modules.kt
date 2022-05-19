@@ -27,6 +27,7 @@ import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.library.LibraryViewModel
 import com.whycody.wordslife.library.most.viewed.LibraryHeaderViewModel
 import com.whycody.wordslife.library.settings.SettingsViewModel
+import com.whycody.wordslife.main.MainViewModel
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.configuration.ConfigurationViewModel
 import com.whycody.wordslife.search.filter.FilterViewModel
@@ -53,7 +54,6 @@ val dataModule = module {
     fun provideDatabase(application: Application): MyDatabase {
         return Room.databaseBuilder(application, MyDatabase::class.java, "MyDatabase")
                 .allowMainThreadQueries()
-                .createFromAsset("wordslife.db")
                 .build()
     }
 
@@ -114,6 +114,7 @@ val utilsModule = module {
 }
 
 val viewModelsModule = module {
+    viewModel { MainViewModel(get(), get(), get()) }
     viewModel { HomeViewModel(get(), get()) }
     viewModel { ChooseLanguageViewModel(get()) }
     viewModel { SearchViewModel(get(), get(), get(), get(), get()) }
