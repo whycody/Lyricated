@@ -62,4 +62,10 @@
     <string name="dontsave">No guardar</string>
     <string name="deletehistory">Eliminar la historia</string>
     <string name="deselectall">Deseleccionar todo</string>
+    <string name="difficulty">Dificultad</string>
+    <string name="easy">Fácil</string>
+    <string name="medium">Medio</string>
+    <string name="hard">Difícil</string>
+    <string name="next">Siguiente</string>
+    <string name="random">Aleatorio</string>
 </resources>

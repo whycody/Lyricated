@@ -12,6 +12,7 @@ import com.whycody.wordslife.data.filter.FilterDaoImpl
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.data.settings.SettingsDaoImpl
 import com.whycody.wordslife.data.sort.SortDaoImpl
+import com.whycody.wordslife.data.studymode.StudyModeDaoImpl
 import com.whycody.wordslife.search.SearchFragment
 import com.whycody.wordslife.search.translation.TranslationViewModel
 import java.io.Serializable
@@ -39,7 +40,9 @@ data class SearchConfiguration(
 data class AppConfiguration(
         var appearance: String = SettingsDaoImpl.DEFAULT,
         var educationalMaterials: String = SettingsDaoImpl.SHOW_EDU,
-        var history: String = SettingsDaoImpl.HISTORY)
+        var history: String = SettingsDaoImpl.SAVE_HISTORY,
+        var studyModeDifficulty: String = StudyModeDaoImpl.EASY,
+        var studyModeSource: String = StudyModeDaoImpl.RANDOM)
 
 data class ConfigurationItem(
         var name: String,
@@ -56,11 +59,6 @@ data class Translation(
         @Json(ignored = true) var numberOfUsages: Int = 0,
         @Json(ignored = true) var translationLangId: String? = null,
         @Json(ignored = true) var type: Int = TranslationViewModel.TRANSLATION)
-
-data class TranslationQuery(
-        val status: String,
-        val message: String,
-        val result: List<String>? = null)
 
 data class LyricItem(
         val lyricId: Int,

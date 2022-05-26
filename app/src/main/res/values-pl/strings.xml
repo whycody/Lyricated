@@ -62,4 +62,10 @@
     <string name="dontsave">Nie zapisuj</string>
     <string name="deletehistory">Wyczyść historię</string>
     <string name="deselectall">Odznacz wszystkie</string>
+    <string name="difficulty">Poziom trudności</string>
+    <string name="easy">Łatwy</string>
+    <string name="medium">Średni</string>
+    <string name="hard">Ciężki</string>
+    <string name="next">Dalej</string>
+    <string name="random">Losowe</string>
 </resources>

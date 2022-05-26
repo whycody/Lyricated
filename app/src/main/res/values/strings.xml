@@ -62,4 +62,10 @@
     <string name="dontsave">Don\'t save</string>
     <string name="deletehistory">Delete search history</string>
     <string name="deselectall">Deselect all</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="next">Next</string>
+    <string name="random">Random</string>
 </resources>

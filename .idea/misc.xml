@@ -23,15 +23,18 @@
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/ripple_language_item.xml" value="0.176" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/ripple_translation_item.xml" value="0.26205128205128203" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/ripple_vocabulary_backgr.xml" value="0.26205128205128203" />
+        <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/s_banner_lyricated.xml" value="0.176" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/s_clear_btn.xml" value="0.176" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/s_conf_item.xml" value="0.26205128205128203" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/s_language_rectangle.xml" value="0.26205128205128203" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/s_library_background.xml" value="0.2703125" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/s_library_background_color.xml" value="0.2703125" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/s_lyric_background.xml" value="0.26205128205128203" />
+        <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/s_next_btn.xml" value="0.2" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/s_rounded_dialog.xml" value="0.26205128205128203" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/s_search_alpha.xml" value="0.26205128205128203" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/s_search_button.xml" value="0.26205128205128203" />
+        <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/s_search_rectangle.xml" value="0.176" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/s_time_backgr.xml" value="0.26205128205128203" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout-night/item_history.xml" value="0.25" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout-night/item_language.xml" value="0.25" />
@@ -42,7 +45,7 @@
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_filter.xml" value="0.22037037037037038" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_header.xml" value="0.24615384615384617" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_history.xml" value="0.264" />
-        <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_home.xml" value="0.22962962962962963" />
+        <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_library.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_library_header.xml" value="0.25" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_lyric.xml" value="0.225" />
@@ -58,6 +61,7 @@
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_search_result.xml" value="0.22037037037037038" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_settings.xml" value="0.25" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_sort.xml" value="0.22037037037037038" />
+        <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_study_mode_settings.xml" value="0.25" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_translation.xml" value="0.22037037037037038" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_vocabulary.xml" value="0.22037037037037038" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/item_configuration.xml" value="0.225" />

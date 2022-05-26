@@ -23,11 +23,14 @@ import com.whycody.wordslife.data.settings.SettingsDao
 import com.whycody.wordslife.data.settings.SettingsDaoImpl
 import com.whycody.wordslife.data.sort.SortDao
 import com.whycody.wordslife.data.sort.SortDaoImpl
+import com.whycody.wordslife.data.studymode.StudyModeDao
+import com.whycody.wordslife.data.studymode.StudyModeDaoImpl
 import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.library.LibraryViewModel
 import com.whycody.wordslife.library.history.HistoryViewModel
 import com.whycody.wordslife.library.most.viewed.LibraryHeaderViewModel
 import com.whycody.wordslife.library.settings.SettingsViewModel
+import com.whycody.wordslife.library.studymode.StudyModeSettingsViewModel
 import com.whycody.wordslife.main.MainViewModel
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.configuration.ConfigurationViewModel
@@ -103,6 +106,10 @@ val settingsModule = module {
     single<SettingsDao> { SettingsDaoImpl(get(), get(), get())}
 }
 
+val studyModeModule = module {
+    single<StudyModeDao> { StudyModeDaoImpl(get(), get()) }
+}
+
 val configurationModule = module {
     single<SortDao> { SortDaoImpl(get(), get()) }
     single<FilterDao> { FilterDaoImpl(get(), get(), get()) }
@@ -133,4 +140,5 @@ val viewModelsModule = module {
     viewModel { LibraryHeaderViewModel(get()) }
     viewModel { SettingsViewModel(get(), get(), get()) }
     viewModel { HistoryViewModel(get()) }
+    viewModel { StudyModeSettingsViewModel(get(), get()) }
 }
