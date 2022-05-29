@@ -1,4 +1,4 @@
-package com.whycody.wordslife.library.studymode
+package com.whycody.wordslife.library.studymode.settings
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

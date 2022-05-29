@@ -10,4 +10,6 @@ interface LyricItemMapper {
     fun getExtendedLyricItemFromLyricItem(lyricItem: LyricItem): ExtendedLyricItem
 
     fun getLyricItemFromLyric(lyric: Lyric, findLyricsResponse: FindLyricsResponse): LyricItem
+
+    fun getExtendedLyricItemFromLyric(lyric: Lyric): ExtendedLyricItem
 }

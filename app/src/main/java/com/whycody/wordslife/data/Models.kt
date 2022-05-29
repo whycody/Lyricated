@@ -184,6 +184,15 @@ data class FindLyricsResponse(
         val similarResults: List<Lyric>
 )
 
+data class GetRandomLyricBody(
+        @SerializedName("lyric_length")
+        var lyricLength: Int,
+        @SerializedName("main_language_id")
+        var mainLanguageId: String,
+        @SerializedName("translation_language_id")
+        var translationLanguageId: String
+)
+
 data class FindLyricsBody(
         @SerializedName("searched_phrase")
         var searchedPhrase: String,

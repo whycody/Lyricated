@@ -53,7 +53,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/wowBtn"
+                android:id="@+id/nextBtn"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:text="@string/next"

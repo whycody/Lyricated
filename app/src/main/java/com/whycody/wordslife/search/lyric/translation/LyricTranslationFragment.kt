@@ -41,14 +41,14 @@ class LyricTranslationFragment : Fragment() {
         else getString(R.string.translation)
 
     private fun observeTranslationItem(binding: FragmentLyricTranslationBinding) =
-        lyricTranslationViewModel.getTranslationItem().observe(activity as MainActivity, {
+        lyricTranslationViewModel.getTranslationItem().observe(viewLifecycleOwner) {
             binding.translationItem = it
-        })
+        }
 
     private fun observeExtendedLyricItem() =
-        lyricViewModel.getCurrentExtendedLyricItem().observe(activity as MainActivity, {
+        lyricViewModel.getCurrentExtendedLyricItem().observe(viewLifecycleOwner) {
             lyricTranslationViewModel.findTranslation(it, typeOfPhrase)
-        })
+        }
 
     companion object {
         const val TYPE_OF_PHRASE = "type of phrase"

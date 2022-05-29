@@ -11,7 +11,7 @@ import com.whycody.wordslife.library.history.HistoryFragment
 import com.whycody.wordslife.library.recycler.LibraryAdapter
 import com.whycody.wordslife.library.recycler.LibraryInteractor
 import com.whycody.wordslife.library.settings.SettingsFragment
-import com.whycody.wordslife.library.studymode.StudyModeSettingsFragment
+import com.whycody.wordslife.library.studymode.settings.StudyModeSettingsFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LibraryFragment : Fragment(), LibraryInteractor {

@@ -1,8 +1,6 @@
 package com.whycody.wordslife.data.api
 
-import com.whycody.wordslife.data.FindLyricsBody
-import com.whycody.wordslife.data.FindLyricsResponse
-import com.whycody.wordslife.data.MoviesResponse
+import com.whycody.wordslife.data.*
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -14,6 +12,9 @@ interface ApiService {
 
     @GET("get_movies")
     suspend fun getAllMovies(): Response<MoviesResponse>
+
+    @POST("get_random_lyric")
+    suspend fun getRandomLyric(@Body getRandomLyricBody: GetRandomLyricBody): Response<Lyric>
 
     @POST("find_lyrics")
     suspend fun findLyrics(@Body findLyricsBody: FindLyricsBody): Response<FindLyricsResponse>

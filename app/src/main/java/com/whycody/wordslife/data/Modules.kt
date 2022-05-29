@@ -30,7 +30,8 @@ import com.whycody.wordslife.library.LibraryViewModel
 import com.whycody.wordslife.library.history.HistoryViewModel
 import com.whycody.wordslife.library.most.viewed.LibraryHeaderViewModel
 import com.whycody.wordslife.library.settings.SettingsViewModel
-import com.whycody.wordslife.library.studymode.StudyModeSettingsViewModel
+import com.whycody.wordslife.library.studymode.StudyModeViewModel
+import com.whycody.wordslife.library.studymode.settings.StudyModeSettingsViewModel
 import com.whycody.wordslife.main.MainViewModel
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.configuration.ConfigurationViewModel
@@ -118,7 +119,7 @@ val configurationModule = module {
 
 val utilsModule = module {
     single<SearchResultSpanBuilder> { SearchResultSpanBuilderImpl(get()) }
-    single<LyricItemMapper> { LyricItemMapperImpl(get()) }
+    single<LyricItemMapper> { LyricItemMapperImpl(get(), get()) }
 }
 
 val viewModelsModule = module {
@@ -141,4 +142,5 @@ val viewModelsModule = module {
     viewModel { SettingsViewModel(get(), get(), get()) }
     viewModel { HistoryViewModel(get()) }
     viewModel { StudyModeSettingsViewModel(get(), get()) }
+    viewModel { StudyModeViewModel(get(), get(), get()) }
 }

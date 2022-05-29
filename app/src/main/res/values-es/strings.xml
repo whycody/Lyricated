@@ -68,4 +68,6 @@
     <string name="hard">Difícil</string>
     <string name="next">Siguiente</string>
     <string name="random">Aleatorio</string>
+    <string name="reveal_word">Revelar palabra</string>
+    <string name="show_translation">Mostrar traducción</string>
 </resources>

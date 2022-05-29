@@ -1,4 +1,5 @@
 <resources>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="app_name">Lyricated</string>
     <string name="english">english</string>
     <string name="polish">polish</string>
@@ -68,4 +69,6 @@
     <string name="hard">Hard</string>
     <string name="next">Next</string>
     <string name="random">Random</string>
+    <string name="reveal_word">Reveal word</string>
+    <string name="show_translation">Show translation</string>
 </resources>
