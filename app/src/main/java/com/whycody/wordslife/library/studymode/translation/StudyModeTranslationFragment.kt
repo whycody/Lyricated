@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentStudyModeTranslationBinding
 import com.whycody.wordslife.library.studymode.StudyModeViewModel
@@ -47,9 +48,15 @@ class StudyModeTranslationFragment : Fragment() {
 
     private fun observeNumberOfShownWords() =
         studyModeViewModel.getNumberOfShownWords().observe(viewLifecycleOwner) {
-            binding.translationIsShown = typeOfPhrase == LyricTranslationFragment.TRANSLATION_PHRASE ||
+            val translationIsShown = typeOfPhrase == LyricTranslationFragment.TRANSLATION_PHRASE ||
                     it == studyModeViewModel.getNumberOfAvailableWords().value!!
+            binding.translationIsShown = translationIsShown
+            if(it == studyModeViewModel.getNumberOfAvailableWords().value!!) startPulseAnim()
         }
+
+    private fun startPulseAnim() =
+        binding.flagImage.startAnimation(AnimationUtils
+            .loadAnimation(requireContext(), R.anim.flag_pulse_anim))
 
     private fun observeTranslationItem() = lyricTranslationViewModel.getTranslationItem()
         .observe(viewLifecycleOwner) { binding.translationItem = it }
