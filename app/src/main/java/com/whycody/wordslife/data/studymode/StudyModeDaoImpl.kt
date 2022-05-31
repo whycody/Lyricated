@@ -28,7 +28,7 @@ class StudyModeDaoImpl(private val context: Context,
                     SortOption(RANDOM, context.getString(R.string.random)),
                     SortOption(HISTORY, context.getString(R.string.history)),
                     SortOption(SAVED, context.getString(R.string.saved))
-                ), expanded = false))
+                )))
         checkCurrentSettings(studyModeSettingsItems)
         return studyModeSettingsItems
     }

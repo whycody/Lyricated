@@ -12,15 +12,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/app_padding"
+        android:paddingBottom="20dp"
         tools:context=".search.lyric.movie.MovieFragment"
         android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/headerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorSecondaryVariant"
-            android:paddingTop="40dp"
-            android:paddingBottom="60dp"
+            android:background="@drawable/s_study_mode_translation"
+            android:paddingBottom="@dimen/app_padding"
             android:orientation="vertical">
 
             <LinearLayout

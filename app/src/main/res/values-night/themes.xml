@@ -4,9 +4,9 @@
         <item name="colorPrimary">@color/light_blue_night</item>
         <item name="colorPrimaryVariant">@color/lyric_gray</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorPrimarySurface">@color/light_gray_night</item>
+        <item name="colorPrimarySurface">@color/gray_night</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/background_gray_night</item>
+        <item name="colorSecondary">@color/lyric_gray_night</item>
         <item name="colorSecondaryVariant">@color/gray_night</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="colorAccent">@color/light_blue_night</item>
@@ -14,7 +14,7 @@
         <item name="colorOnSurface">@color/paragraph_gray_night</item>
         <item name="colorControlHighlight">@color/lyric_gray_night</item>
 
-        <item name="android:windowBackground">?attr/colorSecondary</item>
+        <item name="android:windowBackground">@color/lyric_gray_night</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSecondaryVariant</item>
         <item name="fontFamily">@font/montserrat</item>
     </style>
@@ -25,6 +25,7 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
+        <item name="colorControlHighlight">@color/lyric_gray_night</item>
         <item name="colorAccent">@color/light_blue_night</item>
     </style>
 </resources>

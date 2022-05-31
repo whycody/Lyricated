@@ -18,7 +18,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@{position%2 == 0 ? @color/background_gray_night : @color/gray_night}"
+        android:background="@{position%2 == 0 ? @android:color/transparent : @color/gray_night}"
         android:onClick="@{()->interactor.onHistoryItemClick(historyItem)}">
 
         <LinearLayout

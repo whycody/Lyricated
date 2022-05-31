@@ -21,7 +21,7 @@
         android:orientation="vertical"
         android:focusable="true"
         android:clickable="true"
-        android:background="@{position%2 == 0 ? @color/background_gray_night : @color/gray_night}"
+        android:background="@{position%2 == 0 ? @android:color/transparent : @color/gray_night}"
         android:onClick="@{()->chooseLanguageInteractor.onLanguageClick(language.id)}">
 
         <LinearLayout
