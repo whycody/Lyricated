@@ -79,7 +79,7 @@ class VocabularyFragment : Fragment(), VocabularyInteractor {
             vocabularyViewModel.findVocabulary(it)
         }
 
-    override fun wordClicked(word: String) {
+    override fun wordClicked(index:Int, word: String) {
         languageDao.setCurrentMainLanguage(currentExtendedLyricItem.languages.mainLangId)
         searchViewModel.searchWord(word)
     }

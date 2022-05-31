@@ -26,7 +26,7 @@ class VocabularyAdapter(private val interactor: VocabularyInteractor): ListAdapt
     inner class VocabularyHolder(private val binding: ViewDataBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun setupData(vocabularyItem: VocabularyItem) {
-            binding.setVariable(BR.word, vocabularyItem.word)
+            binding.setVariable(BR.vocabularyItem, vocabularyItem)
             binding.setVariable(BR.interactor, interactor)
         }
     }

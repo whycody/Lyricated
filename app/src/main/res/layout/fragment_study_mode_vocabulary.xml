@@ -17,6 +17,7 @@
         android:id="@+id/studyModeVocabularyRecycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:overScrollMode="never"
         android:nestedScrollingEnabled="false"/>
 
 </LinearLayout>

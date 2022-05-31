@@ -7,12 +7,14 @@ import com.whycody.wordslife.data.ExtendedLyricItem
 import com.whycody.wordslife.data.GetRandomLyricBody
 import com.whycody.wordslife.data.api.ApiService
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
+import com.whycody.wordslife.search.lyric.vocabulary.VocabularyInteractor
 import com.whycody.wordslife.search.mapper.LyricItemMapper
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class StudyModeViewModel(private val searchConfigurationDao: SearchConfigurationDao,
-    private val apiService: ApiService, private val lyricItemMapper: LyricItemMapper): ViewModel() {
+    private val apiService: ApiService, private val lyricItemMapper: LyricItemMapper): ViewModel(),
+    VocabularyInteractor{
 
     private val extendedLyricItem = MutableLiveData<ExtendedLyricItem>()
     private val numberOfAvailableWords = MutableLiveData(1)
@@ -75,4 +77,10 @@ class StudyModeViewModel(private val searchConfigurationDao: SearchConfiguration
 
     private fun getNumberOfWords() = extendedLyricItem.value!!.mainLangSentence?.trim()?.
         split(" ")?.filter { it.any { character -> character.isLetter() } }?.size
+
+    override fun wordClicked(index: Int, word: String) {
+        if(shownWords.value!!.contains(index)) return
+        numberOfShownWords.postValue(numberOfShownWords.value!!+1)
+        shownWords.postValue(shownWords.value!!.plus(index))
+    }
 }

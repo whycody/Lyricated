@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
@@ -22,11 +23,12 @@ class StudyModeVocabularyFragment : Fragment() {
     private lateinit var binding: FragmentStudyModeVocabularyBinding
     private val vocabularyViewModel: VocabularyViewModel by inject()
     private val studyModeViewModel: StudyModeViewModel by sharedViewModel()
-    private val adapter = StudyModeVocabularyAdapter()
+    private lateinit var adapter: StudyModeVocabularyAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = FragmentStudyModeVocabularyBinding.inflate(inflater)
+        adapter = StudyModeVocabularyAdapter(studyModeViewModel)
         addHeader()
         setupRecycler()
         observeExtendedLyricItem()

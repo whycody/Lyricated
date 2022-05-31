@@ -3,8 +3,8 @@
 
     <data>
         <variable
-            name="word"
-            type="java.lang.String" />
+            name="vocabularyItem"
+            type="com.whycody.wordslife.data.VocabularyItem" />
         <variable
             name="interactor"
             type="com.whycody.wordslife.search.lyric.vocabulary.VocabularyInteractor" />
@@ -21,13 +21,13 @@
             android:id="@+id/wordText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{word}"
+            android:text="@{vocabularyItem.word}"
             android:clickable="true"
             android:focusable="true"
             android:textSize="15sp"
             android:paddingHorizontal="11dp"
             android:paddingVertical="8dp"
-            android:onClick="@{()->interactor.wordClicked(word)}"
+            android:onClick="@{()->interactor.wordClicked(vocabularyItem.index, vocabularyItem.word)}"
             android:textColor="?attr/colorPrimaryDark"
             android:background="@drawable/ripple_vocabulary_backgr"/>
 
