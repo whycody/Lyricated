@@ -1,6 +1,5 @@
 package com.whycody.wordslife.library.studymode
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,10 +15,9 @@ class StudyModeViewModel(private val searchConfigurationDao: SearchConfiguration
     private val apiService: ApiService, private val lyricItemMapper: LyricItemMapper): ViewModel() {
 
     private val extendedLyricItem = MutableLiveData<ExtendedLyricItem>()
-    private val numberOfAvailableWords = MutableLiveData(0)
+    private val numberOfAvailableWords = MutableLiveData(1)
     private val numberOfShownWords = MutableLiveData(0)
     private val shownWords = MutableLiveData(emptyList<Int>())
-    private val translationIsShown = MutableLiveData(false)
 
     fun getExtendedLyricItem() = extendedLyricItem
 
@@ -27,15 +25,23 @@ class StudyModeViewModel(private val searchConfigurationDao: SearchConfiguration
 
     fun getNumberOfShownWords() = numberOfShownWords
 
+    fun getShownWords() = shownWords
+
     fun showNextLyricItem() {
         tryGetRandomLyricFromApi()
         numberOfShownWords.postValue(0)
-        translationIsShown.postValue(false)
+        shownWords.postValue(emptyList())
     }
 
-    fun setNumberOfAvailableWords(availableWords: Int) {
-        numberOfAvailableWords.postValue(availableWords)
-        if(availableWords == 0) shownWords.postValue(emptyList())
+    fun nextBtnClicked() {
+        if(numberOfAvailableWords.value==numberOfShownWords.value)
+            showNextLyricItem()
+        else showAllWords()
+    }
+
+    private fun showAllWords() {
+        numberOfShownWords.postValue(numberOfAvailableWords.value!!)
+        this.shownWords.postValue((0 until numberOfAvailableWords.value!!).toList())
     }
 
     fun revealWordBtnClicked() {
@@ -54,15 +60,19 @@ class StudyModeViewModel(private val searchConfigurationDao: SearchConfiguration
     private fun tryGetRandomLyricFromApi() {
         viewModelScope.launch {
             try { sendInquiryToApi()
-            } catch (e: Exception) { Log.d("MOJTAG", e.stackTraceToString()) }
+            } catch (e: Exception) { }
         }
     }
 
     private suspend fun sendInquiryToApi() {
         val currentSearchConf = searchConfigurationDao.getSearchConfiguration()
-        val getRandomLyricBody = GetRandomLyricBody(25, currentSearchConf.lyricLanguages.mainLangId,
+        val getRandomLyricBody = GetRandomLyricBody(24, currentSearchConf.lyricLanguages.mainLangId,
             currentSearchConf.lyricLanguages.translationLangId)
         val response = apiService.getRandomLyric(getRandomLyricBody)
-        extendedLyricItem.postValue(lyricItemMapper.getExtendedLyricItemFromLyric(response.body()!!))
+        extendedLyricItem.value = lyricItemMapper.getExtendedLyricItemFromLyric(response.body()!!)
+        numberOfAvailableWords.postValue(getNumberOfWords())
     }
+
+    private fun getNumberOfWords() = extendedLyricItem.value!!.mainLangSentence?.trim()?.
+        split(" ")?.filter { it.any { character -> character.isLetter() } }?.size
 }

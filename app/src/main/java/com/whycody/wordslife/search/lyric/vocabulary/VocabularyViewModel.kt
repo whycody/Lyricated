@@ -8,7 +8,7 @@ import java.util.*
 
 class VocabularyViewModel: ViewModel() {
 
-    private val vocabularyItems = MutableLiveData<List<VocabularyItem>>()
+    private val vocabularyItems = MutableLiveData<List<VocabularyItem>>(emptyList())
 
     fun getVocabularyItems() = vocabularyItems
 

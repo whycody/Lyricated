@@ -112,6 +112,12 @@ data class VocabularyItem(
         val index: Int,
         val word: String)
 
+data class ExtendedVocabularyItem(
+        val index: Int,
+        val word: String,
+        val shown: Boolean)
+
+
 data class TranslationItem(
         val drawable: Drawable,
         val translatedSentence: String?)

@@ -1,50 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/fragmentsContainer"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="?attr/colorSecondaryVariant"
-    tools:context=".library.studymode.StudyModeFragment">
+<layout>
 
-    <fragment
-        android:id="@+id/studyModeMovieFragment"
+    <data>
+        <variable
+            name="viewModel"
+            type="com.whycody.wordslife.library.studymode.StudyModeViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/fragmentsContainer"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.whycody.wordslife.library.studymode.movie.StudyModeMovieFragment"
-        android:layout_marginBottom="20dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="?attr/colorSecondaryVariant"
+        tools:context=".library.studymode.StudyModeFragment">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        <fragment
+            android:id="@+id/studyModeMovieFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.whycody.wordslife.library.studymode.movie.StudyModeMovieFragment"
+            android:layout_marginBottom="20dp"/>
 
-    <Button
-        android:id="@+id/revealWordBtn"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="bottom"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        android:textColor="?attr/colorAccent"
-        android:background="@android:color/transparent"
-        android:layout_marginHorizontal="@dimen/app_padding"
-        android:layout_marginBottom="35dp"
-        android:text="@string/reveal_word" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
-    <Button
-        android:id="@+id/showTranslationBtn"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="bottom"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:background="@drawable/s_show_translation_btn"
-        android:layout_marginHorizontal="@dimen/app_padding"
-        android:text="@string/show_translation"
-        android:layout_marginBottom="30dp"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="bottom"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="?attr/colorAccent"
+            android:alpha="@{viewModel.numberOfAvailableWords == viewModel.numberOfShownWords ? 0.3f : 1f}"
+            android:enabled="@{viewModel.numberOfAvailableWords != viewModel.numberOfShownWords}"
+            android:background="@android:color/transparent"
+            android:onClick="@{() -> viewModel.revealWordBtnClicked()}"
+            android:layout_marginHorizontal="@dimen/app_padding"
+            android:layout_marginBottom="35dp"
+            android:text="@string/reveal_word" />
 
-</LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="bottom"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:background="@drawable/s_show_translation_btn"
+            android:layout_marginHorizontal="@dimen/app_padding"
+            android:onClick="@{() -> viewModel.nextBtnClicked()}"
+            android:text="@{viewModel.numberOfAvailableWords == viewModel.numberOfShownWords ? @string/next : @string/show_translation}"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+
+</layout>

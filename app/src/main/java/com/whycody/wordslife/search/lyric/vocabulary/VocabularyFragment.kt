@@ -74,7 +74,7 @@ class VocabularyFragment : Fragment(), VocabularyInteractor {
     }
 
     private fun observeExtendedLyricItem() = lyricViewModel.getCurrentExtendedLyricItem()
-        .observe(activity as MainActivity) {
+        .observe(viewLifecycleOwner) {
             currentExtendedLyricItem = it
             vocabularyViewModel.findVocabulary(it)
         }

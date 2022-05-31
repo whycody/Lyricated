@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="word"
+            type="java.lang.String" />
+        <variable
+            name="interactor"
+            type="com.whycody.wordslife.search.lyric.vocabulary.VocabularyInteractor" />
+        <variable
+            name="shown"
+            type="boolean" />
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="7dp">
+
+        <TextView
+            android:id="@+id/wordText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{word}"
+            android:clickable="true"
+            android:focusable="true"
+            android:textSize="15sp"
+            android:paddingHorizontal="11dp"
+            android:paddingVertical="8dp"
+            android:onClick="@{()->interactor.wordClicked(word)}"
+            android:textColor="?attr/colorPrimaryDark"
+            android:background="@drawable/ripple_vocabulary_backgr"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ripple_vocabulary_backgr"
+            app:layout_constraintLeft_toLeftOf="@id/wordText"
+            app:layout_constraintTop_toTopOf="@id/wordText"
+            app:layout_constraintRight_toRightOf="@id/wordText"
+            app:layout_constraintBottom_toBottomOf="@id/wordText"
+            android:visibility="@{shown ? View.GONE : View.VISIBLE}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

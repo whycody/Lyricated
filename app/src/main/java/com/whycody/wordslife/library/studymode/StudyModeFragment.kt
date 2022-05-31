@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.whycody.wordslife.R
 import com.whycody.wordslife.databinding.FragmentStudyModeBinding
 import com.whycody.wordslife.library.studymode.translation.StudyModeTranslationFragment
+import com.whycody.wordslife.library.studymode.vocabulary.StudyModeVocabularyFragment
 import com.whycody.wordslife.search.lyric.translation.LyricTranslationFragment
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -20,7 +21,8 @@ class StudyModeFragment : Fragment() {
                               container: ViewGroup?, savedInstanceState: Bundle?): View {
         checkSavedInstanceState(savedInstanceState)
         binding = FragmentStudyModeBinding.inflate(inflater)
-        binding.revealWordBtn.setOnClickListener{ studyModeViewModel.revealWordBtnClicked() }
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = studyModeViewModel
         studyModeViewModel.showNextLyricItem()
         return binding.root
     }
@@ -33,9 +35,10 @@ class StudyModeFragment : Fragment() {
     private fun addFragments() {
         val fragmentTransaction = childFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragmentsContainer,
-            StudyModeTranslationFragment.newInstance(LyricTranslationFragment.MAIN_PHRASE))
-        fragmentTransaction.add(R.id.fragmentsContainer,
             StudyModeTranslationFragment.newInstance(LyricTranslationFragment.TRANSLATION_PHRASE))
+        fragmentTransaction.add(R.id.fragmentsContainer,
+            StudyModeTranslationFragment.newInstance(LyricTranslationFragment.MAIN_PHRASE))
+        fragmentTransaction.add(R.id.fragmentsContainer, StudyModeVocabularyFragment())
         fragmentTransaction.commit()
     }
 

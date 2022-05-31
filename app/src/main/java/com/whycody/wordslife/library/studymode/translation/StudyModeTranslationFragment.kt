@@ -47,20 +47,15 @@ class StudyModeTranslationFragment : Fragment() {
 
     private fun observeNumberOfShownWords() =
         studyModeViewModel.getNumberOfShownWords().observe(viewLifecycleOwner) {
-            binding.translationIsShown = typeOfPhrase == LyricTranslationFragment.MAIN_PHRASE ||
+            binding.translationIsShown = typeOfPhrase == LyricTranslationFragment.TRANSLATION_PHRASE ||
                     it == studyModeViewModel.getNumberOfAvailableWords().value!!
         }
 
-    private fun observeTranslationItem() =
-        lyricTranslationViewModel.getTranslationItem().observe(viewLifecycleOwner) {
-            binding.translationItem = it
-        }
+    private fun observeTranslationItem() = lyricTranslationViewModel.getTranslationItem()
+        .observe(viewLifecycleOwner) { binding.translationItem = it }
 
-    private fun observeExtendedLyricItem() {
-        studyModeViewModel.getExtendedLyricItem().observe(viewLifecycleOwner) {
-            lyricTranslationViewModel.findTranslation(it, typeOfPhrase)
-        }
-    }
+    private fun observeExtendedLyricItem() = studyModeViewModel.getExtendedLyricItem()
+        .observe(viewLifecycleOwner) { lyricTranslationViewModel.findTranslation(it, typeOfPhrase) }
 
     companion object {
         fun newInstance(typeOfPhrase: String): StudyModeTranslationFragment {

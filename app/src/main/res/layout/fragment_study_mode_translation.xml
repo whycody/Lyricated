@@ -59,12 +59,13 @@
                 app:layout_constraintLeft_toRightOf="@id/flagImage"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 android:paddingStart="12dp"/>
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@android:color/black"
+                android:background="@drawable/s_lyric_background"
                 app:layout_constraintLeft_toLeftOf="@id/translationText"
                 app:layout_constraintRight_toRightOf="@id/translationText"
                 app:layout_constraintTop_toTopOf="@id/translationText"
