@@ -98,7 +98,7 @@ class StudyModeViewModel(private val searchConfigurationDao: SearchConfiguration
     private fun getCurrentDifficulty() = appConfigurationDao.getAppConfiguration().studyModeDifficulty
 
     private fun revealPartOfWords(numberOfWords: Int) {
-        val numberOfRevealedWords = (numberOfWords.times(0.5f)).toInt()
+        val numberOfRevealedWords = (numberOfWords.times(0.4f)).toInt()
         numberOfShownWords.postValue(numberOfRevealedWords)
         postShownWordsList(numberOfWords, numberOfRevealedWords)
     }
