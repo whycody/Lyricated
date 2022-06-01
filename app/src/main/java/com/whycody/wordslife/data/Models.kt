@@ -191,8 +191,6 @@ data class FindLyricsResponse(
 )
 
 data class GetRandomLyricBody(
-        @SerializedName("lyric_length")
-        var lyricLength: Int,
         @SerializedName("main_language_id")
         var mainLanguageId: String,
         @SerializedName("translation_language_id")
