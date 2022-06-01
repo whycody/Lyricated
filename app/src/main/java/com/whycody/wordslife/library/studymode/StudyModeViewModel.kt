@@ -16,10 +16,11 @@ class StudyModeViewModel(private val searchConfigurationDao: SearchConfiguration
     private val apiService: ApiService, private val lyricItemMapper: LyricItemMapper): ViewModel(),
     VocabularyInteractor{
 
-    private val extendedLyricItem = MutableLiveData<ExtendedLyricItem>()
+    private val extendedLyricItem = MutableLiveData<ExtendedLyricItem?>(null)
     private val numberOfAvailableWords = MutableLiveData(1)
     private val numberOfShownWords = MutableLiveData(0)
     private val shownWords = MutableLiveData(emptyList<Int>())
+    private val loadingNextLyricItem = MutableLiveData(true)
 
     fun getExtendedLyricItem() = extendedLyricItem
 
@@ -29,16 +30,20 @@ class StudyModeViewModel(private val searchConfigurationDao: SearchConfiguration
 
     fun getShownWords() = shownWords
 
+    fun getLoadingNextLyricItem() = loadingNextLyricItem
+
     fun showNextLyricItem() {
         tryGetRandomLyricFromApi()
         numberOfShownWords.postValue(0)
         shownWords.postValue(emptyList())
+        loadingNextLyricItem.postValue(false)
     }
 
     fun nextBtnClicked() {
-        if(numberOfAvailableWords.value==numberOfShownWords.value)
-            showNextLyricItem()
-        else showAllWords()
+        if(numberOfAvailableWords.value==numberOfShownWords.value) {
+            extendedLyricItem.postValue(null)
+            loadingNextLyricItem.postValue(true)
+        } else showAllWords()
     }
 
     private fun showAllWords() {

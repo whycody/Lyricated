@@ -70,4 +70,7 @@
     <string name="random">Aleatorio</string>
     <string name="reveal_word">Revelar palabra</string>
     <string name="show_translation">Mostrar traducción</string>
+    <string name="loading">cargando resultado...</string>
+    <string name="tryto">intenta</string>
+    <string name="translate">traducir</string>
 </resources>

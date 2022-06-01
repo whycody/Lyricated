@@ -70,4 +70,7 @@
     <string name="random">Losowe</string>
     <string name="reveal_word">Odsłoń wyraz</string>
     <string name="show_translation">Pokaż tłumaczenie</string>
+    <string name="loading">ładowanie napisu...</string>
+    <string name="tryto">spróbuj</string>
+    <string name="translate">przetłumaczyć</string>
 </resources>

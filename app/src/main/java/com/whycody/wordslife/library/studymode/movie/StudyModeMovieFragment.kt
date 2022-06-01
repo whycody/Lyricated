@@ -28,6 +28,7 @@ class StudyModeMovieFragment : Fragment() {
 
     private fun observeExtendedLyricItem() {
         studyModeViewModel.getExtendedLyricItem().observe(viewLifecycleOwner) {
+            if(it==null) return@observe
             movieViewModel.findMovie(it)
         }
     }

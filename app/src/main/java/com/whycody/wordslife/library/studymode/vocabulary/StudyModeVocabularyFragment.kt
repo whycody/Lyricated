@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
@@ -60,7 +59,10 @@ class StudyModeVocabularyFragment : Fragment() {
     }
 
     private fun observeExtendedLyricItem() = studyModeViewModel.getExtendedLyricItem()
-        .observe(viewLifecycleOwner) { vocabularyViewModel.findVocabulary(it) }
+        .observe(viewLifecycleOwner) {
+            if(it==null) return@observe
+            vocabularyViewModel.findVocabulary(it)
+        }
 
     private fun observeVocabularyItems() = vocabularyViewModel.getVocabularyItems()
         .observe(viewLifecycleOwner) { refreshVocabulary() }

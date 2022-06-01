@@ -62,7 +62,10 @@ class StudyModeTranslationFragment : Fragment() {
         .observe(viewLifecycleOwner) { binding.translationItem = it }
 
     private fun observeExtendedLyricItem() = studyModeViewModel.getExtendedLyricItem()
-        .observe(viewLifecycleOwner) { lyricTranslationViewModel.findTranslation(it, typeOfPhrase) }
+        .observe(viewLifecycleOwner) {
+            if(it==null) return@observe
+            lyricTranslationViewModel.findTranslation(it, typeOfPhrase)
+        }
 
     companion object {
         fun newInstance(typeOfPhrase: String): StudyModeTranslationFragment {
