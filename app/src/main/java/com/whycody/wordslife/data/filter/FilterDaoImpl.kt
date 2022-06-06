@@ -5,12 +5,12 @@ import com.whycody.wordslife.R
 import com.whycody.wordslife.data.Movie
 import com.whycody.wordslife.data.SortItem
 import com.whycody.wordslife.data.SortOption
-import com.whycody.wordslife.data.movie.MovieDao
+import com.whycody.wordslife.data.movie.MovieRepository
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 
 class FilterDaoImpl(private val context: Context,
                     private val searchConfigurationDao: SearchConfigurationDao,
-                    private val movieDao: MovieDao): FilterDao {
+                    private val movieRepository: MovieRepository): FilterDao {
 
     override fun getFilterItems(): List<SortItem> {
         val filterItems = mutableListOf<SortItem>()
@@ -32,7 +32,7 @@ class FilterDaoImpl(private val context: Context,
         val currentSearchConf = searchConfigurationDao.getSearchConfiguration()
         if(!currentSearchConf.checkedFilters.contains(CHOOSE_SOURCE))
             return context.getString(R.string.choose_source)
-        val movie = movieDao.getMovieWithId(currentSearchConf.chosenSource!!)
+        val movie = movieRepository.getMovieWithId(currentSearchConf.chosenSource!!)
         return "${movie.eng!!} (${getTypeOfMovie(movie)})"
     }
 

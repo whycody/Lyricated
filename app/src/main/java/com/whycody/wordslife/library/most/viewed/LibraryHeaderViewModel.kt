@@ -2,14 +2,14 @@ package com.whycody.wordslife.library.most.viewed
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.whycody.wordslife.data.movie.MovieDao
+import com.whycody.wordslife.data.movie.MovieRepository
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class LibraryHeaderViewModel(private val movieDao: MovieDao): ViewModel() {
+class LibraryHeaderViewModel(private val movieRepository: MovieRepository): ViewModel() {
 
-    private var allMovies = movieDao.getAllMovies()
+    private var allMovies = movieRepository.getAllMovies()
     val randomMovieTitle = MutableLiveData<String>()
 
     init {
@@ -26,8 +26,7 @@ class LibraryHeaderViewModel(private val movieDao: MovieDao): ViewModel() {
 
     private fun updateMovieTitle() =
         if(allMovies.isEmpty()) {
-            allMovies = movieDao.getAllMovies()
+            allMovies = movieRepository.getAllMovies()
             randomMovieTitle.postValue("Enola Holmes")
         } else randomMovieTitle.postValue(allMovies.random().eng!!)
-
 }

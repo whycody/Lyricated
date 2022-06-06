@@ -5,17 +5,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.whycody.wordslife.data.MovieListItem
 import com.whycody.wordslife.data.filter.FilterDaoImpl
-import com.whycody.wordslife.data.movie.MovieDao
+import com.whycody.wordslife.data.movie.MovieRepository
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.data.utilities.MovieItemMapper
 import kotlinx.coroutines.launch
 
-class ChooseSourceViewModel(movieDao: MovieDao, private val movieItemMapper: MovieItemMapper,
+class ChooseSourceViewModel(movieRepository: MovieRepository, private val movieItemMapper: MovieItemMapper,
                             private val searchConfDao: SearchConfigurationDao):
     ViewModel(), MovieItemInteractor {
 
     private var currentSearchText: String? = null
-    private val listOfAllMovieListItems = movieDao.getAllMovies()
+    private val listOfAllMovieListItems = movieRepository.getAllMovies()
         .map { movieItemMapper.getMovieListItemFromMovie(it) }.sortedBy { it.title }
     private val allMovieListItems = MutableLiveData(listOfAllMovieListItems)
     private val movieListItems = MutableLiveData(listOfAllMovieListItems)

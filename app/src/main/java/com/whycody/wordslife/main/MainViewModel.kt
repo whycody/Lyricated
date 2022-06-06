@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.whycody.wordslife.data.Movie
 import com.whycody.wordslife.data.api.ApiService
-import com.whycody.wordslife.data.movie.MovieDao
+import com.whycody.wordslife.data.movie.MovieRepository
 import kotlinx.coroutines.launch
 
 class MainViewModel(context: Context, private val apiService: ApiService,
-    private val movieDao: MovieDao): ViewModel() {
+    private val movieRepository: MovieRepository): ViewModel() {
 
     private val sharedPrefs: SharedPreferences =
         context.getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
@@ -27,8 +27,8 @@ class MainViewModel(context: Context, private val apiService: ApiService,
         viewModelScope.launch {
             val response = apiService.getAllMovies()
             if(response.isSuccessful) {
-                movieDao.deleteAllMovies()
-                movieDao.insertMovies(response.body()?.movies!!.map {
+                movieRepository.deleteAllMovies()
+                movieRepository.insertMovies(response.body()?.movies!!.map {
                     Movie(it.id, it.lang, it.type, it.minutes, 0,
                         it.en, it.pl, it.esp, it.fr, it.ger, it.it, it.pt)
                 })
