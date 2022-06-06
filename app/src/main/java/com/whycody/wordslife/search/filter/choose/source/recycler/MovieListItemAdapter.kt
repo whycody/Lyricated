@@ -1,4 +1,4 @@
-package com.whycody.wordslife.data.filter.choose.source.recycler
+package com.whycody.wordslife.search.filter.choose.source.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.whycody.wordslife.BR
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.MovieListItem
-import com.whycody.wordslife.data.filter.choose.source.MovieItemInteractor
+import com.whycody.wordslife.search.filter.choose.source.MovieItemInteractor
 
 class MovieListItemAdapter(private val interactor: MovieItemInteractor): ListAdapter<MovieListItem,
         MovieListItemAdapter.MovieListItemHolder>(MovieListItemDiffCallback()) {

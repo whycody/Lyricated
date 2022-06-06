@@ -1,12 +1,10 @@
-package com.whycody.wordslife.data.filter.choose.source
+package com.whycody.wordslife.search.filter.choose.source
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.whycody.wordslife.data.Movie
-import com.whycody.wordslife.data.MovieApi
 import com.whycody.wordslife.data.MovieListItem
-import com.whycody.wordslife.data.api.ApiService
 import com.whycody.wordslife.data.filter.FilterDaoImpl
 import com.whycody.wordslife.data.movie.MovieDao
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao

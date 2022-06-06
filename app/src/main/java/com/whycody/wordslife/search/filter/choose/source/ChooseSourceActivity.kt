@@ -1,4 +1,4 @@
-package com.whycody.wordslife.data.filter.choose.source
+package com.whycody.wordslife.search.filter.choose.source
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.whycody.wordslife.data.filter.choose.source.recycler.MovieListItemAdapter
+import com.whycody.wordslife.search.filter.choose.source.recycler.MovieListItemAdapter
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.databinding.ActivityChooseSourceBinding
 import org.koin.android.ext.android.inject

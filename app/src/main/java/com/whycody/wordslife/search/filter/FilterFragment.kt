@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.whycody.wordslife.R
-import com.whycody.wordslife.data.filter.choose.source.ChooseSourceActivity
+import com.whycody.wordslife.search.filter.choose.source.ChooseSourceActivity
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.databinding.FragmentFilterBinding
 import com.whycody.wordslife.search.SearchFragment

@@ -9,7 +9,7 @@ import com.whycody.wordslife.data.app.configuration.AppConfigurationDao
 import com.whycody.wordslife.data.app.configuration.AppConfigurationDaoImpl
 import com.whycody.wordslife.data.filter.FilterDao
 import com.whycody.wordslife.data.filter.FilterDaoImpl
-import com.whycody.wordslife.data.filter.choose.source.ChooseSourceViewModel
+import com.whycody.wordslife.search.filter.choose.source.ChooseSourceViewModel
 import com.whycody.wordslife.data.language.ChooseLanguageRepository
 import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.language.LanguageDaoImpl

@@ -8,7 +8,7 @@
             type="com.whycody.wordslife.data.MovieListItem" />
         <variable
             name="interactor"
-            type="com.whycody.wordslife.data.filter.choose.source.MovieItemInteractor" />
+            type="com.whycody.wordslife.search.filter.choose.source.MovieItemInteractor" />
         <variable
             name="position"
             type="int" />

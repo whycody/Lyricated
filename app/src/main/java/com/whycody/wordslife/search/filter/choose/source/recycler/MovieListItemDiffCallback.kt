@@ -1,4 +1,4 @@
-package com.whycody.wordslife.data.filter.choose.source.recycler
+package com.whycody.wordslife.search.filter.choose.source.recycler
 
 import androidx.recyclerview.widget.DiffUtil
 import com.whycody.wordslife.data.MovieListItem
