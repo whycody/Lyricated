@@ -237,3 +237,15 @@ data class LastSearch(
         val text: String,
         val saved: Boolean = false,
         val time: Long = Calendar.getInstance().timeInMillis)
+
+data class SetLyricQualityBody(
+        @SerializedName("lyric_id")
+        val lyricId: Int,
+        val quality: Int
+)
+
+data class SetLyricQualityResponse(
+        val id: Int,
+        val quality: Int,
+        val success: Boolean
+)

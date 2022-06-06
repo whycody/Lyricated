@@ -73,4 +73,5 @@
     <string name="loading">cargando resultado...</string>
     <string name="tryto">intenta</string>
     <string name="translate">traducir</string>
+    <string name="set_quality_to_1">Establece la calidad en 1</string>
 </resources>

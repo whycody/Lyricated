@@ -18,4 +18,7 @@ interface ApiService {
 
     @POST("find_lyrics")
     suspend fun findLyrics(@Body findLyricsBody: FindLyricsBody): Response<FindLyricsResponse>
+
+    @POST("set_lyric_quality")
+    suspend fun setLyricQuality(@Body setLyricQualityBody: SetLyricQualityBody): Response<SetLyricQualityResponse>
 }

@@ -20,6 +20,12 @@
         android:background="?attr/colorControlHighlight"
         tools:context=".library.studymode.StudyModeFragment">
 
+        <fragment
+            android:id="@+id/studyModeMovieFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.whycody.wordslife.library.studymode.movie.StudyModeMovieFragment" />
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -32,12 +38,9 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <fragment
-                    android:id="@+id/studyModeMovieFragment"
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:name="com.whycody.wordslife.library.studymode.movie.StudyModeMovieFragment"
-                    android:layout_marginBottom="20dp"/>
+                    android:layout_height="20dp"/>
 
             </LinearLayout>
 
@@ -75,6 +78,21 @@
                 android:layout_marginHorizontal="@dimen/app_padding"
                 android:onClick="@{() -> viewModel.nextBtnClicked()}"
                 android:text="@{viewModel.numberOfAvailableWords == viewModel.numberOfShownWords ? @string/next : @string/show_translation}"
+                android:layout_marginBottom="30dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="bottom"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@drawable/s_show_translation_btn"
+                android:alpha="0.6"
+                android:layout_marginHorizontal="@dimen/app_padding"
+                android:onClick="@{() -> viewModel.qualityBtnClicked()}"
+                android:visibility="@{viewModel.adminMode ? View.VISIBLE : View.GONE}"
+                android:text="@string/set_quality_to_1"
                 android:layout_marginBottom="30dp"/>
 
         </LinearLayout>

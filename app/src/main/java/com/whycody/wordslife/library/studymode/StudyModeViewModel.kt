@@ -1,10 +1,12 @@
 package com.whycody.wordslife.library.studymode
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.whycody.wordslife.data.ExtendedLyricItem
 import com.whycody.wordslife.data.GetRandomLyricBody
+import com.whycody.wordslife.data.SetLyricQualityBody
 import com.whycody.wordslife.data.api.ApiService
 import com.whycody.wordslife.data.app.configuration.AppConfigurationDao
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
@@ -24,6 +26,7 @@ class StudyModeViewModel(private val searchConfigurationDao: SearchConfiguration
     private val shownWords = MutableLiveData(emptyList<Int>())
     private val loadingNextLyricItem = MutableLiveData(true)
     private val difficulty = MutableLiveData(appConfigurationDao.getAppConfiguration().studyModeDifficulty)
+    private val adminMode = MutableLiveData(true)
 
     fun getExtendedLyricItem() = extendedLyricItem
 
@@ -37,9 +40,32 @@ class StudyModeViewModel(private val searchConfigurationDao: SearchConfiguration
 
     fun getDifficulty() = difficulty
 
+    fun getAdminMode() = adminMode
+
     fun showNextLyricItem() {
         tryGetRandomLyricFromApi()
         loadingNextLyricItem.postValue(false)
+    }
+
+    fun qualityBtnClicked() {
+        trySetQualityToOne()
+        extendedLyricItem.postValue(null)
+        loadingNextLyricItem.postValue(true)
+    }
+
+    private fun trySetQualityToOne() {
+        viewModelScope.launch {
+            try { setQualityToOne()
+            } catch (e: Exception) { }
+        }
+    }
+
+    private suspend fun setQualityToOne() {
+        val lyricId = extendedLyricItem.value!!.lyricId
+        val setLyricQualityBody = SetLyricQualityBody(lyricId, 1)
+        val response = apiService.setLyricQuality(setLyricQualityBody)
+        if(response.isSuccessful) Log.d(STUDY_MODE_TAG, "Successfully set $lyricId quality to 1")
+        else Log.d(STUDY_MODE_TAG, "Could not set $lyricId quality to 1")
     }
 
     fun nextBtnClicked() {
@@ -117,5 +143,9 @@ class StudyModeViewModel(private val searchConfigurationDao: SearchConfiguration
         if(shownWords.value!!.contains(index) || difficulty.value == StudyModeDaoImpl.HARD) return
         numberOfShownWords.postValue(numberOfShownWords.value!!+1)
         shownWords.postValue(shownWords.value!!.plus(index))
+    }
+
+    companion object {
+        const val STUDY_MODE_TAG = "StudyModeTag"
     }
 }

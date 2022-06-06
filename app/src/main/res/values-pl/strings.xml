@@ -73,4 +73,5 @@
     <string name="loading">ładowanie napisu...</string>
     <string name="tryto">spróbuj</string>
     <string name="translate">przetłumaczyć</string>
+    <string name="set_quality_to_1">Ustaw jakość na 1</string>
 </resources>
