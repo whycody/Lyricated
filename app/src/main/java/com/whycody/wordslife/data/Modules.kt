@@ -25,6 +25,8 @@ import com.whycody.wordslife.data.sort.SortDao
 import com.whycody.wordslife.data.sort.SortDaoImpl
 import com.whycody.wordslife.data.studymode.StudyModeDao
 import com.whycody.wordslife.data.studymode.StudyModeDaoImpl
+import com.whycody.wordslife.data.utilities.MovieItemMapper
+import com.whycody.wordslife.data.utilities.MovieItemMapperImpl
 import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.library.LibraryViewModel
 import com.whycody.wordslife.library.history.HistoryViewModel
@@ -120,6 +122,7 @@ val configurationModule = module {
 val utilsModule = module {
     single<SearchResultSpanBuilder> { SearchResultSpanBuilderImpl(get()) }
     single<LyricItemMapper> { LyricItemMapperImpl(get(), get()) }
+    single<MovieItemMapper> { MovieItemMapperImpl(get(), get(), get()) }
 }
 
 val viewModelsModule = module {
@@ -136,7 +139,7 @@ val viewModelsModule = module {
     viewModel { SortViewModel(get(), get()) }
     viewModel { FilterViewModel(get(), get()) }
     viewModel { ConfigurationViewModel(get(), get(), get()) }
-    viewModel { ChooseSourceViewModel(get(), get()) }
+    viewModel { ChooseSourceViewModel(get(), get(), get()) }
     viewModel { LibraryViewModel(get()) }
     viewModel { LibraryHeaderViewModel(get()) }
     viewModel { SettingsViewModel(get(), get(), get()) }

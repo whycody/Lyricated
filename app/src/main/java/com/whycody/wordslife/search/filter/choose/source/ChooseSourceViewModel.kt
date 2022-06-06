@@ -3,19 +3,22 @@ package com.whycody.wordslife.search.filter.choose.source
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.whycody.wordslife.data.Movie
 import com.whycody.wordslife.data.MovieListItem
 import com.whycody.wordslife.data.filter.FilterDaoImpl
 import com.whycody.wordslife.data.movie.MovieDao
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
+import com.whycody.wordslife.data.utilities.MovieItemMapper
 import kotlinx.coroutines.launch
 
-class ChooseSourceViewModel(movieDao: MovieDao, private val searchConfDao: SearchConfigurationDao):
+class ChooseSourceViewModel(movieDao: MovieDao, private val movieItemMapper: MovieItemMapper,
+                            private val searchConfDao: SearchConfigurationDao):
     ViewModel(), MovieItemInteractor {
 
     private var currentSearchText: String? = null
-    private val allMovies = MutableLiveData(movieDao.getAllMovies())
-    private val movieListItems = MutableLiveData(getMovieListItemsFromMovieItems())
+    private val listOfAllMovieListItems = movieDao.getAllMovies()
+        .map { movieItemMapper.getMovieListItemFromMovie(it) }.sortedBy { it.title }
+    private val allMovieListItems = MutableLiveData(listOfAllMovieListItems)
+    private val movieListItems = MutableLiveData(listOfAllMovieListItems)
 
     init {
         viewModelScope.launch {
@@ -28,26 +31,9 @@ class ChooseSourceViewModel(movieDao: MovieDao, private val searchConfDao: Searc
     fun searchTextChanged(newText: String?) {
         currentSearchText = newText
         if(!newText.isNullOrEmpty())
-            movieListItems.postValue(getMovieListItemsFromMovieItems().filter {
-                it.allTitles.contains(newText.lowercase())
-            })
-        else movieListItems.postValue(getMovieListItemsFromMovieItems())
-    }
-
-    private fun getMovieListItemsFromMovieItems(): List<MovieListItem> {
-        val currentSearchConf = searchConfDao.getSearchConfiguration()
-        return allMovies.value?.map { MovieListItem(
-            it.id,
-            it.eng!!,
-            getAllTitlesFromMovie(it),
-            currentSearchConf.chosenSource == it.id)
-        }!!.sortedBy { it.title }
-    }
-
-    private fun getAllTitlesFromMovie(movie: Movie): String {
-        var allTitles = with(movie) { "$eng $esp $fr $ger $it $pl $pt" }
-        allTitles = allTitles.replace("null", "").lowercase()
-        return allTitles
+            movieListItems.postValue(allMovieListItems.value!!
+                .filter { it.allTitles.contains(newText.lowercase()) })
+        else movieListItems.postValue(allMovieListItems.value)
     }
 
     override fun movieListItemClicked(movieListItem: MovieListItem) {

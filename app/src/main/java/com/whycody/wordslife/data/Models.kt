@@ -99,7 +99,9 @@ data class MovieItem(
 
 data class MovieListItem(
         val id: String,
+        val type: String,
         val title: String,
+        val subtitle: String?,
         val allTitles: String,
         var isChecked: Boolean = false)
 

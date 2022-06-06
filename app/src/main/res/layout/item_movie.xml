@@ -17,7 +17,7 @@
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:focusable="true"
         android:clickable="true"
@@ -36,15 +36,32 @@
             android:orientation="horizontal"
             android:padding="@dimen/app_padding">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="?attr/colorPrimaryVariant"
-                android:text="@{movieListItem.title}"
-                android:textSize="15sp"
-                android:gravity="center|start"
-                android:ellipsize="end"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:text="@{movieListItem.title}"
+                    android:textSize="15sp"
+                    android:gravity="center|start"
+                    android:ellipsize="end"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:text="@{movieListItem.subtitle != null ? movieListItem.subtitle : (movieListItem.type.equals(`movie`) ? @string/movie : @string/series)}"
+                    android:textSize="14sp"
+                    android:alpha="0.8"
+                    android:gravity="center|start"
+                    android:ellipsize="end"/>
+
+            </LinearLayout>
 
             <View
                 android:id="@+id/dot"
