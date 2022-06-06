@@ -36,7 +36,7 @@
                 android:id="@+id/underline"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?attr/colorPrimarySurface"
+                android:background="?attr/colorControlHighlight"
                 android:visibility="@{position==0 ? View.INVISIBLE : View.VISIBLE}"/>
 
             <LinearLayout

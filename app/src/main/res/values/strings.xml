@@ -71,8 +71,10 @@
     <string name="random">Random</string>
     <string name="reveal_word">Reveal word</string>
     <string name="show_translation">Show translation</string>
-    <string name="loading">loading result...</string>
+    <string name="loading">loading result…</string>
     <string name="tryto">try to</string>
     <string name="translate">translate</string>
     <string name="set_quality_to_1">Set quality to 1</string>
+    <string name="choosing_source">Choosing source</string>
+    <string name="movies_and_series">Movies and series</string>
 </resources>

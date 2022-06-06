@@ -70,8 +70,10 @@
     <string name="random">Aleatorio</string>
     <string name="reveal_word">Revelar palabra</string>
     <string name="show_translation">Mostrar traducción</string>
-    <string name="loading">cargando resultado...</string>
+    <string name="loading">cargando resultado…</string>
     <string name="tryto">intenta</string>
     <string name="translate">traducir</string>
     <string name="set_quality_to_1">Establece la calidad en 1</string>
+    <string name="choosing_source">Selección del fuente</string>
+    <string name="movies_and_series">Películas y series</string>
 </resources>

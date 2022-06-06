@@ -9,6 +9,9 @@
         <variable
             name="interactor"
             type="com.whycody.wordslife.data.filter.choose.source.MovieItemInteractor" />
+        <variable
+            name="position"
+            type="int" />
     </data>
 
     <LinearLayout
@@ -18,8 +21,14 @@
         android:orientation="vertical"
         android:focusable="true"
         android:clickable="true"
-        android:onClick="@{()->interactor.movieListItemClicked(movieListItem)}"
-        android:background="@drawable/ripple_language_item">
+        android:onClick="@{()->interactor.movieListItemClicked(movieListItem)}">
+
+        <View
+            android:id="@+id/underline"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?attr/colorControlHighlight"
+            android:visibility="@{position==0 ? View.INVISIBLE : View.VISIBLE}"/>
 
         <LinearLayout
             android:layout_width="match_parent"
