@@ -68,7 +68,7 @@ class SearchResultViewModel(private val lyricItemMapper: LyricItemMapper):
     private fun postNewValues(newNumber: Boolean = false) {
         val sizeOfShowedLyrics = updateNumberOfShowedLyricItems(newNumber)
         lyricItems.postValue(allLyricItems.take(sizeOfShowedLyrics))
-        resultsAvailable.postValue(allLyricItems.isNotEmpty())
+        if(!newNumber) resultsAvailable.postValue(allLyricItems.isNotEmpty())
         thereAreMoreResults.postValue(currentShowedLyrics < allLyricItems.size)
         searching.postValue(false)
     }
