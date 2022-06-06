@@ -6,7 +6,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.beust.klaxon.Json
 import com.google.gson.annotations.SerializedName
 import com.whycody.wordslife.data.filter.FilterDaoImpl
 import com.whycody.wordslife.data.language.LanguageDaoImpl
@@ -55,10 +54,10 @@ data class LibraryItem(
         val desc: String)
 
 data class Translation(
-        @Json(name = "text") val translatedPhrase: String? = null,
-        @Json(ignored = true) var numberOfUsages: Int = 0,
-        @Json(ignored = true) var translationLangId: String? = null,
-        @Json(ignored = true) var type: Int = TranslationViewModel.TRANSLATION)
+        val translatedPhrase: String? = null,
+        var numberOfUsages: Int = 0,
+        var translationLangId: String? = null,
+        var type: Int = TranslationViewModel.TRANSLATION)
 
 data class LyricItem(
         val lyricId: Int,
