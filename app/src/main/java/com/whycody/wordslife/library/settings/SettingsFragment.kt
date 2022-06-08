@@ -1,13 +1,16 @@
 package com.whycody.wordslife.library.settings
 
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.app.configuration.AppConfigurationDao
+import com.whycody.wordslife.data.last.searches.LastSearchRepository
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.data.settings.SettingsDaoImpl
 import com.whycody.wordslife.databinding.FragmentSettingsBinding
@@ -20,6 +23,7 @@ class SettingsFragment : BottomSheetDialogFragment() {
     private val settingsViewModel: SettingsViewModel by viewModel()
     private val appConfigurationDao: AppConfigurationDao by inject()
     private val searchConfigurationDao: SearchConfigurationDao by inject()
+    private val lastSearchRepository: LastSearchRepository by inject()
     private lateinit var binding: FragmentSettingsBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +33,7 @@ class SettingsFragment : BottomSheetDialogFragment() {
         setupRecycler()
         observeAppConf()
         observeSearchConf()
+        observeActionBtnClicked()
         return binding.root
     }
 
@@ -50,6 +55,29 @@ class SettingsFragment : BottomSheetDialogFragment() {
             settingsViewModel.refreshSettingsItems()
             updateAppearance()
         }
+
+    private fun observeActionBtnClicked() = settingsViewModel.getActionBtnClicked()
+        .observe(viewLifecycleOwner) {
+            if(it == null) return@observe
+            val builder = AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.AlertDialogCustom))
+            builder.setTitle(getTitle(it))
+                .setMessage(getString(R.string.are_you_sure))
+                .setCancelable(true)
+                .setPositiveButton(getString(android.R.string.ok)) { _, _ -> positiveBtnClicked(it) }
+                .setNegativeButton(getString(android.R.string.cancel)) { _, _ -> }
+                .show()
+            settingsViewModel.getActionBtnClicked().postValue(null)
+        }
+
+    private fun getTitle(actionId: String) =
+        if(actionId == SettingsDaoImpl.DELETE_SAVED) getString(R.string.deselectall)
+        else getString(R.string.deletehistory)
+
+    private fun positiveBtnClicked(actionId: String) {
+        if(actionId == SettingsDaoImpl.DELETE_HISTORY)
+            lastSearchRepository.deleteAllLastSearches()
+        else lastSearchRepository.deselectAllLastSearches()
+    }
 
     private fun updateAppearance() {
         val currentAppConfig = appConfigurationDao.getAppConfiguration()

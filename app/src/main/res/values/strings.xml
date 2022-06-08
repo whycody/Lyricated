@@ -77,4 +77,5 @@
     <string name="set_quality_to_1">Set quality to 1</string>
     <string name="choosing_source">Choosing source</string>
     <string name="movies_and_series">Movies and series</string>
+    <string name="are_you_sure">Are you sure about that? You will not be able to undo this action.</string>
 </resources>

@@ -17,8 +17,11 @@ class SettingsViewModel(private val settingsDao: SettingsDao,
     ViewModel(), SortItemInteractor {
 
     private val settingsItems = MutableLiveData(settingsDao.getSettingsItems())
+    private val actionBtnClicked = MutableLiveData<String>(null)
 
     fun getSettingsItems() = settingsItems
+
+    fun getActionBtnClicked() = actionBtnClicked
 
     fun refreshSettingsItems() = settingsItems.postValue(settingsDao.getSettingsItems())
 
@@ -26,8 +29,8 @@ class SettingsViewModel(private val settingsDao: SettingsDao,
         val sortItem = getSortItemFromSortOptionId(sortOptionId)
         when (sortItem?.id) {
             SettingsDaoImpl.EDU_MATERIALS -> updateEduMaterials(sortOptionId)
-            SettingsDaoImpl.DELETE_HISTORY -> deleteHistory()
-            SettingsDaoImpl.DELETE_SAVED -> deleteSaved()
+            SettingsDaoImpl.DELETE_HISTORY, SettingsDaoImpl.DELETE_SAVED ->
+                actionBtnClicked.postValue(sortItem.id)
             else -> updateAppConfig(sortOptionId, sortItem)
         }
         refreshSettingsItems()

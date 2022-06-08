@@ -76,4 +76,5 @@
     <string name="set_quality_to_1">Establece la calidad en 1</string>
     <string name="choosing_source">Selección del fuente</string>
     <string name="movies_and_series">Películas y series</string>
+    <string name="are_you_sure">¿Está seguro de eso? No podrá deshacer esta acción.</string>
 </resources>

@@ -19,6 +19,11 @@
         <item name="fontFamily">@font/montserrat</item>
     </style>
 
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:background">@color/light_gray_night</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Theme.NoWiredStrapInNavigationBar" parent="@style/Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:navigationBarColor">?attr/colorSecondaryVariant</item>
