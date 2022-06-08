@@ -73,7 +73,6 @@ class HomeFragment : Fragment() {
     private fun setupRecycler(binding: FragmentHomeBinding) {
         val historyAdapter = HistoryAdapter(homeViewModel)
         observeHistoryItems(binding, historyAdapter)
-        binding.historyDisponible = true
         with(binding.historyRecycler) {
             itemAnimator?.changeDuration = 0
             adapter = historyAdapter
@@ -82,7 +81,6 @@ class HomeFragment : Fragment() {
 
     private fun observeHistoryItems(binding: FragmentHomeBinding, historyAdapter: HistoryAdapter) =
         homeViewModel.getHistoryItems().observe(activity as MainActivity) {
-            binding.historyDisponible = it.isNotEmpty()
             if (historyAdapter.currentList.isEmpty())
                 binding.historyRecycler.scheduleLayoutAnimation()
             historyAdapter.submitList(it)

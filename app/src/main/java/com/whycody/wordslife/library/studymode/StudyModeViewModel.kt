@@ -26,7 +26,7 @@ class StudyModeViewModel(private val searchConfigurationDao: SearchConfiguration
     private val shownWords = MutableLiveData(emptyList<Int>())
     private val loadingNextLyricItem = MutableLiveData(true)
     private val difficulty = MutableLiveData(appConfigurationDao.getAppConfiguration().studyModeDifficulty)
-    private val adminMode = MutableLiveData(true)
+    private val adminMode = MutableLiveData(false)
 
     fun getExtendedLyricItem() = extendedLyricItem
 

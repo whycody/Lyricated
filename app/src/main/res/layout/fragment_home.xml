@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <data>
-        <import type="android.view.View"/>
-        <variable
-            name="historyDisponible"
-            type="boolean" />
-    </data>
-
     <androidx.core.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -70,17 +63,7 @@
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         android:overScrollMode="never"
-                        android:layoutAnimation="@anim/layout_fall_down"
-                        android:visibility="@{historyDisponible ? View.VISIBLE : View.GONE}"/>
-
-                    <ImageView
-                        android:alpha="0.8"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/no_history_banner_pl"
-                        android:adjustViewBounds="true"
-                        android:visibility="@{historyDisponible ? View.GONE : View.VISIBLE}"
-                        android:padding="40dp"/>
+                        android:layoutAnimation="@anim/layout_fall_down"/>
 
                 </LinearLayout>
 
