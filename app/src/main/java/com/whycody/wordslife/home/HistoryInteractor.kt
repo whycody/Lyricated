@@ -6,5 +6,5 @@ interface HistoryInteractor {
 
     fun onHistoryItemClick(historyItem: HistoryItem)
 
-    fun onStarClick(historyItem: HistoryItem)
+    fun onStarClick(position: Int, historyItem: HistoryItem)
 }

@@ -9,7 +9,6 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.whycody.wordslife.main.MainActivity
 import com.whycody.wordslife.main.MainNavigation
@@ -55,21 +54,21 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeSearchWord() = searchViewModel.getSearchWord()
-        .observe(activity as MainActivity, {
-            if(shouldOpenSearchFragment(it))
+        .observe(activity as MainActivity) {
+            if (shouldOpenSearchFragment(it))
                 (activity as MainNavigation).navigateTo(SearchFragment.newInstance(it))
-    })
+        }
 
     private fun shouldOpenSearchFragment(word: String) =
         !(activity as MainNavigation).fragmentsContainSearchFragment() && word.isNotEmpty()
 
     private fun observeClickedWord() = homeViewModel.getClickedWord()
-        .observe(activity as MainActivity, {
-            if(it.isNotEmpty()) {
+        .observe(activity as MainActivity) {
+            if (it.isNotEmpty()) {
                 searchViewModel.searchWord(it)
                 homeViewModel.resetClickedWord()
             }
-        })
+        }
 
     private fun setupRecycler(binding: FragmentHomeBinding) {
         val historyAdapter = HistoryAdapter(homeViewModel)
@@ -82,11 +81,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeHistoryItems(binding: FragmentHomeBinding, historyAdapter: HistoryAdapter) =
-        homeViewModel.getHistoryItems().observe(activity as MainActivity, {
+        homeViewModel.getHistoryItems().observe(activity as MainActivity) {
             binding.historyDisponible = it.isNotEmpty()
             if (historyAdapter.currentList.isEmpty())
                 binding.historyRecycler.scheduleLayoutAnimation()
             historyAdapter.submitList(it)
-        })
-
+        }
 }

@@ -7,6 +7,10 @@ class LastSearchRepository(private val lastSearchDao: LastSearchDao) {
 
     fun getAllLastSearches() = lastSearchDao.getAllLastSearches()
 
+    fun getPagedLastSearches(limit: Int, offset: Int) = lastSearchDao.getPagedLastSearches(limit, offset)
+
+    fun getPagedSavedLastSearches(limit: Int, offset: Int) = lastSearchDao.getPagedSavedLastSearches(limit, offset)
+
     fun flowFourLastSearches() = lastSearchDao.flowFourLastSearches()
 
     fun flowAllLastSearches() = lastSearchDao.flowAllLastSearches()

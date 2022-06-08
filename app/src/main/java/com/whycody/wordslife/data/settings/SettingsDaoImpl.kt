@@ -38,6 +38,18 @@ class SettingsDaoImpl(private val context: Context,
                     SortOption(SAVE_HISTORY, context.getString(R.string.save)),
                     SortOption(DONT_SAVE_HISTORY, context.getString(R.string.dontsave))
                 )))
+        settingsItems.add(
+            SortItem(
+                DELETE_HISTORY,
+                context.getString(R.string.deletehistory),
+                emptyList()
+            ))
+        settingsItems.add(
+            SortItem(
+                DELETE_SAVED,
+                context.getString(R.string.deselectall),
+                emptyList()
+            ))
         checkCurrentSettings(settingsItems)
         return settingsItems
     }
@@ -65,5 +77,7 @@ class SettingsDaoImpl(private val context: Context,
         const val HISTORY = "history"
         const val SAVE_HISTORY = "save history"
         const val DONT_SAVE_HISTORY = "dont save history"
+        const val DELETE_HISTORY = "delete history"
+        const val DELETE_SAVED = "delete saved"
     }
 }

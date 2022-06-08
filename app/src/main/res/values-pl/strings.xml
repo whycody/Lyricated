@@ -61,7 +61,7 @@
     <string name="save">Zapisuj</string>
     <string name="dontsave">Nie zapisuj</string>
     <string name="deletehistory">Wyczyść historię</string>
-    <string name="deselectall">Odznacz wszystkie</string>
+    <string name="deselectall">Odznacz wszystkie zapisane</string>
     <string name="difficulty">Poziom trudności</string>
     <string name="easy">Łatwy</string>
     <string name="medium">Średni</string>

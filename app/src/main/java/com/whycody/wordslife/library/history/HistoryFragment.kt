@@ -10,11 +10,7 @@ import com.whycody.wordslife.data.HistoryItem
 import com.whycody.wordslife.databinding.FragmentHistoryBinding
 import com.whycody.wordslife.home.HistoryInteractor
 import com.whycody.wordslife.home.HomeViewModel
-import com.whycody.wordslife.home.history.HistoryAdapter
-import com.whycody.wordslife.main.MainActivity
 import com.whycody.wordslife.search.SearchViewModel
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -24,6 +20,7 @@ class HistoryFragment : BottomSheetDialogFragment(), HistoryInteractor {
     private val homeViewModel: HomeViewModel by viewModel()
     private val searchViewModel: SearchViewModel by sharedViewModel()
     private lateinit var binding: FragmentHistoryBinding
+    private val historyAdapter = HistoryBottomSheetAdapter(this)
     private var onlySaved = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -31,36 +28,21 @@ class HistoryFragment : BottomSheetDialogFragment(), HistoryInteractor {
         binding = FragmentHistoryBinding.inflate(inflater)
         binding.sortHeader.setOnClickListener { dismiss() }
         onlySaved = arguments?.getBoolean(ONLY_SAVED, false)!!
-        binding.cleanListBtn.setOnClickListener {
-            historyViewModel.cleanListBtnClicked(onlySaved)
-            dismiss()
-        }
         binding.onlySaved = onlySaved
-        loadHistoryItems()
         setupRecycler(binding)
+        observeHistoryItems()
         return binding.root
     }
 
-    private fun loadHistoryItems() {
-        MainScope().launch {
-            homeViewModel.loadHistoryItems(true, onlySaved)
-        }
-    }
-
     private fun setupRecycler(binding: FragmentHistoryBinding) {
-        val historyAdapter = HistoryAdapter(this)
-        observeHistoryItems(historyAdapter)
         with(binding.historyRecycler) {
             itemAnimator?.changeDuration = 0
             adapter = historyAdapter
         }
     }
 
-    private fun observeHistoryItems(historyAdapter: HistoryAdapter) =
-        homeViewModel.getHistoryItems().observe(activity as MainActivity) {
-            historyAdapter.submitList(it)
-            binding.listsAreFilled = it.isNotEmpty()
-        }
+    private fun observeHistoryItems() = historyViewModel.getData(onlySaved)
+        .observe(viewLifecycleOwner) { historyAdapter.submitData(lifecycle, it) }
 
     override fun getTheme() = R.style.Theme_NoWiredStrapInNavigationBar
 
@@ -70,7 +52,11 @@ class HistoryFragment : BottomSheetDialogFragment(), HistoryInteractor {
         dismiss()
     }
 
-    override fun onStarClick(historyItem: HistoryItem) = homeViewModel.onStarClick(historyItem)
+    override fun onStarClick(position: Int, historyItem: HistoryItem) {
+        homeViewModel.onStarClick(position, historyItem)
+        historyItem.saved = !historyItem.saved
+        historyAdapter.notifyItemChanged(position)
+    }
 
     companion object {
         const val ONLY_SAVED = "only saved"

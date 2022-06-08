@@ -33,16 +33,22 @@ class SortItemAdapter(private val interactor: SortItemInteractor): ListAdapter<S
         private val headerLayout = binding.root.findViewById<ConstraintLayout>(R.id.headerLayout)
 
         fun setupData(sortItem: SortItem) {
-            if(!sortItem.expanded) headerClicked()
-            headerLayout.setOnClickListener{ headerClicked() }
+            if(!sortItem.expanded) headerClicked(sortItem)
+            headerLayout.setOnClickListener{ headerClicked(sortItem) }
             val sortOptionAdapter = SortOptionAdapter(interactor)
             sortOptionAdapter.submitList(sortItem.options)
             recycler.adapter = sortOptionAdapter
             binding.setVariable(BR.header, sortItem.headerName)
+            binding.setVariable(BR.itemIsBtn, sortItem.options.isEmpty())
             binding.executePendingBindings()
         }
 
-        private fun headerClicked() {
+        private fun headerClicked(sortItem: SortItem) {
+            if(sortItem.options.isEmpty()) interactor.sortOptionClicked(sortItem.id)
+            else showExpandingAnimation()
+        }
+
+        private fun showExpandingAnimation() {
             val itemIsCollapsed = recycler.visibility == View.GONE
             headerArrow.rotation = if(itemIsCollapsed) 180f else 0f
             headerArrow.animate()?.rotationBy(180f)?.setDuration(200)?.start()

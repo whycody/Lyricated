@@ -15,6 +15,12 @@ interface LastSearchDao {
     @Query("SELECT * FROM last_searches ORDER BY time DESC")
     fun getAllLastSearches(): List<LastSearch>
 
+    @Query("SELECT * FROM last_searches ORDER BY time DESC LIMIT :limit OFFSET :offset")
+    fun getPagedLastSearches(limit: Int, offset: Int): List<LastSearch>
+
+    @Query("SELECT * FROM last_searches WHERE saved=1 ORDER BY time DESC LIMIT :limit OFFSET :offset")
+    fun getPagedSavedLastSearches(limit: Int, offset: Int): List<LastSearch>
+
     @Query("SELECT * FROM last_searches ORDER BY time DESC LIMIT 4")
     fun flowFourLastSearches(): Flow<List<LastSearch>>
 

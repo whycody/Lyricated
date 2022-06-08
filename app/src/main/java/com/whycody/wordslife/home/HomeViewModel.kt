@@ -65,7 +65,7 @@ class HomeViewModel(private val lastSearchRepository: LastSearchRepository,
 
     private fun postNewValues(lastSearch: LastSearch) = clickedWord.postValue(lastSearch.text)
 
-    override fun onStarClick(historyItem: HistoryItem) =
+    override fun onStarClick(position: Int, historyItem: HistoryItem) =
         lastSearchRepository.updateLastSearchSaved(historyItem.id, !historyItem.saved)
 
 }

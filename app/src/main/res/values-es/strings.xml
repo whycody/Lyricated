@@ -61,7 +61,7 @@
     <string name="save">Guardar</string>
     <string name="dontsave">No guardar</string>
     <string name="deletehistory">Eliminar la historia</string>
-    <string name="deselectall">Deseleccionar todo</string>
+    <string name="deselectall">Deseleccionar todos guardados</string>
     <string name="difficulty">Dificultad</string>
     <string name="easy">Fácil</string>
     <string name="medium">Medio</string>

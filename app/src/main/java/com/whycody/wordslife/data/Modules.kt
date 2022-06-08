@@ -142,8 +142,8 @@ val viewModelsModule = module {
     viewModel { ChooseSourceViewModel(get(), get(), get()) }
     viewModel { LibraryViewModel(get()) }
     viewModel { LibraryHeaderViewModel(get()) }
-    viewModel { SettingsViewModel(get(), get(), get()) }
-    viewModel { HistoryViewModel(get()) }
+    viewModel { SettingsViewModel(get(), get(), get(), get()) }
+    viewModel { HistoryViewModel(get(), get()) }
     viewModel { StudyModeSettingsViewModel(get(), get()) }
     viewModel { StudyModeViewModel(get(), get(), get(), get()) }
 }

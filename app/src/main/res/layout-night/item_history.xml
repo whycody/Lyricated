@@ -73,7 +73,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="match_parent"
-                android:onClick="@{()->interactor.onStarClick(historyItem)}"
+                android:onClick="@{()->interactor.onStarClick(position, historyItem)}"
                 android:src='@{historyItem.saved ? @drawable/ic_star_filled : @drawable/ic_star_stroke}'
                 android:padding="6dp"/>
 
