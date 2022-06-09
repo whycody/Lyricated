@@ -7,21 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import com.whycody.wordslife.main.MainActivity
 import com.whycody.wordslife.R
+import com.whycody.wordslife.data.utilities.MoviePlayer
 import com.whycody.wordslife.databinding.FragmentMovieBinding
 import com.whycody.wordslife.search.lyric.LyricViewModel
 import com.whycody.wordslife.search.lyric.header.HeaderFragment
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MovieFragment : Fragment() {
+class MovieFragment : Fragment(), MovieInteractor {
 
     private val lyricViewModel: LyricViewModel by sharedViewModel()
     private val movieViewModel: MovieViewModel by viewModel()
+    private val moviePlayer: MoviePlayer by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val binding = FragmentMovieBinding.inflate(inflater)
         if(savedInstanceState == null) addHeader()
+        binding.interactor = this
         binding.movieViewModel = movieViewModel
         binding.lifecycleOwner = activity
         observeExtendedLyricItem()
@@ -39,4 +43,6 @@ class MovieFragment : Fragment() {
             HeaderFragment.newInstance(getString(R.string.production)))
         fragmentTransaction.commit()
     }
+
+    override fun playBtnClicked(url: String, time: String) = moviePlayer.playMovie(url, time)
 }

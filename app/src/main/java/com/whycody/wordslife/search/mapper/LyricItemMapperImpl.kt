@@ -40,7 +40,7 @@ class LyricItemMapperImpl(private val searchResultSpanBuilder: SearchResultSpanB
         val hours = totalSecs / 3600
         val minutes = (totalSecs % 3600) / 60
         val seconds = totalSecs % 60
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
     }
 
     private fun getLyricSeason(lyric: Lyric) =

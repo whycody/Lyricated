@@ -27,6 +27,8 @@ import com.whycody.wordslife.data.studymode.StudyModeDao
 import com.whycody.wordslife.data.studymode.StudyModeDaoImpl
 import com.whycody.wordslife.data.utilities.MovieItemMapper
 import com.whycody.wordslife.data.utilities.MovieItemMapperImpl
+import com.whycody.wordslife.data.utilities.MoviePlayer
+import com.whycody.wordslife.data.utilities.MoviePlayerImpl
 import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.library.LibraryViewModel
 import com.whycody.wordslife.library.history.HistoryViewModel
@@ -123,6 +125,7 @@ val utilsModule = module {
     single<SearchResultSpanBuilder> { SearchResultSpanBuilderImpl(get()) }
     single<LyricItemMapper> { LyricItemMapperImpl(get(), get()) }
     single<MovieItemMapper> { MovieItemMapperImpl(get(), get(), get()) }
+    single<MoviePlayer> { MoviePlayerImpl(get()) }
 }
 
 val viewModelsModule = module {

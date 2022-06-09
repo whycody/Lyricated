@@ -93,6 +93,7 @@ data class ExtendedLyricItem(
 data class MovieItem(
         val mainTitle: String,
         val translatedTitle: String? = null,
+        val url: String? = null,
         val type: String,
         val episodeItem: EpisodeItem?,
         val time: String?)
@@ -100,6 +101,7 @@ data class MovieItem(
 data class MovieListItem(
         val id: String,
         val type: String,
+        val url: String?,
         val title: String,
         val subtitle: String?,
         val allTitles: String,
@@ -125,7 +127,7 @@ data class TranslationItem(
 
 data class LyricLanguages(
         var mainLangId: String = LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE,
-        var translationLangId: String = LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE)
+        var translationLangId: String = LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE): Serializable
 
 data class UserAction(
         val actionType: Int = SearchFragment.NO_ACTION,
@@ -149,6 +151,7 @@ data class Movie(
         val lang: String,
         val type: String,
         val minutes: Int,
+        val url: String?,
         val lyrics: Int,
         val eng: String?,
         val pl: String?,
@@ -167,6 +170,7 @@ data class MovieApi(
         val lang: String,
         val type: String,
         val minutes: Int,
+        val url: String?,
         val en: String?,
         val pl: String?,
         val esp: String?,

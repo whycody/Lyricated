@@ -7,6 +7,9 @@
         <variable
             name="movieViewModel"
             type="com.whycody.wordslife.search.lyric.movie.MovieViewModel" />
+        <variable
+            name="interactor"
+            type="com.whycody.wordslife.search.lyric.movie.MovieInteractor" />
     </data>
 
     <LinearLayout
@@ -89,6 +92,8 @@
                     android:focusable="true"
                     android:paddingStart="7dp"
                     android:paddingEnd="11dp"
+                    android:onClick="@{() -> interactor.playBtnClicked(movieViewModel.movieItem.url, movieViewModel.movieItem.time)}"
+                    android:visibility="@{movieViewModel.movieItem.url == null ? View.GONE : View.VISIBLE}"
                     android:gravity="end|center">
 
                     <ImageView

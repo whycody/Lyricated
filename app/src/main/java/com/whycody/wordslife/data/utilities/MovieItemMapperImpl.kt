@@ -15,6 +15,7 @@ class MovieItemMapperImpl(private val movieRepository: MovieRepository,
         return MovieListItem(
             movie.id,
             movie.type,
+            movie.url,
             getTitleFromMovieInLang(languageDao.getCurrentMainLanguage().id, movie, true)!!,
             getTitleFromMovieInLang(languageDao.getCurrentTranslationLanguage().id, movie, false),
             getAllTitlesFromMovie(movie),
@@ -32,6 +33,7 @@ class MovieItemMapperImpl(private val movieRepository: MovieRepository,
         return MovieItem(
             getTitleFromMovieInLang(extendedLyricItem.languages.mainLangId, movie, true)!!,
             getTitleFromMovieInLang(extendedLyricItem.languages.translationLangId, movie, false),
+            movie.url,
             movie.type,
             getEpisodeItemFromMovie(extendedLyricItem),
             extendedLyricItem.time)
