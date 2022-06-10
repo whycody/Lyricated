@@ -6,7 +6,7 @@ import android.net.Uri
 
 class MoviePlayerImpl(private val context: Context): MoviePlayer {
 
-    override fun playMovie(url: String, time: String) = tryPlayMovie(url, getSecondsFromTime(time))
+    override fun playMovie(url: String, time: String) = tryPlayMovie(url, getSecondsFromTime(time)-2)
 
     private fun getSecondsFromTime(time: String): Int {
         val hours = time.substring(0, 2).toInt()
@@ -23,13 +23,13 @@ class MoviePlayerImpl(private val context: Context): MoviePlayer {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setClassName("com.netflix.mediaclient",
             "com.netflix.mediaclient.ui.launch.UIWebViewActivity")
-        intent.data = Uri.parse("https://$url?t=${seconds-5}")
+        intent.data = Uri.parse("https://$url?t=$seconds")
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
 
     private fun runWebApp(url: String, seconds: Int) {
-        val uri = Uri.parse("https://$url?t=${seconds-5}")
+        val uri = Uri.parse("https://$url?t=$seconds")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
