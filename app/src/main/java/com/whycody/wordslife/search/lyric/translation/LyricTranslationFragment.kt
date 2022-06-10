@@ -1,15 +1,17 @@
 package com.whycody.wordslife.search.lyric.translation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.whycody.wordslife.main.MainActivity
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.whycody.wordslife.R
+import com.whycody.wordslife.data.utilities.TextCopyUtility
 import com.whycody.wordslife.databinding.FragmentLyricTranslationBinding
 import com.whycody.wordslife.search.lyric.LyricViewModel
 import com.whycody.wordslife.search.lyric.header.HeaderFragment
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -18,10 +20,15 @@ class LyricTranslationFragment : Fragment() {
     private lateinit var typeOfPhrase: String
     private val lyricViewModel: LyricViewModel by sharedViewModel()
     private val lyricTranslationViewModel: LyricTranslationViewModel by viewModel()
+    private val textCopyUtility: TextCopyUtility by inject()
+    private lateinit var binding: FragmentLyricTranslationBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding = FragmentLyricTranslationBinding.inflate(inflater)
+        binding = FragmentLyricTranslationBinding.inflate(inflater)
+        val view = (parentFragment as BottomSheetDialogFragment).dialog?.window?.decorView!!
+        binding.contentText.setOnLongClickListener { textCopyUtility.copyText(view,
+            lyricTranslationViewModel.getTranslationItem().value!!.translatedSentence!!) }
         typeOfPhrase = arguments?.getString(TYPE_OF_PHRASE, MAIN_PHRASE)!!
         if(savedInstanceState == null) addHeader()
         observeTranslationItem(binding)

@@ -25,10 +25,7 @@ import com.whycody.wordslife.data.sort.SortDao
 import com.whycody.wordslife.data.sort.SortDaoImpl
 import com.whycody.wordslife.data.studymode.StudyModeDao
 import com.whycody.wordslife.data.studymode.StudyModeDaoImpl
-import com.whycody.wordslife.data.utilities.MovieItemMapper
-import com.whycody.wordslife.data.utilities.MovieItemMapperImpl
-import com.whycody.wordslife.data.utilities.MoviePlayer
-import com.whycody.wordslife.data.utilities.MoviePlayerImpl
+import com.whycody.wordslife.data.utilities.*
 import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.library.LibraryViewModel
 import com.whycody.wordslife.library.history.HistoryViewModel
@@ -126,6 +123,7 @@ val utilsModule = module {
     single<LyricItemMapper> { LyricItemMapperImpl(get(), get()) }
     single<MovieItemMapper> { MovieItemMapperImpl(get(), get(), get()) }
     single<MoviePlayer> { MoviePlayerImpl(get()) }
+    single<TextCopyUtility> { TextCopyUtilityImpl(get()) }
 }
 
 val viewModelsModule = module {

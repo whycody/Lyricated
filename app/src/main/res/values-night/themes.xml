@@ -17,6 +17,13 @@
         <item name="android:windowBackground">@color/lyric_gray_night</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSecondaryVariant</item>
         <item name="fontFamily">@font/montserrat</item>
+        <item name="snackbarStyle">@style/MySnackBarStyle</item>
+    </style>
+
+    <style name="MySnackBarStyle" parent="Widget.MaterialComponents.Snackbar">
+        <item name="backgroundTint">@color/lyric_gray</item>
+        <item name="android:layout_marginLeft">@dimen/app_padding</item>
+        <item name="android:layout_marginRight">@dimen/app_padding</item>
     </style>
 
     <style name="AlertDialogCustom" parent="Theme.AppCompat.DayNight.Dialog.Alert">

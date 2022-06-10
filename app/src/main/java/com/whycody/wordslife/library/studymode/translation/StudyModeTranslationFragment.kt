@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import com.whycody.wordslife.R
+import com.whycody.wordslife.data.utilities.TextCopyUtility
 import com.whycody.wordslife.databinding.FragmentStudyModeTranslationBinding
 import com.whycody.wordslife.library.studymode.StudyModeViewModel
 import com.whycody.wordslife.search.lyric.header.HeaderFragment
 import com.whycody.wordslife.search.lyric.translation.LyricTranslationFragment
 import com.whycody.wordslife.search.lyric.translation.LyricTranslationViewModel
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -19,12 +21,18 @@ class StudyModeTranslationFragment : Fragment() {
 
     private lateinit var typeOfPhrase: String
     private lateinit var binding: FragmentStudyModeTranslationBinding
+    private val textCopyUtility: TextCopyUtility by inject()
     private val studyModeViewModel: StudyModeViewModel by sharedViewModel()
     private val lyricTranslationViewModel: LyricTranslationViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = FragmentStudyModeTranslationBinding.inflate(inflater)
+        binding.translationText.setOnLongClickListener { textCopyUtility.copyText(
+            requireParentFragment().requireView(),
+            lyricTranslationViewModel.getTranslationItem().value!!.translatedSentence!!,
+            parentFragment?.view?.findViewById(R.id.revealWordBtn)) }
+        binding.viewAboveTranslation.setOnLongClickListener { false }
         typeOfPhrase = arguments?.getString(LyricTranslationFragment.TYPE_OF_PHRASE,
             LyricTranslationFragment.MAIN_PHRASE)!!
         addHeader()
