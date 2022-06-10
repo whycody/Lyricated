@@ -6,6 +6,9 @@
         <variable
             name="translationItem"
             type="com.whycody.wordslife.data.TranslationItem" />
+        <variable
+            name="ttsAvailable"
+            type="boolean" />
     </data>
 
     <LinearLayout
@@ -50,6 +53,14 @@
                 android:layout_gravity="center"
                 android:gravity="center|start"
                 android:paddingStart="12dp"/>
+
+            <ImageButton
+                android:id="@+id/playTTSBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="@{ttsAvailable ? View.VISIBLE : View.GONE}"
+                android:src="@drawable/ic_round_volume_up_24"
+                android:background="@android:color/transparent"/>
 
         </LinearLayout>
 

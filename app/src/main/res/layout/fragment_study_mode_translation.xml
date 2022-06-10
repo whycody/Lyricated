@@ -9,6 +9,9 @@
         <variable
             name="translationIsShown"
             type="boolean" />
+        <variable
+            name="ttsAvailable"
+            type="boolean" />
     </data>
 
     <LinearLayout
@@ -61,8 +64,20 @@
                 app:layout_constraintLeft_toRightOf="@id/flagImage"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/playTTSBtn"
                 android:paddingStart="12dp"/>
+
+            <ImageButton
+                android:id="@+id/playTTSBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingRight="@dimen/app_padding"
+                android:visibility="@{ttsAvailable ? View.VISIBLE : View.GONE}"
+                android:src="@drawable/ic_round_volume_up_24"
+                android:background="@android:color/transparent"/>
 
             <View
                 android:id="@+id/viewAboveTranslation"
@@ -70,7 +85,7 @@
                 android:layout_height="0dp"
                 android:background="@drawable/s_study_mode_translation"
                 app:layout_constraintLeft_toLeftOf="@id/translationText"
-                app:layout_constraintRight_toRightOf="@id/translationText"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@id/translationText"
                 app:layout_constraintBottom_toBottomOf="@id/translationText"
                 android:visibility="@{translationIsShown ? View.GONE : View.VISIBLE}"/>
