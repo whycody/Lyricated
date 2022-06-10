@@ -16,45 +16,56 @@
         tools:context=".choose.language.ChooseLanguageFragment"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/headerText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@{ mainLanguage ? @string/choose_main_language : @string/choose_translation_language}"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:paddingStart="@dimen/app_padding"
+            android:textColor="?attr/colorPrimaryDark" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/app_padding"
-            android:paddingTop="40dp"
-            android:paddingBottom="21dp">
+            android:layout_marginTop="30dp"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <View
-                android:id="@+id/dot"
-                android:layout_width="6dp"
-                android:layout_height="0dp"
-                android:background="?attr/colorAccent"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fragmentsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/headerText"
-                app:layout_constraintBottom_toBottomOf="@id/headerText" />
-
-            <TextView
-                android:id="@+id/headerText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{ mainLanguage ? @string/choose_main_language : @string/choose_translation_language}"
-                android:textStyle="bold"
-                android:textSize="22sp"
-                android:paddingStart="@dimen/app_padding"
-                android:textColor="?attr/colorPrimaryDark"
-                app:layout_constraintLeft_toRightOf="@id/dot"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
+                app:cardBackgroundColor="?attr/colorSecondaryVariant"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="0dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/chooseLanguageRecycler"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:overScrollMode="never"
+                    android:layout_marginBottom="30dp"
+                    android:layout_height="wrap_content"
+                    android:layoutAnimation="@anim/layout_fall_down"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <View
+                android:id="@+id/downCornersContentFragment"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="?attr/colorSecondaryVariant"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/chooseLanguageRecycler"
-            android:layout_width="match_parent"
-            android:overScrollMode="never"
-            android:layout_height="wrap_content"
-            android:layoutAnimation="@anim/layout_fall_down"/>
 
     </LinearLayout>
 

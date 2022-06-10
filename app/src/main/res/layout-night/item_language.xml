@@ -21,8 +21,14 @@
         android:orientation="vertical"
         android:focusable="true"
         android:clickable="true"
-        android:background="@{position%2 == 0 ? @android:color/transparent : @color/gray_night}"
         android:onClick="@{()->chooseLanguageInteractor.onLanguageClick(language.id)}">
+
+        <View
+            android:id="@+id/underline"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?attr/colorControlHighlight"
+            android:visibility="@{position==0 ? View.INVISIBLE : View.VISIBLE}"/>
 
         <LinearLayout
             android:layout_width="match_parent"

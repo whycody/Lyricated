@@ -10,7 +10,6 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.whycody.wordslife.main.MainActivity
 import com.whycody.wordslife.R
 import com.whycody.wordslife.choose.language.recycler.ChooseLanguageAdapter
 import com.whycody.wordslife.data.language.LanguageDaoImpl
@@ -56,7 +55,7 @@ class ChooseLanguageFragment : Fragment() {
     }
 
     private fun observeLanguagesList(adapter: ChooseLanguageAdapter, recyclerView: RecyclerView) {
-        viewModel.getLanguages().observe(activity as MainActivity) {
+        viewModel.getLanguages().observe(viewLifecycleOwner) {
             if (adapter.currentList.size != 0) activity?.onBackPressed()
             adapter.submitList(it)
             recyclerView.scheduleLayoutAnimation()
