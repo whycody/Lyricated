@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="historyIsAvailable"
+            type="boolean" />
+    </data>
+
     <androidx.core.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -37,7 +44,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:layout_marginStart="@dimen/app_padding"
-                android:layout_marginEnd="@dimen/app_padding"/>
+                android:layout_marginEnd="@dimen/app_padding"
+                android:layout_marginBottom="30dp"/>
 
             <TextView
                 android:id="@+id/headerText"
@@ -47,9 +55,34 @@
                 android:textSize="15sp"
                 android:textColor="?attr/colorPrimaryVariant"
                 android:paddingHorizontal="@dimen/app_padding"
-                android:layout_marginTop="30dp"
+                android:visibility="@{historyIsAvailable ? View.VISIBLE : View.GONE}"
                 android:textStyle="bold"
                 android:text="@string/previous_words"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/app_padding"
+                android:visibility="@{historyIsAvailable ? View.GONE : View.VISIBLE}"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_round_arrow_upward_24"/>
+
+                <TextView
+                    android:id="@+id/searchFirstPhraseText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:layout_marginLeft="8dp"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="@string/search_first_phrase"/>
+
+            </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

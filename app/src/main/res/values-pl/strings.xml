@@ -81,4 +81,6 @@
     <string name="initial_configuration">Konfiguracja wstępna</string>
     <string name="get_started">Rozpocznij</string>
     <string name="hello_in">Witaj w</string>
+    <string name="search_first_phrase">Wyszukaj pierwsze słówko</string>
+    <string name="first">pierwsze</string>
 </resources>

@@ -22,6 +22,7 @@
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/ic_movie.xml" value="0.122" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/ic_play.xml" value="0.14375" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/ic_quote.xml" value="0.122" />
+        <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/ic_round_arrow_upward_24.xml" value="0.172" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/ic_round_volume_up_24.xml" value="0.172" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/ic_search.xml" value="0.122" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/drawable/ic_sort.xml" value="0.26205128205128203" />
@@ -74,7 +75,7 @@
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_filter.xml" value="0.22037037037037038" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_header.xml" value="0.24615384615384617" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_history.xml" value="0.1" />
-        <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_library.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_library_header.xml" value="0.25" />
         <entry key="..\:/Users/oktaw/Desktop/Projekty/Lyricated/Lyricated/app/src/main/res/layout/fragment_lyric.xml" value="0.225" />

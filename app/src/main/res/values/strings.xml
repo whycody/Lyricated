@@ -82,4 +82,6 @@
     <string name="initial_configuration">Initial configuration</string>
     <string name="get_started">Get started</string>
     <string name="hello_in">Hello in</string>
+    <string name="search_first_phrase">Search first phrase</string>
+    <string name="first">first</string>
 </resources>

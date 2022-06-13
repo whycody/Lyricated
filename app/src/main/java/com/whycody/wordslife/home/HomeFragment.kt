@@ -28,7 +28,10 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val binding = FragmentHomeBinding.inflate(inflater)
-        binding.headerText.text = getHeaderTextStringSpannable()
+        binding.headerText.text = getStringSpannable(getString(R.string.previous_words),
+            getString(R.string.previous))
+        binding.searchFirstPhraseText.text = getStringSpannable(getString(R.string.search_first_phrase),
+            getString(R.string.first))
         homeViewModel.loadHistoryItems()
         setupRecycler(binding)
         return binding.root
@@ -40,12 +43,10 @@ class HomeFragment : Fragment() {
         observeClickedWord()
     }
 
-    private fun getHeaderTextStringSpannable(): SpannableStringBuilder {
-        val prevWords = getString(R.string.previous_words)
-        val prev = getString(R.string.previous)
-        val spanBuilder = SpannableStringBuilder(prevWords)
-        val indexStart = prevWords.indexOf(prev)
-        val indexEnd = indexStart + prev.length
+    private fun getStringSpannable(phrase: String, word: String): SpannableStringBuilder {
+        val spanBuilder = SpannableStringBuilder(phrase)
+        val indexStart = phrase.indexOf(word)
+        val indexEnd = indexStart + word.length
         val typedValue = TypedValue()
         requireContext().theme.resolveAttribute(R.attr.colorPrimary, typedValue, true)
         spanBuilder.setSpan(ForegroundColorSpan(typedValue.data),
@@ -83,6 +84,7 @@ class HomeFragment : Fragment() {
         homeViewModel.getHistoryItems().observe(activity as MainActivity) {
             if (historyAdapter.currentList.isEmpty())
                 binding.historyRecycler.scheduleLayoutAnimation()
+            binding.historyIsAvailable = !it.isNullOrEmpty()
             historyAdapter.submitList(it)
         }
 }
