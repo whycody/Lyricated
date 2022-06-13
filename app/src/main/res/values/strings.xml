@@ -79,4 +79,7 @@
     <string name="movies_and_series">Movies and series</string>
     <string name="are_you_sure">Are you sure about that? You will not be able to undo this action.</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="initial_configuration">Initial configuration</string>
+    <string name="get_started">Get started</string>
+    <string name="hello_in">Hello in</string>
 </resources>

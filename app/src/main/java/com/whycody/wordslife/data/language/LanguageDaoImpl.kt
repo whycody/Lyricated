@@ -1,6 +1,8 @@
 package com.whycody.wordslife.data.language
 
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.Language
@@ -27,7 +29,8 @@ class LanguageDaoImpl(private val context: Context,
                 Language(PT, context.getString(R.string.portugal),
                     ContextCompat.getDrawable(context,R.drawable.ic_portugal)!!),
                 Language(IT, context.getString(R.string.italian),
-                    ContextCompat.getDrawable(context,R.drawable.ic_italy)!!))
+                    ContextCompat.getDrawable(context,R.drawable.ic_italy)!!)
+    )
 
     override fun setCurrentLanguages(mainLangId: String, translLangId: String) {
         if(!currentLanguagesAreDifferent(mainLangId, translLangId)) return
@@ -40,10 +43,12 @@ class LanguageDaoImpl(private val context: Context,
                     translationLangId != getCurrentTranslationLanguage().id
 
     override fun getCurrentMainLanguage() =
-        getLanguage(searchConfigurationDao.getSearchConfiguration().lyricLanguages.mainLangId)!!
+        getLanguage(searchConfigurationDao.getSearchConfiguration().lyricLanguages.mainLangId)
+            ?: Language(UNSET, "", ContextCompat.getDrawable(context,R.drawable.ic_italy)!!)
 
     override fun getCurrentTranslationLanguage() =
-        getLanguage(searchConfigurationDao.getSearchConfiguration().lyricLanguages.translationLangId)!!
+        getLanguage(searchConfigurationDao.getSearchConfiguration().lyricLanguages.translationLangId)
+            ?: Language(UNSET, "", ContextCompat.getDrawable(context,R.drawable.ic_italy)!!)
 
     override fun setCurrentMainLanguage(id: String) {
         if(getCurrentTranslationLanguage().id != id) saveCurrentMainLanguage(id)
@@ -83,6 +88,7 @@ class LanguageDaoImpl(private val context: Context,
         const val FR = "fr"
         const val PT = "pt"
         const val IT = "it"
+        const val UNSET = "unset"
 
         const val DEFAULT_MAIN_LANGUAGE = EN
         const val DEFAULT_TRANSLATION_LANGUAGE = PL

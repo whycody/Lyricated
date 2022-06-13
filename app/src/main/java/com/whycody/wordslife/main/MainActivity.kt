@@ -6,8 +6,12 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.whycody.wordslife.IOnBackPressed
 import com.whycody.wordslife.R
+import com.whycody.wordslife.choose.language.ChooseLanguageFragment
 import com.whycody.wordslife.data.app.configuration.AppConfigurationDao
+import com.whycody.wordslife.data.language.LanguageDaoImpl
+import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.data.settings.SettingsDaoImpl
+import com.whycody.wordslife.main.startup.StartupFragment
 import com.whycody.wordslife.search.SearchFragment
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -16,13 +20,26 @@ class MainActivity : AppCompatActivity(), MainNavigation {
 
     private val mainViewModel: MainViewModel by viewModel()
     private val appConfigurationDao: AppConfigurationDao by inject()
+    private val searchConfigurationDao: SearchConfigurationDao by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         updateAppearance()
         mainViewModel.checkDatabase()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if(savedInstanceState == null) showHomeFragment()
+        if(savedInstanceState == null) showFragments()
+    }
+
+    private fun showFragments() {
+        showHomeFragment()
+        val translationLangId = searchConfigurationDao.getLyricLanguages().translationLangId
+        if(translationLangId == LanguageDaoImpl.UNSET) showChooseLanguageFragments()
+    }
+
+    private fun showChooseLanguageFragments() {
+        navigateTo(ChooseLanguageFragment.newInstance(false))
+        navigateTo(ChooseLanguageFragment.newInstance(true))
+        navigateTo(StartupFragment())
     }
 
     private fun updateAppearance() {

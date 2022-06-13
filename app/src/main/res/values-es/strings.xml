@@ -78,4 +78,7 @@
     <string name="movies_and_series">Películas y series</string>
     <string name="are_you_sure">¿Está seguro de eso? No podrá deshacer esta acción.</string>
     <string name="copied_to_clipboard">Copiado al portapapeles</string>
+    <string name="initial_configuration">Configuración inicial</string>
+    <string name="get_started">Empezar</string>
+    <string name="hello_in">Bienvenido a</string>
 </resources>

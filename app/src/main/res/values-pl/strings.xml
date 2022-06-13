@@ -78,4 +78,7 @@
     <string name="movies_and_series">Filmy i seriale</string>
     <string name="are_you_sure">Czy jesteś tego pewien? Wykonanej czynności nie będziesz mógł cofnąć.</string>
     <string name="copied_to_clipboard">Skopiowano do schowka</string>
+    <string name="initial_configuration">Konfiguracja wstępna</string>
+    <string name="get_started">Rozpocznij</string>
+    <string name="hello_in">Witaj w</string>
 </resources>

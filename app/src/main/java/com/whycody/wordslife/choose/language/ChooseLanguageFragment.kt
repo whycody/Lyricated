@@ -10,35 +10,35 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.whycody.wordslife.IOnBackPressed
 import com.whycody.wordslife.R
 import com.whycody.wordslife.choose.language.recycler.ChooseLanguageAdapter
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.databinding.FragmentChooseLanguageBinding
+import com.whycody.wordslife.home.HomeFragment
+import com.whycody.wordslife.main.MainFragment
+import com.whycody.wordslife.main.MainNavigation
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ChooseLanguageFragment : Fragment() {
+class ChooseLanguageFragment : Fragment(), IOnBackPressed {
 
     private val viewModel: ChooseLanguageViewModel by viewModel()
+    private lateinit var binding: FragmentChooseLanguageBinding
+    private var mainLanguage = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val binding = FragmentChooseLanguageBinding.inflate(inflater)
-        val mainLanguage = arguments?.getBoolean(LanguageDaoImpl.MAIN_LANGUAGE, true)!!
-        binding.mainLanguage = mainLanguage
+        binding = FragmentChooseLanguageBinding.inflate(inflater)
+        mainLanguage = arguments?.getBoolean(LanguageDaoImpl.MAIN_LANGUAGE, true)!!
         viewModel.setMainLanguage(mainLanguage)
+        binding.mainLanguage = mainLanguage
+        binding.initialConfiguration = viewModel.getCurrentLanguageID() == LanguageDaoImpl.UNSET
         setupRecycler(binding.chooseLanguageRecycler)
         hideKeyboard()
         return binding.root
     }
 
-    fun newInstance(mainLanguage: Boolean): ChooseLanguageFragment {
-        val fragment = ChooseLanguageFragment()
-        with(Bundle()) {
-            putBoolean(LanguageDaoImpl.MAIN_LANGUAGE, mainLanguage)
-            fragment.arguments = this
-        }
-        return fragment
-    }
+    override fun onBackPressed() = viewModel.getCurrentLanguageID() != LanguageDaoImpl.UNSET
 
     private fun hideKeyboard() {
         val imm = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -66,6 +66,17 @@ class ChooseLanguageFragment : Fragment() {
         val layoutAnimationController =
                 AnimationUtils.loadLayoutAnimation(recyclerView.context, R.anim.layout_fall_down)
         recyclerView.layoutAnimation = layoutAnimationController
+    }
+
+    companion object {
+        fun newInstance(mainLanguage: Boolean): ChooseLanguageFragment {
+            val fragment = ChooseLanguageFragment()
+            with(Bundle()) {
+                putBoolean(LanguageDaoImpl.MAIN_LANGUAGE, mainLanguage)
+                fragment.arguments = this
+            }
+            return fragment
+        }
     }
 
 }

@@ -50,7 +50,7 @@ class CurrentLanguageFragment : Fragment() {
     }
 
     private fun startChooseLanguageFragment(mainLanguage: Boolean) =
-        (activity as MainActivity).navigateTo(ChooseLanguageFragment().newInstance(mainLanguage))
+        (activity as MainActivity).navigateTo(ChooseLanguageFragment.newInstance(mainLanguage))
 
     private fun observeCurrentLanguages() {
         searchConfigurationDao.getSearchConfigurationLiveData().observe(activity as MainActivity) {

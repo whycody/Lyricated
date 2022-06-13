@@ -120,14 +120,13 @@ data class ExtendedVocabularyItem(
         val word: String,
         val shown: Boolean)
 
-
 data class TranslationItem(
         val drawable: Drawable,
         val translatedSentence: String?)
 
 data class LyricLanguages(
-        var mainLangId: String = LanguageDaoImpl.DEFAULT_MAIN_LANGUAGE,
-        var translationLangId: String = LanguageDaoImpl.DEFAULT_TRANSLATION_LANGUAGE): Serializable
+        var mainLangId: String = LanguageDaoImpl.UNSET,
+        var translationLangId: String = LanguageDaoImpl.UNSET): Serializable
 
 data class UserAction(
         val actionType: Int = SearchFragment.NO_ACTION,

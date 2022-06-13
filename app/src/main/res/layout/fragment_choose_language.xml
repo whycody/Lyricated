@@ -5,6 +5,10 @@
         <variable
             name="mainLanguage"
             type="boolean" />
+        <variable
+            name="initialConfiguration"
+            type="boolean" />
+        <import type="android.view.View"/>
     </data>
 
     <LinearLayout
@@ -14,13 +18,22 @@
         android:layout_height="match_parent"
         android:background="?attr/colorSecondary"
         tools:context=".choose.language.ChooseLanguageFragment"
+        android:paddingTop="30dp"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            android:textSize="12sp"
+            android:visibility="@{initialConfiguration ? View.VISIBLE : View.GONE}"
+            android:paddingStart="@dimen/app_padding"
+            android:text="@string/initial_configuration"/>
 
         <TextView
             android:id="@+id/headerText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:text="@{ mainLanguage ? @string/choose_main_language : @string/choose_translation_language}"
             android:textStyle="bold"
             android:textSize="20sp"
