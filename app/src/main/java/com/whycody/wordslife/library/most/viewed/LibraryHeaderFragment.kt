@@ -12,7 +12,7 @@ import com.whycody.wordslife.databinding.FragmentLibraryHeaderBinding
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LibraryHeaderFragment : Fragment() {
 

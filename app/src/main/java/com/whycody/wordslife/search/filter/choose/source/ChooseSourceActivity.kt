@@ -11,7 +11,7 @@ import com.whycody.wordslife.search.filter.choose.source.recycler.MovieListItemA
 import com.whycody.wordslife.data.search.configuration.SearchConfigurationDao
 import com.whycody.wordslife.databinding.ActivityChooseSourceBinding
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChooseSourceActivity : AppCompatActivity(), TextWatcher {
 

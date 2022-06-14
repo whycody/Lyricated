@@ -18,8 +18,8 @@ import com.whycody.wordslife.search.translation.recycler.TranslationAdapter
 import com.whycody.wordslife.search.translation.recycler.TranslationItemDecoration
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.sharedViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TranslationFragment : Fragment(), TranslationInteractor {
 

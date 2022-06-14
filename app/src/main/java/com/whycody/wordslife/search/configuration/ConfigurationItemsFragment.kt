@@ -11,7 +11,7 @@ import com.whycody.wordslife.databinding.FragmentConfigurationItemsBinding
 import com.whycody.wordslife.search.configuration.recycler.ConfigurationItemAdapter
 import com.whycody.wordslife.search.translation.recycler.TranslationItemDecoration
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ConfigurationItemsFragment : Fragment() {
 

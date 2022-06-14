@@ -14,7 +14,7 @@ import com.whycody.wordslife.search.lyric.movie.MovieFragment
 import com.whycody.wordslife.search.lyric.translation.LyricTranslationFragment
 import com.whycody.wordslife.search.lyric.vocabulary.VocabularyFragment
 import kotlinx.coroutines.*
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class LyricFragment : BottomSheetDialogFragment() {
 

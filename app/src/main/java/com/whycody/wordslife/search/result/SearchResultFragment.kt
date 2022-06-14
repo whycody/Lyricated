@@ -15,8 +15,8 @@ import com.whycody.wordslife.databinding.FragmentSearchResultBinding
 import com.whycody.wordslife.search.SearchViewModel
 import com.whycody.wordslife.search.result.recycler.SearchResultAdapter
 import kotlinx.coroutines.*
-import org.koin.android.viewmodel.ext.android.sharedViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchResultFragment : Fragment() {
 

@@ -13,7 +13,7 @@ import com.whycody.wordslife.library.studymode.translation.StudyModeTranslationF
 import com.whycody.wordslife.library.studymode.vocabulary.StudyModeVocabularyFragment
 import com.whycody.wordslife.main.MainNavigation
 import com.whycody.wordslife.search.lyric.translation.LyricTranslationFragment
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class StudyModeFragment : Fragment(), IOnBackPressed {
 

@@ -11,8 +11,8 @@ import com.whycody.wordslife.databinding.FragmentHistoryBinding
 import com.whycody.wordslife.home.HistoryInteractor
 import com.whycody.wordslife.home.HomeViewModel
 import com.whycody.wordslife.search.SearchViewModel
-import org.koin.android.viewmodel.ext.android.sharedViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HistoryFragment : BottomSheetDialogFragment(), HistoryInteractor {
 

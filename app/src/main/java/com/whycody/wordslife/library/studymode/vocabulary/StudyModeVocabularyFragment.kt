@@ -15,7 +15,7 @@ import com.whycody.wordslife.library.studymode.StudyModeViewModel
 import com.whycody.wordslife.search.lyric.header.HeaderFragment
 import com.whycody.wordslife.search.lyric.vocabulary.VocabularyViewModel
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class StudyModeVocabularyFragment : Fragment() {
 

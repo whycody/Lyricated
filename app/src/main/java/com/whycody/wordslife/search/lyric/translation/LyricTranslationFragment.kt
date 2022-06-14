@@ -16,8 +16,8 @@ import com.whycody.wordslife.databinding.FragmentLyricTranslationBinding
 import com.whycody.wordslife.search.lyric.LyricViewModel
 import com.whycody.wordslife.search.lyric.header.HeaderFragment
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.sharedViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class LyricTranslationFragment : Fragment(), TextToSpeech.OnInitListener {

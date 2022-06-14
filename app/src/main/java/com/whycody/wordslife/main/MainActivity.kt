@@ -14,7 +14,7 @@ import com.whycody.wordslife.data.settings.SettingsDaoImpl
 import com.whycody.wordslife.main.startup.StartupFragment
 import com.whycody.wordslife.search.SearchFragment
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), MainNavigation {
 

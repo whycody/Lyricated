@@ -15,7 +15,7 @@ import com.whycody.wordslife.R
 import com.whycody.wordslife.choose.language.recycler.ChooseLanguageAdapter
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.databinding.FragmentChooseLanguageBinding
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChooseLanguageFragment : Fragment(), IOnBackPressed {
 

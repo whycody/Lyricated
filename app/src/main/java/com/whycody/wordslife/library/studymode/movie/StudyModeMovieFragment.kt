@@ -11,7 +11,7 @@ import com.whycody.wordslife.library.studymode.StudyModeViewModel
 import com.whycody.wordslife.search.lyric.movie.MovieInteractor
 import com.whycody.wordslife.search.lyric.movie.MovieViewModel
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class StudyModeMovieFragment : Fragment(), MovieInteractor {
 

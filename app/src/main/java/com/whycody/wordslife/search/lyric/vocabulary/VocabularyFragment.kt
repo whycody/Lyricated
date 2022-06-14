@@ -19,8 +19,8 @@ import com.whycody.wordslife.search.lyric.LyricViewModel
 import com.whycody.wordslife.search.lyric.header.HeaderFragment
 import com.whycody.wordslife.search.lyric.vocabulary.recycler.VocabularyAdapter
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.sharedViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class VocabularyFragment : Fragment(), VocabularyInteractor {
 

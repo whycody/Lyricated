@@ -21,7 +21,7 @@ import com.whycody.wordslife.search.content.SearchContentView
 import com.whycody.wordslife.search.filter.FilterFragment
 import com.whycody.wordslife.search.sort.SortFragment
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.lang.Exception
 
 class SearchFragment : Fragment(), IOnBackPressed {

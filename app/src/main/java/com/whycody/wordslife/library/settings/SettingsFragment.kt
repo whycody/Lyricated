@@ -16,7 +16,7 @@ import com.whycody.wordslife.data.settings.SettingsDaoImpl
 import com.whycody.wordslife.databinding.FragmentSettingsBinding
 import com.whycody.wordslife.search.sort.recycler.SortItemAdapter
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : BottomSheetDialogFragment() {
 

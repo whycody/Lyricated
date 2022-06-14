@@ -12,7 +12,7 @@ import com.whycody.wordslife.data.ExtendedLyricItem
 import com.whycody.wordslife.library.studymode.StudyModeViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class StudyModeLoadingFragment : Fragment(), IOnBackPressed {
 

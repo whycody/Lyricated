@@ -50,7 +50,7 @@ import com.whycody.wordslife.search.sort.SortViewModel
 import com.whycody.wordslife.search.translation.TranslationViewModel
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
-import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

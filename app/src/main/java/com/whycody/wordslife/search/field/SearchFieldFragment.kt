@@ -12,7 +12,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import com.whycody.wordslife.databinding.FragmentSearchFieldBinding
 import com.whycody.wordslife.search.SearchViewModel
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SearchFieldFragment : Fragment(), TextWatcher {
 
