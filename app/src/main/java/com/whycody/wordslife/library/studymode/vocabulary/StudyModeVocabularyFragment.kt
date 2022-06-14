@@ -22,12 +22,12 @@ class StudyModeVocabularyFragment : Fragment() {
     private lateinit var binding: FragmentStudyModeVocabularyBinding
     private val vocabularyViewModel: VocabularyViewModel by inject()
     private val studyModeViewModel: StudyModeViewModel by sharedViewModel()
-    private lateinit var adapter: StudyModeVocabularyAdapter
+    private lateinit var studyModeVocabularyAdapter: StudyModeVocabularyAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = FragmentStudyModeVocabularyBinding.inflate(inflater)
-        adapter = StudyModeVocabularyAdapter(studyModeViewModel)
+        studyModeVocabularyAdapter = StudyModeVocabularyAdapter(studyModeViewModel)
         addHeader()
         setupRecycler()
         observeExtendedLyricItem()
@@ -45,7 +45,7 @@ class StudyModeVocabularyFragment : Fragment() {
 
     private fun setupRecycler() {
         with(binding.studyModeVocabularyRecycler) {
-            this.adapter = adapter
+            adapter = studyModeVocabularyAdapter
             itemAnimator = null
             layoutManager = getFlexboxLayoutManager()
         }
@@ -71,7 +71,7 @@ class StudyModeVocabularyFragment : Fragment() {
         .observe(viewLifecycleOwner) { refreshVocabulary() }
 
     private fun refreshVocabulary() {
-        adapter.submitList(vocabularyViewModel.getVocabularyItems().value!!
+        studyModeVocabularyAdapter.submitList(vocabularyViewModel.getVocabularyItems().value!!
             .map { ExtendedVocabularyItem(it.index, it.word,
                 studyModeViewModel.getShownWords().value!!.contains(it.index)) })
     }
