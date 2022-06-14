@@ -17,10 +17,15 @@ class MainViewModel(context: Context, private val apiService: ApiService,
     private val prefsEditor = sharedPrefs.edit()
 
     fun checkDatabase() {
-        val localDatabaseVersion = getLocalDatabaseVersion()
-        val currentDatabaseVersion = 1
-        if(localDatabaseVersion != currentDatabaseVersion)
-            updateMovies(currentDatabaseVersion)
+        viewModelScope.launch {
+            val localDatabaseVersion = getLocalDatabaseVersion()
+            val response = apiService.getDatabaseVersion()
+            if(response.isSuccessful) {
+                val currentDatabaseVersion = response.body()?.version!!
+                if(localDatabaseVersion != currentDatabaseVersion)
+                    updateMovies(currentDatabaseVersion)
+            }
+        }
     }
 
     private fun updateMovies(currentDatabaseVersion: Int) {

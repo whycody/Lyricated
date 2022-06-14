@@ -10,6 +10,9 @@ const val BASE_URL = "https://translate.lyricated.com/"
 
 interface ApiService {
 
+    @GET("get_database_version")
+    suspend fun getDatabaseVersion(): Response<DatabaseVersionResponse>
+
     @GET("get_movies")
     suspend fun getAllMovies(): Response<MoviesResponse>
 

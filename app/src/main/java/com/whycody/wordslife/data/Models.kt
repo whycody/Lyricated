@@ -239,3 +239,7 @@ data class SetLyricQualityResponse(
         val id: Int,
         val quality: Int,
         val success: Boolean)
+
+data class DatabaseVersionResponse(
+        val version: Int
+)
