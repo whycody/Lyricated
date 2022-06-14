@@ -37,5 +37,5 @@ class StudyModeMovieFragment : Fragment(), MovieInteractor {
         }
     }
 
-    override fun playBtnClicked(url: String, time: String) = moviePlayer.playMovie(url, time)
+    override fun playBtnClicked(netflixid: Int, time: String) = moviePlayer.playMovie(netflixid, time)
 }

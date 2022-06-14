@@ -28,9 +28,9 @@ class ConfigurationItemsFragment : Fragment() {
     }
 
     private fun observeSearchConf() =
-        searchConfDao.getSearchConfigurationLiveData().observe(requireActivity(), {
+        searchConfDao.getSearchConfigurationLiveData().observe(requireActivity()) {
             confViewModel.searchConfUpdated()
-        })
+        }
 
     private fun setupConfigurationRecycler() {
         val confItemAdapter = ConfigurationItemAdapter(confViewModel)
@@ -45,10 +45,10 @@ class ConfigurationItemsFragment : Fragment() {
     }
 
     private fun observeConfItems(adapter: ConfigurationItemAdapter) =
-        confViewModel.getConfItems().observe(requireActivity(), {
-            if(it.isEmpty()) binding.configurationRecycler.visibility = View.GONE
+        confViewModel.getConfItems().observe(requireActivity()) {
+            if (it.isEmpty()) binding.configurationRecycler.visibility = View.GONE
             else binding.configurationRecycler.visibility = View.VISIBLE
             adapter.submitList(it)
-        })
+        }
 
 }

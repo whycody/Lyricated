@@ -40,7 +40,7 @@ data class AppConfiguration(
         var appearance: String = SettingsDaoImpl.DEFAULT,
         var educationalMaterials: String = SettingsDaoImpl.SHOW_EDU,
         var history: String = SettingsDaoImpl.SAVE_HISTORY,
-        var studyModeDifficulty: String = StudyModeDaoImpl.EASY,
+        var studyModeDifficulty: String = StudyModeDaoImpl.MEDIUM,
         var studyModeSource: String = StudyModeDaoImpl.RANDOM)
 
 data class ConfigurationItem(
@@ -65,17 +65,15 @@ data class LyricItem(
         val translatedSentence: String,
         val movieId: String,
         val time: String,
-        var season: Int,
-        var episode: Int,
+        val episode: Episode?,
         val mainLangId: String,
         val translationLangId: String,
         @Ignore var mainSentenceSpan: SpannableStringBuilder?,
         @Ignore var translatedSentenceSpan: SpannableStringBuilder?) {
 
-    constructor(lyricId: Int, mainSentence: String, translatedSentence: String,
-                movieId: String, time:String, season: Int, episode: Int,
-                mainLangId: String, translationLangId: String) :
-            this(lyricId, mainSentence, translatedSentence, movieId, time, season, episode,
+    constructor(lyricId: Int, mainSentence: String, translatedSentence: String, movieId: String,
+                time:String, episode: Episode?, mainLangId: String, translationLangId: String) :
+            this(lyricId, mainSentence, translatedSentence, movieId, time, episode,
                     mainLangId, translationLangId, mainSentenceSpan = null,
                     translatedSentenceSpan = null)
 }
@@ -86,30 +84,25 @@ data class ExtendedLyricItem(
         val translatedSentence: String?,
         val movieId: String,
         val time: String,
-        val season: Int,
-        val episode: Int,
+        val episode: Episode?,
         val languages: LyricLanguages): Serializable
 
 data class MovieItem(
         val mainTitle: String,
         val translatedTitle: String? = null,
-        val url: String? = null,
+        val netflixid: Int? = null,
         val type: String,
-        val episodeItem: EpisodeItem?,
+        val episodeItem: Episode?,
         val time: String?)
 
 data class MovieListItem(
         val id: String,
         val type: String,
-        val url: String?,
+        val netflixid: Int?,
         val title: String,
         val subtitle: String?,
         val allTitles: String,
         var isChecked: Boolean = false)
-
-data class EpisodeItem(
-        val season: Int,
-        val episode: Int)
 
 data class VocabularyItem(
         val index: Int,
@@ -150,7 +143,7 @@ data class Movie(
         val lang: String,
         val type: String,
         val minutes: Int,
-        val url: String?,
+        val netflixid: Int?,
         val lyrics: Int,
         val eng: String?,
         val pl: String?,
@@ -161,23 +154,21 @@ data class Movie(
         val pt: String?)
 
 data class MoviesResponse(
-        val movies: List<MovieApi>
-)
+        val movies: List<MovieApi>)
 
 data class MovieApi(
         val id: String,
         val lang: String,
         val type: String,
         val minutes: Int,
-        val url: String?,
+        val netflixid: Int?,
         val en: String?,
         val pl: String?,
         val esp: String?,
         val fr: String?,
         val ger: String?,
         val it: String?,
-        val pt: String?
-)
+        val pt: String?)
 
 data class FindLyricsResponse(
         @SerializedName("main_language_id")
@@ -191,15 +182,13 @@ data class FindLyricsResponse(
         @SerializedName("main_results")
         val mainResults: List<Lyric>,
         @SerializedName("similar_results")
-        val similarResults: List<Lyric>
-)
+        val similarResults: List<Lyric>)
 
 data class GetRandomLyricBody(
         @SerializedName("main_language_id")
         var mainLanguageId: String,
         @SerializedName("translation_language_id")
-        var translationLanguageId: String
-)
+        var translationLanguageId: String)
 
 data class FindLyricsBody(
         @SerializedName("searched_phrase")
@@ -215,8 +204,7 @@ data class FindLyricsBody(
         @SerializedName("source")
         var source: String? = null,
         @SerializedName("movie_id")
-        var movieId: String? = null
-)
+        var movieId: String? = null)
 
 data class Lyric(
         @SerializedName("id")
@@ -231,8 +219,8 @@ data class Lyric(
 
 data class Episode(
         val season: Int,
-        val episode: Int
-)
+        val episode: Int,
+        val netflixid: Int?): Serializable
 
 @Entity(tableName = "last_searches")
 data class LastSearch(
@@ -246,11 +234,9 @@ data class LastSearch(
 data class SetLyricQualityBody(
         @SerializedName("lyric_id")
         val lyricId: Int,
-        val quality: Int
-)
+        val quality: Int)
 
 data class SetLyricQualityResponse(
         val id: Int,
         val quality: Int,
-        val success: Boolean
-)
+        val success: Boolean)

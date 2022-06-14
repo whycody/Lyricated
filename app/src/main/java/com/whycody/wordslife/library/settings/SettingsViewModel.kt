@@ -49,5 +49,6 @@ class SettingsViewModel(private val settingsDao: SettingsDao,
 
     private fun getSortItemFromSortOptionId(sortOptionId: String) =
         settingsItems.value!!.find { it.id == sortOptionId } ?:
-        settingsItems.value!!.find { it.options.map { it.id }.contains(sortOptionId) }
+        settingsItems.value!!.find { settingItem ->
+            settingItem.options.map { it.id }.contains(sortOptionId) }
 }

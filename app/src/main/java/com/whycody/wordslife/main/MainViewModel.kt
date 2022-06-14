@@ -29,7 +29,7 @@ class MainViewModel(context: Context, private val apiService: ApiService,
             if(response.isSuccessful) {
                 movieRepository.deleteAllMovies()
                 movieRepository.insertMovies(response.body()?.movies!!.map {
-                    Movie(it.id, it.lang, it.type, it.minutes, it.url, 0,
+                    Movie(it.id, it.lang, it.type, it.minutes, it.netflixid, 0,
                         it.en, it.pl, it.esp, it.fr, it.ger, it.it, it.pt)
                 })
                 updateLocalDatabaseVersion(currentDatabaseVersion)

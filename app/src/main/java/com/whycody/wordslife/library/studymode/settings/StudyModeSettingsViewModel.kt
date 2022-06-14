@@ -28,5 +28,6 @@ class StudyModeSettingsViewModel(private val studyModeDao: StudyModeDao,
     }
 
     private fun getSortItemFromSortOptionId(sortOptionId: String) =
-        studyModeSettingsItems.value!!.find { it.options.map { it.id }.contains(sortOptionId) }
+        studyModeSettingsItems.value!!.find { settingItem -> settingItem.options
+            .map { it.id }.contains(sortOptionId) }
 }

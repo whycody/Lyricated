@@ -6,7 +6,9 @@ import android.net.Uri
 
 class MoviePlayerImpl(private val context: Context): MoviePlayer {
 
-    override fun playMovie(url: String, time: String) = tryPlayMovie(url, getSecondsFromTime(time)-2)
+    private val netflixURL = "https://www.netflix.com/watch/"
+
+    override fun playMovie(netflixid: Int, time: String) = tryPlayMovie(netflixid, getSecondsFromTime(time)-2)
 
     private fun getSecondsFromTime(time: String): Int {
         val hours = time.substring(0, 2).toInt()
@@ -15,21 +17,21 @@ class MoviePlayerImpl(private val context: Context): MoviePlayer {
         return hours * 3600 + minutes * 60 + seconds
     }
 
-    private fun tryPlayMovie(url: String, seconds:Int) =
-        try { runNetflixApp(url, seconds)
-        } catch (e: Exception) { runWebApp(url, seconds) }
+    private fun tryPlayMovie(netflixid: Int, seconds:Int) =
+        try { runNetflixApp(netflixid, seconds)
+        } catch (e: Exception) { runWebApp(netflixid, seconds) }
 
-    private fun runNetflixApp(url: String, seconds: Int) {
+    private fun runNetflixApp(netflixid: Int, seconds: Int) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setClassName("com.netflix.mediaclient",
             "com.netflix.mediaclient.ui.launch.UIWebViewActivity")
-        intent.data = Uri.parse("https://$url?t=$seconds")
+        intent.data = Uri.parse("$netflixURL$netflixid?t=$seconds")
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
 
-    private fun runWebApp(url: String, seconds: Int) {
-        val uri = Uri.parse("https://$url?t=$seconds")
+    private fun runWebApp(netflixid: Int, seconds: Int) {
+        val uri = Uri.parse("$netflixURL$netflixid?t=$seconds")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)

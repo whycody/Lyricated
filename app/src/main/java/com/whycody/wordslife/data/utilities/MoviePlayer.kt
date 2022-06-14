@@ -2,5 +2,5 @@ package com.whycody.wordslife.data.utilities
 
 interface MoviePlayer {
 
-    fun playMovie(url: String, time: String)
+    fun playMovie(netflixid: Int, time: String)
 }

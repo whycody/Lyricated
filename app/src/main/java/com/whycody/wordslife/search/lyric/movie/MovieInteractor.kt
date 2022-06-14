@@ -2,5 +2,5 @@ package com.whycody.wordslife.search.lyric.movie
 
 interface MovieInteractor {
 
-    fun playBtnClicked(url: String, time: String)
+    fun playBtnClicked(netflixid: Int, time: String)
 }

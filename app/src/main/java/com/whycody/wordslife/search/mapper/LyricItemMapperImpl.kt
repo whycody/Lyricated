@@ -10,16 +10,14 @@ class LyricItemMapperImpl(private val searchResultSpanBuilder: SearchResultSpanB
     override fun getExtendedLyricItemFromLyricItem(lyricItem: LyricItem) =
         ExtendedLyricItem(lyricItem.lyricId, getSentenceWithoutSpecialChars(lyricItem.mainSentence),
             getSentenceWithoutSpecialChars(lyricItem.translatedSentence), lyricItem.movieId,
-            getTimeInCorrectFormat(lyricItem.time), lyricItem.season, lyricItem.episode,
-            LyricLanguages(lyricItem.mainLangId, lyricItem.translationLangId)
-        )
+            getTimeInCorrectFormat(lyricItem.time), lyricItem.episode, LyricLanguages(lyricItem.mainLangId,
+                lyricItem.translationLangId))
 
     override fun getLyricItemFromLyric(lyric: Lyric,
                                        findLyricsResponse: FindLyricsResponse): LyricItem {
         val lyricItem = LyricItem(lyric.lyricId, lyric.mainSentence,
-            lyric.translatedSentence, lyric.movie.id, lyric.time, getLyricSeason(lyric),
-            getLyricEpisode(lyric), findLyricsResponse.mainLanguageId,
-            findLyricsResponse.translationLanguageId)
+            lyric.translatedSentence, lyric.movie.id, lyric.time, lyric.episode,
+            findLyricsResponse.mainLanguageId, findLyricsResponse.translationLanguageId)
         searchResultSpanBuilder.setLyricItemSpans(lyricItem)
         return lyricItem
     }
@@ -27,8 +25,7 @@ class LyricItemMapperImpl(private val searchResultSpanBuilder: SearchResultSpanB
     override fun getExtendedLyricItemFromLyric(lyric: Lyric) =
         ExtendedLyricItem(lyric.lyricId, getSentenceWithoutSpecialChars(lyric.mainSentence),
             getSentenceWithoutSpecialChars(lyric.translatedSentence), lyric.movie.id,
-            getTimeInCorrectFormat(lyric.time),
-            getLyricSeason(lyric), getLyricEpisode(lyric),
+            getTimeInCorrectFormat(lyric.time), lyric.episode,
             LyricLanguages(languageDao.getCurrentMainLanguage().id,
                 languageDao.getCurrentTranslationLanguage().id))
 
@@ -42,10 +39,4 @@ class LyricItemMapperImpl(private val searchResultSpanBuilder: SearchResultSpanB
         val seconds = totalSecs % 60
         return String.format("%02d:%02d:%02d", hours, minutes, seconds)
     }
-
-    private fun getLyricSeason(lyric: Lyric) =
-        if(lyric.episode != null) lyric.episode.season else 0
-
-    private fun getLyricEpisode(lyric: Lyric) =
-        if(lyric.episode != null) lyric.episode.episode else 0
 }

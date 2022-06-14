@@ -1,8 +1,6 @@
 package com.whycody.wordslife.data.language
 
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.core.content.ContextCompat
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.Language
@@ -90,8 +88,6 @@ class LanguageDaoImpl(private val context: Context,
         const val IT = "it"
         const val UNSET = "unset"
 
-        const val DEFAULT_MAIN_LANGUAGE = EN
-        const val DEFAULT_TRANSLATION_LANGUAGE = PL
         const val MAIN_LANGUAGE = "main_language"
     }
 }

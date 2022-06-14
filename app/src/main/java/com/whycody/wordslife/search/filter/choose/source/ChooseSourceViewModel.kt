@@ -42,7 +42,7 @@ class ChooseSourceViewModel(movieRepository: MovieRepository, private val movieI
         currentSearchConf.checkedFilters =
             currentSearchConf.checkedFilters
                 .minus(listOf(FilterDaoImpl.ONLY_MOVIES,
-                    FilterDaoImpl.ONLY_SERIES, FilterDaoImpl.CHOOSE_SOURCE))
+                        FilterDaoImpl.ONLY_SERIES, FilterDaoImpl.CHOOSE_SOURCE).toSet())
                 .plus(FilterDaoImpl.CHOOSE_SOURCE)
         searchConfDao.setSearchConfiguration(currentSearchConf)
     }

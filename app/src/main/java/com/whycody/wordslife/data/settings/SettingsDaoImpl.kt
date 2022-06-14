@@ -57,7 +57,7 @@ class SettingsDaoImpl(private val context: Context,
     private fun checkCurrentSettings(settingsItems: MutableList<SortItem>) {
         val searchConfig = searchConfigurationDao.getSearchConfiguration()
         val appConfig = appConfigurationDao.getAppConfiguration()
-        settingsItems.forEach{ it.options.forEach{ it.isChecked = false }}
+        settingsItems.forEach{ settingItem -> settingItem.options.forEach{ it.isChecked = false }}
         settingsItems.find { it.id == APPEARANCE }?.options?.find {
             it.id == appConfig.appearance}?.isChecked = true
         settingsItems.find { it.id == EDU_MATERIALS }?.options?.find {

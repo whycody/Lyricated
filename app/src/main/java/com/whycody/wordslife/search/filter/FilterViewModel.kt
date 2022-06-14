@@ -51,7 +51,7 @@ class FilterViewModel(private val filterDao: FilterDao,
 
     private fun uncheckAllOptionsFromFilter(sortOptionId: String, currentFilters: MutableList<String>) {
         val filterItems = filterDao.getFilterItems()
-        filterItems.find { it.options.map { it.id }
+        filterItems.find { filterItem -> filterItem.options.map { option -> option.id }
             .contains(sortOptionId) }?.options?.forEach { currentFilters.remove(it.id) }
     }
 }

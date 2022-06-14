@@ -45,11 +45,12 @@ class FilterDaoImpl(private val context: Context,
         getFilterItemWithFilterOptionId(id).options.find { it.id == id }!!
 
     private fun getFilterItemWithFilterOptionId(id: String) =
-        getFilterItems().find { it.options.map { it.id }.contains(id) }!!
+        getFilterItems().find { filterItem -> filterItem.options.map { it.id }.contains(id) }!!
 
     private fun checkCurrentFilterOptions(filterItems: MutableList<SortItem>) {
         val currentCheckedFilters = searchConfigurationDao.getSearchConfiguration().checkedFilters
-        filterItems.forEach { it.options.forEach { if(currentCheckedFilters.contains(it.id)) it.isChecked = true } }
+        filterItems.forEach { filterItem -> filterItem.options.forEach {
+            if(currentCheckedFilters.contains(it.id)) it.isChecked = true } }
     }
 
     companion object {

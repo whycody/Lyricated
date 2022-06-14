@@ -28,11 +28,13 @@ class SortDaoImpl(private val context: Context,
         getSortItemWithSortOptionId(id).options.find { it.id == id }!!
 
     private fun getSortItemWithSortOptionId(id: String) =
-        getSortItems().find { it.options.map { it.id }.contains(id) }!!
+        getSortItems().find { it -> it.options.map { it.id }.contains(id) }!!
 
     private fun checkCurrentSortingOption(sortItems: MutableList<SortItem>) {
         val currentSortingId =  searchConfigurationDao.getSearchConfiguration().sortOptionId
-        sortItems.forEach { it.options.forEach { if(it.id == currentSortingId) it.isChecked = true } }
+        sortItems.forEach { sortItem -> sortItem.options.forEach {
+            if(it.id == currentSortingId) it.isChecked = true }
+        }
     }
 
     companion object {

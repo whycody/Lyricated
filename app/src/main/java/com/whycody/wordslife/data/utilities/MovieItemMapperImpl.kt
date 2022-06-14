@@ -15,7 +15,7 @@ class MovieItemMapperImpl(private val movieRepository: MovieRepository,
         return MovieListItem(
             movie.id,
             movie.type,
-            movie.url,
+            movie.netflixid,
             getTitleFromMovieInLang(languageDao.getCurrentMainLanguage().id, movie, true)!!,
             getTitleFromMovieInLang(languageDao.getCurrentTranslationLanguage().id, movie, false),
             getAllTitlesFromMovie(movie),
@@ -30,18 +30,17 @@ class MovieItemMapperImpl(private val movieRepository: MovieRepository,
 
     override fun getMovieItemFromExtendedLyricItem(extendedLyricItem: ExtendedLyricItem): MovieItem {
         val movie = movieRepository.getMovieWithId(extendedLyricItem.movieId)
+        val episode = extendedLyricItem.episode
         return MovieItem(
             getTitleFromMovieInLang(extendedLyricItem.languages.mainLangId, movie, true)!!,
             getTitleFromMovieInLang(extendedLyricItem.languages.translationLangId, movie, false),
-            movie.url,
+            getMovieNetflixid(movie, episode),
             movie.type,
-            getEpisodeItemFromMovie(extendedLyricItem),
+            episode,
             extendedLyricItem.time)
     }
 
-    private fun getEpisodeItemFromMovie(extendedLyricItem: ExtendedLyricItem) =
-        if(extendedLyricItem.season == 0) null
-        else EpisodeItem(extendedLyricItem.season, extendedLyricItem.episode)
+    private fun getMovieNetflixid(movie: Movie, episode: Episode?) = movie.netflixid ?: episode?.netflixid
 
     private fun getTitleFromMovieInLang(langId: String, movie: Movie, main: Boolean): String? {
         val originalTitle = getTitleInLang(movie.lang, movie)
