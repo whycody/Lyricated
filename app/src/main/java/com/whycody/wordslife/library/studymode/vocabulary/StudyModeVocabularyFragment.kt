@@ -44,10 +44,10 @@ class StudyModeVocabularyFragment : Fragment() {
     }
 
     private fun setupRecycler() {
-        with(adapter) {
-            binding.studyModeVocabularyRecycler.adapter = this
-            binding.studyModeVocabularyRecycler.itemAnimator = null
-            binding.studyModeVocabularyRecycler.layoutManager = getFlexboxLayoutManager()
+        with(binding.studyModeVocabularyRecycler) {
+            this.adapter = adapter
+            itemAnimator = null
+            layoutManager = getFlexboxLayoutManager()
         }
     }
 

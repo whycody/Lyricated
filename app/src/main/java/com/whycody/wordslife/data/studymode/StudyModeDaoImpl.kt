@@ -20,15 +20,6 @@ class StudyModeDaoImpl(private val context: Context,
                     SortOption(MEDIUM, context.getString(R.string.medium)),
                     SortOption(HARD, context.getString(R.string.hard))
                 )))
-//        studyModeSettingsItems.add(
-//            SortItem(
-//                SOURCE,
-//                context.getString(R.string.source),
-//                listOf(
-//                    SortOption(RANDOM, context.getString(R.string.random)),
-//                    SortOption(HISTORY, context.getString(R.string.history)),
-//                    SortOption(SAVED, context.getString(R.string.saved))
-//                )))
         checkCurrentSettings(studyModeSettingsItems)
         return studyModeSettingsItems
     }
@@ -37,8 +28,6 @@ class StudyModeDaoImpl(private val context: Context,
         val appConfig = appConfigurationDao.getAppConfiguration()
         studyModeSettingsItems.find { it.id == DIFFICULTY }?.options?.find {
             it.id == appConfig.studyModeDifficulty }?.isChecked = true
-        studyModeSettingsItems.find { it.id == SOURCE }?.options?.find {
-            it.id == appConfig.studyModeSource }?.isChecked = true
     }
 
     companion object {
@@ -46,9 +35,5 @@ class StudyModeDaoImpl(private val context: Context,
         const val EASY = "easy"
         const val MEDIUM = "medium"
         const val HARD = "hard"
-        const val SOURCE = "source"
-        const val RANDOM = "random"
-        const val HISTORY = "history"
-        const val SAVED = "saved"
     }
 }

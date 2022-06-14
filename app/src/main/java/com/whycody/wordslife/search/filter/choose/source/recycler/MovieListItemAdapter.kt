@@ -27,7 +27,7 @@ class MovieListItemAdapter(private val interactor: MovieItemInteractor): ListAda
     inner class MovieListItemHolder(private val binding: ViewDataBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun setupData(movieListItem: MovieListItem) {
-            binding.setVariable(BR.position, adapterPosition)
+            binding.setVariable(BR.position, layoutPosition)
             binding.setVariable(BR.interactor, interactor)
             binding.setVariable(BR.movieListItem, movieListItem)
             binding.executePendingBindings()

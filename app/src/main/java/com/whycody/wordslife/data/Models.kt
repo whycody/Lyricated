@@ -40,8 +40,7 @@ data class AppConfiguration(
         var appearance: String = SettingsDaoImpl.DEFAULT,
         var educationalMaterials: String = SettingsDaoImpl.SHOW_EDU,
         var history: String = SettingsDaoImpl.SAVE_HISTORY,
-        var studyModeDifficulty: String = StudyModeDaoImpl.MEDIUM,
-        var studyModeSource: String = StudyModeDaoImpl.RANDOM)
+        var studyModeDifficulty: String = StudyModeDaoImpl.MEDIUM)
 
 data class ConfigurationItem(
         var name: String,

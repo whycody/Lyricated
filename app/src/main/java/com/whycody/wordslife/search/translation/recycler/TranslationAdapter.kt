@@ -44,7 +44,7 @@ class TranslationAdapter(private val interactor: TranslationInteractor):
 
         fun setupData(translation: Translation) {
             binding.setVariable(BR.translation, translation)
-            binding.setVariable(BR.position, adapterPosition)
+            binding.setVariable(BR.position, layoutPosition)
             binding.setVariable(BR.interactor, interactor)
             binding.executePendingBindings()
         }

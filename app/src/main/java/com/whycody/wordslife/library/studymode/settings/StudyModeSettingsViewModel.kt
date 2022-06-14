@@ -22,7 +22,6 @@ class StudyModeSettingsViewModel(private val studyModeDao: StudyModeDao,
         val sortItem = getSortItemFromSortOptionId(sortOptionId)
         if(sortItem?.id == StudyModeDaoImpl.DIFFICULTY)
             currentAppConfig.studyModeDifficulty = sortOptionId
-        else currentAppConfig.studyModeSource = sortOptionId
         appConfigurationDao.setAppConfiguration(currentAppConfig)
         refreshStudyModeSettingsItems()
     }
