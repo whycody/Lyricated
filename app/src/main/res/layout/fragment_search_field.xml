@@ -18,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_search"
+            android:contentDescription="@string/search"
             android:alpha="0.6"
             android:paddingStart="16dp"
             android:paddingEnd="4dp"
@@ -37,7 +38,8 @@
             android:inputType="text"
             android:textSize="16sp"
             android:maxLines="1"
-            android:text="@{viewModel.searchWord}" />
+            android:text="@{viewModel.searchWord}"
+            android:importantForAutofill="no"/>
 
         <ImageButton
             android:id="@+id/clearBtn"
@@ -48,6 +50,7 @@
             android:alpha="0.6"
             android:paddingEnd="16dp"
             android:paddingStart="4dp"
+            android:contentDescription="@string/clear"
             android:background="@android:color/transparent"/>
 
     </LinearLayout>

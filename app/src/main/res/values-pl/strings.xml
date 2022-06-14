@@ -14,7 +14,7 @@
     <string name="choose_translation_language">Wybierz język tłumaczenia</string>
     <string name="show_more_results">Pokaż więcej wyników</string>
     <string name="main_lyrics_search_result">Wyniki wyszukiwania</string>
-    <string name="similiar_lyrics_search_result">Podobne wyniki</string>
+    <string name="similar_lyrics_search_result">Podobne wyniki</string>
     <string name="no_word_search_results">Niestety nie znaleźliśmy zastosowania frazy \"%1$s\"</string>
     <string name="filter">Filtruj</string>
     <string name="sort">Sortuj</string>
@@ -40,7 +40,7 @@
     <string name="choose_source">Wybierz film lub serial</string>
     <string name="curses">Przekleństwa</string>
     <string name="without_curses">Bez przekleństw</string>
-    <string name="clear">Wyczyść filtry</string>
+    <string name="clear_filters">Wyczyść filtry</string>
     <string name="library">Biblioteka</string>
     <string name="history">Historia</string>
     <string name="history_desc">Wróć do wcześniej wyszukiwanych wyrażeń</string>
@@ -52,16 +52,16 @@
     <string name="settings_desc">Dopasuj aplikację do swoich preferencji</string>
     <string name="latest_movie">W Lyricated znajdziesz napisy z:</string>
     <string name="appearance">Wygląd aplikacji</string>
-    <string name="defaultsetting">Domyślny</string>
-    <string name="darkmode">Tryb ciemny</string>
-    <string name="lightmode">Tryb jasny</string>
-    <string name="edumaterials">Materiały edukacyjne</string>
+    <string name="default_setting">Domyślny</string>
+    <string name="dark_mode">Tryb ciemny</string>
+    <string name="light_mode">Tryb jasny</string>
+    <string name="edu_materials">Materiały edukacyjne</string>
     <string name="show">Wyświetlaj</string>
-    <string name="dontshow">Nie wyświetlaj</string>
+    <string name="do_not_show">Nie wyświetlaj</string>
     <string name="save">Zapisuj</string>
-    <string name="dontsave">Nie zapisuj</string>
-    <string name="deletehistory">Wyczyść historię</string>
-    <string name="deselectall">Odznacz wszystkie zapisane</string>
+    <string name="do_not_save">Nie zapisuj</string>
+    <string name="delete_history">Wyczyść historię</string>
+    <string name="deselect_all">Odznacz wszystkie zapisane</string>
     <string name="difficulty">Poziom trudności</string>
     <string name="easy">Łatwy</string>
     <string name="medium">Średni</string>
@@ -71,7 +71,7 @@
     <string name="reveal_word">Odsłoń wyraz</string>
     <string name="show_translation">Pokaż tłumaczenie</string>
     <string name="loading">ładowanie napisu…</string>
-    <string name="tryto">spróbuj</string>
+    <string name="try_to">spróbuj</string>
     <string name="translate">przetłumaczyć</string>
     <string name="set_quality_to_1">Ustaw jakość na 1</string>
     <string name="choosing_source">Wybieranie źródła</string>
@@ -83,4 +83,12 @@
     <string name="hello_in">Witaj w</string>
     <string name="search_first_phrase">Wyszukaj pierwsze słówko</string>
     <string name="first">pierwsze</string>
+    <string name="clear">Wyczyść</string>
+    <string name="switch_languages">Zamień języki</string>
+    <string name="close">Zamknij</string>
+    <string name="tts">Tekst na mowę</string>
+    <string name="collapse_list">Zwiń listę</string>
+    <string name="delete">Usuń</string>
+    <string name="add_to_favorites">Dodaj do ulubionych</string>
+    <string name="more_information">Więcej informacji</string>
 </resources>

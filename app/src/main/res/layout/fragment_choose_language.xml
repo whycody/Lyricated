@@ -27,7 +27,7 @@
             android:textAllCaps="true"
             android:textSize="12sp"
             android:visibility="@{initialConfiguration ? View.VISIBLE : View.GONE}"
-            android:paddingStart="@dimen/app_padding"
+            android:paddingHorizontal="@dimen/app_padding"
             android:text="@string/initial_configuration"/>
 
         <TextView
@@ -37,7 +37,7 @@
             android:text="@{ mainLanguage ? @string/choose_main_language : @string/choose_translation_language}"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:paddingStart="@dimen/app_padding"
+            android:paddingHorizontal="@dimen/app_padding"
             android:textColor="?attr/colorPrimaryDark" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

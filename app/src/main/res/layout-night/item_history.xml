@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
     <data>
         <import type="android.view.View"/>
         <variable
@@ -36,25 +36,30 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
+                    android:contentDescription="@null"
                     android:paddingTop="6dp"
                     android:paddingStart="6dp"
                     android:paddingBottom="6dp"
-                    android:src="@{historyItem.mainLanguage}"/>
+                    android:src="@{historyItem.mainLanguage}"
+                    tools:ignore="RtlSymmetry" />
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_arrowright"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_arrow_right"
                     android:paddingTop="11dp"
                     android:paddingBottom="11dp"/>
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
+                    android:contentDescription="@null"
                     android:paddingTop="6dp"
                     android:paddingEnd="6dp"
                     android:paddingBottom="6dp"
-                    android:src="@{historyItem.translationLanguage}"/>
+                    android:src="@{historyItem.translationLanguage}"
+                    tools:ignore="RtlSymmetry" />
 
             </LinearLayout>
 
@@ -63,7 +68,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textSize="16sp"
-                android:gravity="center|left"
+                android:gravity="center|start"
                 android:text="@{historyItem.text}"
                 android:layout_marginStart="@dimen/app_padding"
                 android:maxLines="1"
@@ -73,6 +78,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/add_to_favorites"
                 android:onClick="@{()->interactor.onStarClick(position, historyItem)}"
                 android:src='@{historyItem.saved ? @drawable/ic_star_filled : @drawable/ic_star_stroke}'
                 android:padding="6dp"/>

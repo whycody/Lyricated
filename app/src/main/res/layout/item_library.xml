@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -26,7 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:paddingStart="@dimen/app_padding"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="RtlSymmetry">
 
         <TextView
             android:layout_width="wrap_content"
@@ -48,7 +49,8 @@
     <ImageView
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:src="@drawable/ic_light_arrowright"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_light_arrow_right"
         android:layout_gravity="center"
         android:layout_marginHorizontal="20dp"/>
 

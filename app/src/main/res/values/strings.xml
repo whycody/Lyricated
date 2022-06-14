@@ -15,7 +15,7 @@
     <string name="choose_translation_language">Choose translation language</string>
     <string name="show_more_results">Show more results</string>
     <string name="main_lyrics_search_result">Search results</string>
-    <string name="similiar_lyrics_search_result">Similar results</string>
+    <string name="similar_lyrics_search_result">Similar results</string>
     <string name="no_word_search_results">Sadly we couldn\'t find phrase \"%1$s\"</string>
     <string name="filter">Filter</string>
     <string name="sort">Sort</string>
@@ -38,10 +38,10 @@
     <string name="source">Source</string>
     <string name="only_movies">Only movies</string>
     <string name="only_series">Only series</string>
-    <string name="choose_source">Choose movie or serie</string>
+    <string name="choose_source">Choose movie or series</string>
     <string name="curses">Curses</string>
     <string name="without_curses">Without curses</string>
-    <string name="clear">Clear filters</string>
+    <string name="clear_filters">Clear filters</string>
     <string name="library">Library</string>
     <string name="history">History</string>
     <string name="history_desc">Back to previous searched phrases</string>
@@ -53,16 +53,16 @@
     <string name="settings_desc">Adjust our app to your preferences</string>
     <string name="latest_movie">In Lyricated you will find subtitles from:</string>
     <string name="appearance">Appearance</string>
-    <string name="defaultsetting">Default</string>
-    <string name="darkmode">Dark mode</string>
-    <string name="lightmode">Light mode</string>
-    <string name="edumaterials">Educational Materials</string>
+    <string name="default_setting">Default</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="light_mode">Light mode</string>
+    <string name="edu_materials">Educational Materials</string>
     <string name="show">Show</string>
-    <string name="dontshow">Don\'t show</string>
+    <string name="do_not_show">Don\'t show</string>
     <string name="save">Save</string>
-    <string name="dontsave">Don\'t save</string>
-    <string name="deletehistory">Delete search history</string>
-    <string name="deselectall">Deselect all saved</string>
+    <string name="do_not_save">Don\'t save</string>
+    <string name="delete_history">Delete search history</string>
+    <string name="deselect_all">Deselect all saved</string>
     <string name="difficulty">Difficulty</string>
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
@@ -72,7 +72,7 @@
     <string name="reveal_word">Reveal word</string>
     <string name="show_translation">Show translation</string>
     <string name="loading">loading result…</string>
-    <string name="tryto">try to</string>
+    <string name="try_to">try to</string>
     <string name="translate">translate</string>
     <string name="set_quality_to_1">Set quality to 1</string>
     <string name="choosing_source">Choosing source</string>
@@ -84,4 +84,13 @@
     <string name="hello_in">Hello in</string>
     <string name="search_first_phrase">Search first phrase</string>
     <string name="first">first</string>
+    <string name="opss" translatable="false">Opss..</string>
+    <string name="clear">Clear</string>
+    <string name="switch_languages">Switch languages</string>
+    <string name="close">Close</string>
+    <string name="tts">Text to speech</string>
+    <string name="collapse_list">Collapse the list</string>
+    <string name="delete">Delete</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="more_information">More information</string>
 </resources>

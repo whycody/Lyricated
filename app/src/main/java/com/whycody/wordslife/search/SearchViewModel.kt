@@ -35,7 +35,7 @@ class SearchViewModel(private val lastSearchRepository: LastSearchRepository,
 
     private fun historyIsTurnedOut(): Boolean {
         val currentAppConfig = appConfigurationDao.getAppConfiguration()
-        return currentAppConfig.history == SettingsDaoImpl.DONT_SAVE_HISTORY
+        return currentAppConfig.history == SettingsDaoImpl.DO_NOT_SAVE_HISTORY
     }
 
     fun tryFindLyricsFromApi() {

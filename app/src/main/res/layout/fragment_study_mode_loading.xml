@@ -24,7 +24,7 @@
             android:textColor="?attr/colorPrimaryVariant"
             android:textSize="17sp"
             android:alpha="0.7"
-            android:text="@string/tryto"
+            android:text="@string/try_to"
             android:layout_gravity="center"/>
 
         <TextView

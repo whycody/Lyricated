@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mostViewedFragment"
             android:name="com.whycody.wordslife.library.most.viewed.LibraryHeaderFragment"
             android:layout_width="match_parent"

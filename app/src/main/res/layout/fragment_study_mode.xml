@@ -20,7 +20,7 @@
         android:background="?attr/colorControlHighlight"
         tools:context=".library.studymode.StudyModeFragment">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/studyModeMovieFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -33,7 +34,7 @@
                 android:layout_gravity="center"
                 android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="17sp"
-                android:text="@{searchViewModel.typeOfLyrics == SearchResultFragment.MAIN_LYRICS ? @string/main_lyrics_search_result : @string/similiar_lyrics_search_result}"/>
+                android:text="@{searchViewModel.typeOfLyrics == SearchResultFragment.MAIN_LYRICS ? @string/main_lyrics_search_result : @string/similar_lyrics_search_result}"/>
 
             <View
                 android:layout_width="0dp"
@@ -45,6 +46,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
+                android:contentDescription="@string/collapse_list"
                 android:src="@drawable/ic_arrow_down"/>
 
         </LinearLayout>
@@ -64,7 +66,9 @@
                 android:paddingStart="@dimen/app_padding"
                 android:foregroundGravity="center"
                 android:scaleType="fitStart"
-                android:src="@drawable/gr_cloud_astronaut"/>
+                android:contentDescription="@null"
+                android:src="@drawable/gr_cloud_astronaut"
+                tools:ignore="RtlSymmetry" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
@@ -80,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:text="Opss.."
+                    android:text="@string/opss"
                     android:textSize="18sp"
                     android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintTop_toTopOf="parent"

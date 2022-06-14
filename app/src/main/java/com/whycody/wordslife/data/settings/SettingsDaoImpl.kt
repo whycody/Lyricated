@@ -18,17 +18,17 @@ class SettingsDaoImpl(private val context: Context,
                 APPEARANCE,
                 context.getString(R.string.appearance),
                 listOf(
-                    SortOption(DEFAULT, context.getString(R.string.defaultsetting)),
-                    SortOption(DARK, context.getString(R.string.darkmode)),
-                    SortOption(LIGHT, context.getString(R.string.lightmode))
+                    SortOption(DEFAULT, context.getString(R.string.default_setting)),
+                    SortOption(DARK, context.getString(R.string.dark_mode)),
+                    SortOption(LIGHT, context.getString(R.string.light_mode))
                 )))
         settingsItems.add(
             SortItem(
                 EDU_MATERIALS,
-                context.getString(R.string.edumaterials),
+                context.getString(R.string.edu_materials),
                 listOf(
                     SortOption(SHOW_EDU, context.getString(R.string.show)),
-                    SortOption(DONT_SHOW_EDU, context.getString(R.string.dontshow))
+                    SortOption(DO_NOT_SHOW_EDU, context.getString(R.string.do_not_show))
                 )))
         settingsItems.add(
             SortItem(
@@ -36,18 +36,18 @@ class SettingsDaoImpl(private val context: Context,
                 context.getString(R.string.history),
                 listOf(
                     SortOption(SAVE_HISTORY, context.getString(R.string.save)),
-                    SortOption(DONT_SAVE_HISTORY, context.getString(R.string.dontsave))
+                    SortOption(DO_NOT_SAVE_HISTORY, context.getString(R.string.do_not_save))
                 )))
         settingsItems.add(
             SortItem(
                 DELETE_HISTORY,
-                context.getString(R.string.deletehistory),
+                context.getString(R.string.delete_history),
                 emptyList()
             ))
         settingsItems.add(
             SortItem(
                 DELETE_SAVED,
-                context.getString(R.string.deselectall),
+                context.getString(R.string.deselect_all),
                 emptyList()
             ))
         checkCurrentSettings(settingsItems)
@@ -73,10 +73,10 @@ class SettingsDaoImpl(private val context: Context,
         const val LIGHT = "light"
         const val EDU_MATERIALS = "edu materials"
         const val SHOW_EDU = "show edu"
-        const val DONT_SHOW_EDU = "dont show edu"
+        const val DO_NOT_SHOW_EDU = "do not show edu"
         const val HISTORY = "history"
         const val SAVE_HISTORY = "save history"
-        const val DONT_SAVE_HISTORY = "dont save history"
+        const val DO_NOT_SAVE_HISTORY = "do not save history"
         const val DELETE_HISTORY = "delete history"
         const val DELETE_SAVED = "delete saved"
     }

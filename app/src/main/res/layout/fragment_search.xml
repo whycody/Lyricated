@@ -29,13 +29,13 @@
                 android:animateLayoutChanges="true"
                 android:paddingTop="40dp">
 
-                <fragment
+                <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/currentLanguageFragment"
                     android:name="com.whycody.wordslife.current.language.CurrentLanguageFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <fragment
+                <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/searchFieldFragment"
                     android:name="com.whycody.wordslife.search.field.SearchFieldFragment"
                     android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                     android:layout_marginStart="@dimen/app_padding"
                     android:layout_marginEnd="@dimen/app_padding"/>
 
-                <fragment
+                <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/translationFragment"
                     android:name="com.whycody.wordslife.search.translation.TranslationFragment"
                     android:layout_width="match_parent"
@@ -55,63 +55,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
 
-                    <LinearLayout
+                    <TextView
                         android:id="@+id/filterBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="@dimen/app_padding"
+                        android:gravity="center"
+                        android:text="@string/filter"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:textColor="?attr/colorAccent"
+                        android:paddingHorizontal="@dimen/app_padding"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent">
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:drawablePadding="3dp"
+                        app:drawableLeftCompat="@drawable/ic_filter_list" />
 
-                        <ImageView
-                            android:src="@drawable/ic_filter_list"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:scaleType="center"
-                            android:paddingEnd="2dp"/>
-
-                        <TextView
-                            android:id="@+id/filterText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="@string/filter"
-                            android:textStyle="bold"
-                            android:textSize="15sp"
-                            android:textColor="?attr/colorAccent"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
                         android:id="@+id/sortBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingStart="@dimen/app_padding"
-                        android:paddingEnd="@dimen/app_padding"
+                        android:gravity="center"
+                        android:text="@string/sort"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent">
-
-                        <ImageView
-                            android:src="@drawable/ic_sort"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:scaleType="center"
-                            android:paddingEnd="2dp"/>
-
-                        <TextView
-                            android:id="@+id/sortText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="@string/sort"
-                            android:textStyle="bold"
-                            android:textSize="15sp"
-                            android:textColor="?attr/colorAccent"/>
-
-                    </LinearLayout>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textColor="?attr/colorAccent"
+                        android:paddingHorizontal="@dimen/app_padding"
+                        android:drawablePadding="3dp"
+                        app:drawableLeftCompat="@drawable/ic_sort" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -37,7 +37,7 @@ class FilterDaoImpl(private val context: Context,
     }
 
     private fun getTypeOfMovie(movie: Movie): String {
-        return if(movie.type == "serie") context.getString(R.string.series)
+        return if(movie.type == SERIES) context.getString(R.string.series)
         else context.getString(R.string.movie)
     }
 
@@ -55,6 +55,7 @@ class FilterDaoImpl(private val context: Context,
 
     companion object {
         const val TYPE = "type"
+        const val SERIES = "series"
         const val ONLY_MOVIES = "only_movies"
         const val ONLY_SERIES = "only_series"
         const val CHOOSE_SOURCE = "choose_source"

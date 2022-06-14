@@ -20,7 +20,8 @@
             android:id="@+id/astronautImageView"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/il_helloastro"
+            android:contentDescription="@null"
+            android:src="@drawable/il_hello_astronaut"
             android:layout_gravity="center"/>
 
         <TextView

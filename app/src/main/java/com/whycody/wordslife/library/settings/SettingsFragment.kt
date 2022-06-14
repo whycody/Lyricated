@@ -70,8 +70,8 @@ class SettingsFragment : BottomSheetDialogFragment() {
         }
 
     private fun getTitle(actionId: String) =
-        if(actionId == SettingsDaoImpl.DELETE_SAVED) getString(R.string.deselectall)
-        else getString(R.string.deletehistory)
+        if(actionId == SettingsDaoImpl.DELETE_SAVED) getString(R.string.deselect_all)
+        else getString(R.string.delete_history)
 
     private fun positiveBtnClicked(actionId: String) {
         if(actionId == SettingsDaoImpl.DELETE_HISTORY)
