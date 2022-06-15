@@ -35,13 +35,12 @@ class StudyModeTranslationFragment : Fragment(), TextToSpeech.OnInitListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = FragmentStudyModeTranslationBinding.inflate(inflater)
+        typeOfPhrase = arguments?.getString(LyricTranslationFragment.TYPE_OF_PHRASE,
+            LyricTranslationFragment.MAIN_PHRASE)!!
         binding.translationText.setOnLongClickListener { copyText() }
         binding.viewAboveTranslation.setOnLongClickListener { false }
         binding.viewAboveTranslation.setOnClickListener { }
-        tts = TextToSpeech(requireContext(), this)
         binding.playTTSBtn.setOnClickListener { playTTS() }
-        typeOfPhrase = arguments?.getString(LyricTranslationFragment.TYPE_OF_PHRASE,
-            LyricTranslationFragment.MAIN_PHRASE)!!
         addHeader()
         observeNumberOfShownWords()
         observeExtendedLyricItem()
@@ -96,6 +95,7 @@ class StudyModeTranslationFragment : Fragment(), TextToSpeech.OnInitListener {
     override fun onInit(status: Int) { configureTTS() }
 
     private fun configureTTS() {
+        tts = TextToSpeech(requireContext(), this)
         val languages = LyricLanguages(languageDao.getCurrentMainLanguage().id,
             languageDao.getCurrentTranslationLanguage().id)
         val locale = getLocale(getCurrentLang(languages))

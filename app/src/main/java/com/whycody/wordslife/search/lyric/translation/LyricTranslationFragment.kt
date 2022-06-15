@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.whycody.wordslife.R
 import com.whycody.wordslife.data.LyricLanguages
+import com.whycody.wordslife.data.language.LanguageDao
 import com.whycody.wordslife.data.language.LanguageDaoImpl
 import com.whycody.wordslife.data.utilities.TextCopyUtility
 import com.whycody.wordslife.databinding.FragmentLyricTranslationBinding
@@ -24,6 +25,7 @@ class LyricTranslationFragment : Fragment(), TextToSpeech.OnInitListener {
 
     private lateinit var typeOfPhrase: String
     private val lyricViewModel: LyricViewModel by sharedViewModel()
+    private val languageDao: LanguageDao by inject()
     private val lyricTranslationViewModel: LyricTranslationViewModel by viewModel()
     private val textCopyUtility: TextCopyUtility by inject()
     private lateinit var binding: FragmentLyricTranslationBinding
@@ -31,13 +33,12 @@ class LyricTranslationFragment : Fragment(), TextToSpeech.OnInitListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
+        typeOfPhrase = arguments?.getString(TYPE_OF_PHRASE, MAIN_PHRASE)!!
         binding = FragmentLyricTranslationBinding.inflate(inflater)
         val view = (parentFragment as BottomSheetDialogFragment).dialog?.window?.decorView!!
-        tts = TextToSpeech(requireContext(), this)
         binding.contentText.setOnLongClickListener { textCopyUtility.copyText(view,
             lyricTranslationViewModel.getTranslationItem().value!!.translatedSentence!!) }
         binding.playTTSBtn.setOnClickListener { playTTS() }
-        typeOfPhrase = arguments?.getString(TYPE_OF_PHRASE, MAIN_PHRASE)!!
         if(savedInstanceState == null) addHeader()
         observeTranslationItem(binding)
         observeExtendedLyricItem()
@@ -75,7 +76,9 @@ class LyricTranslationFragment : Fragment(), TextToSpeech.OnInitListener {
     override fun onInit(status: Int) { configureTTS() }
 
     private fun configureTTS() {
-        val languages = lyricViewModel.getCurrentExtendedLyricItem().value!!.languages
+        tts = TextToSpeech(requireContext(), this)
+        val languages = LyricLanguages(languageDao.getCurrentMainLanguage().id,
+            languageDao.getCurrentTranslationLanguage().id)
         val locale = getLocale(getCurrentLang(languages))
         binding.ttsAvailable = locale != null
         if(locale != null) tts.language = locale
