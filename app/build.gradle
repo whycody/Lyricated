@@ -9,7 +9,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.whycody.wordslife"
+        applicationId "com.whycody.lyricated"
         minSdkVersion 21
         targetSdkVersion 32
         versionCode 1
