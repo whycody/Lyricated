@@ -25,20 +25,20 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/lyricatedBannerFragment"
-                android:name="com.whycody.wordslife.home.banner.main.MainBannerFragment"
+                android:name="com.whycody.lyricated.home.banner.main.MainBannerFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/currentLanguageFragment"
-                android:name="com.whycody.wordslife.current.language.CurrentLanguageFragment"
+                android:name="com.whycody.lyricated.current.language.CurrentLanguageFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"/>
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/searchFieldFragment"
-                android:name="com.whycody.wordslife.search.field.SearchFieldFragment"
+                android:name="com.whycody.lyricated.search.field.SearchFieldFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"

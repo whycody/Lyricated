@@ -5,7 +5,7 @@
         <import type="android.view.View"/>
         <variable
             name="translationViewModel"
-            type="com.whycody.wordslife.search.translation.TranslationViewModel" />
+            type="com.whycody.lyricated.search.translation.TranslationViewModel" />
     </data>
 
     <LinearLayout

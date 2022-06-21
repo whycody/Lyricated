@@ -5,10 +5,10 @@
         <import type="android.view.View"/>
         <variable
             name="movieListItem"
-            type="com.whycody.wordslife.data.MovieListItem" />
+            type="com.whycody.lyricated.data.MovieListItem" />
         <variable
             name="interactor"
-            type="com.whycody.wordslife.search.filter.choose.source.MovieItemInteractor" />
+            type="com.whycody.lyricated.search.filter.choose.source.MovieItemInteractor" />
         <variable
             name="position"
             type="int" />

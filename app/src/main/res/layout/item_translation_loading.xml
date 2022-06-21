@@ -4,7 +4,7 @@
     <data>
         <variable
             name="translation"
-            type="com.whycody.wordslife.data.Translation" />
+            type="com.whycody.lyricated.data.Translation" />
     </data>
 
     <com.facebook.shimmer.ShimmerFrameLayout

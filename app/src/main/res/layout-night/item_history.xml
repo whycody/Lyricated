@@ -4,13 +4,13 @@
         <import type="android.view.View"/>
         <variable
             name="historyItem"
-            type="com.whycody.wordslife.data.HistoryItem" />
+            type="com.whycody.lyricated.data.HistoryItem" />
         <variable
             name="position"
             type="int" />
         <variable
             name="interactor"
-            type="com.whycody.wordslife.home.HistoryInteractor" />
+            type="com.whycody.lyricated.home.HistoryInteractor" />
     </data>
 
     <LinearLayout

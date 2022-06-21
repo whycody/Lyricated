@@ -5,10 +5,10 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="com.whycody.wordslife.search.result.SearchResultFragment"/>
+        <import type="com.whycody.lyricated.search.result.SearchResultFragment"/>
         <variable
             name="searchViewModel"
-            type="com.whycody.wordslife.search.result.SearchResultViewModel" />
+            type="com.whycody.lyricated.search.result.SearchResultViewModel" />
     </data>
 
     <LinearLayout

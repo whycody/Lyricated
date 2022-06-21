@@ -4,8 +4,8 @@
     <data>
         <variable
             name="viewModel"
-            type="com.whycody.wordslife.library.studymode.StudyModeViewModel" />
-        <import type="com.whycody.wordslife.data.studymode.StudyModeDaoImpl"/>
+            type="com.whycody.lyricated.library.studymode.StudyModeViewModel" />
+        <import type="com.whycody.lyricated.data.studymode.StudyModeDaoImpl"/>
         <import type="android.view.View"/>
     </data>
 
@@ -24,7 +24,7 @@
             android:id="@+id/studyModeMovieFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:name="com.whycody.wordslife.library.studymode.movie.StudyModeMovieFragment" />
+            android:name="com.whycody.lyricated.library.studymode.movie.StudyModeMovieFragment" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

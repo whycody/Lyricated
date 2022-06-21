@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.whycody.wordslife.search.SearchViewModel" />
+            type="com.whycody.lyricated.search.SearchViewModel" />
     </data>
 
     <LinearLayout

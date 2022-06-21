@@ -5,13 +5,13 @@
         <import type="android.view.View"/>
         <variable
             name="language"
-            type="com.whycody.wordslife.data.Language" />
+            type="com.whycody.lyricated.data.Language" />
         <variable
             name="position"
             type="int" />
         <variable
             name="chooseLanguageInteractor"
-            type="com.whycody.wordslife.choose.language.ChooseLanguageInteractor" />
+            type="com.whycody.lyricated.choose.language.ChooseLanguageInteractor" />
     </data>
 
     <LinearLayout

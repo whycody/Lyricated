@@ -4,10 +4,10 @@
     <data>
         <variable
             name="mainLanguage"
-            type="com.whycody.wordslife.data.Language" />
+            type="com.whycody.lyricated.data.Language" />
         <variable
             name="translationLanguage"
-            type="com.whycody.wordslife.data.Language" />
+            type="com.whycody.lyricated.data.Language" />
     </data>
 
     <LinearLayout

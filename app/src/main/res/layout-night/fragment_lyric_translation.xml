@@ -5,7 +5,7 @@
         <import type="android.view.View"/>
         <variable
             name="translationItem"
-            type="com.whycody.wordslife.data.TranslationItem" />
+            type="com.whycody.lyricated.data.TranslationItem" />
         <variable
             name="ttsAvailable"
             type="boolean" />

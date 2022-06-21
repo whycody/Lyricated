@@ -4,10 +4,10 @@
     <data>
         <variable
             name="libraryInteractor"
-            type="com.whycody.wordslife.library.recycler.LibraryInteractor" />
+            type="com.whycody.lyricated.library.recycler.LibraryInteractor" />
         <variable
             name="libraryItem"
-            type="com.whycody.wordslife.data.LibraryItem" />
+            type="com.whycody.lyricated.data.LibraryItem" />
         <variable
             name="position"
             type="int" />

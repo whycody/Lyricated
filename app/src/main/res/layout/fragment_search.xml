@@ -31,13 +31,13 @@
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/currentLanguageFragment"
-                    android:name="com.whycody.wordslife.current.language.CurrentLanguageFragment"
+                    android:name="com.whycody.lyricated.current.language.CurrentLanguageFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/searchFieldFragment"
-                    android:name="com.whycody.wordslife.search.field.SearchFieldFragment"
+                    android:name="com.whycody.lyricated.search.field.SearchFieldFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -47,7 +47,7 @@
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/translationFragment"
-                    android:name="com.whycody.wordslife.search.translation.TranslationFragment"
+                    android:name="com.whycody.lyricated.search.translation.TranslationFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 

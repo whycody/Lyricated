@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.WordsLife" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Lyricated" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/light_blue</item>
         <item name="colorPrimaryVariant">@color/dark_blue</item>
@@ -14,7 +14,7 @@
         <item name="colorOnSurface">@color/paragraph_gray</item>
         <item name="colorControlHighlight">@color/lyric_gray</item>
 
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSecondaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorSecondaryVariant</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="fontFamily">@font/montserrat</item>
         <item name="snackbarStyle">@style/MySnackBarStyle</item>

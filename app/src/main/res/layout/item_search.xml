@@ -4,19 +4,19 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="com.whycody.wordslife.search.SearchFragment"/>
+        <import type="com.whycody.lyricated.search.SearchFragment"/>
         <variable
             name="position"
             type="int" />
         <variable
             name="lyricItem"
-            type="com.whycody.wordslife.data.LyricItem" />
+            type="com.whycody.lyricated.data.LyricItem" />
         <variable
             name="viewModel"
-            type="com.whycody.wordslife.search.result.SearchResultViewModel" />
+            type="com.whycody.lyricated.search.result.SearchResultViewModel" />
         <variable
             name="searchViewModel"
-            type="com.whycody.wordslife.search.SearchViewModel" />
+            type="com.whycody.lyricated.search.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

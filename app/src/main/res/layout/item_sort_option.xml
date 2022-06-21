@@ -5,10 +5,10 @@
         <import type="android.view.View"/>
         <variable
             name="sortOption"
-            type="com.whycody.wordslife.data.SortOption" />
+            type="com.whycody.lyricated.data.SortOption" />
         <variable
             name="interactor"
-            type="com.whycody.wordslife.search.sort.recycler.SortItemInteractor" />
+            type="com.whycody.lyricated.search.sort.recycler.SortItemInteractor" />
     </data>
 
     <LinearLayout
