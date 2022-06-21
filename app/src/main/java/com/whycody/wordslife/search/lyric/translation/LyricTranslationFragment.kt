@@ -29,12 +29,13 @@ class LyricTranslationFragment : Fragment(), TextToSpeech.OnInitListener {
     private val lyricTranslationViewModel: LyricTranslationViewModel by viewModel()
     private val textCopyUtility: TextCopyUtility by inject()
     private lateinit var binding: FragmentLyricTranslationBinding
-    private lateinit var tts: TextToSpeech
+    private var tts: TextToSpeech? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         typeOfPhrase = arguments?.getString(TYPE_OF_PHRASE, MAIN_PHRASE)!!
         binding = FragmentLyricTranslationBinding.inflate(inflater)
+        tts = TextToSpeech(requireContext(), this)
         val view = (parentFragment as BottomSheetDialogFragment).dialog?.window?.decorView!!
         binding.contentText.setOnLongClickListener { textCopyUtility.copyText(view,
             lyricTranslationViewModel.getTranslationItem().value!!.translatedSentence!!) }
@@ -48,7 +49,7 @@ class LyricTranslationFragment : Fragment(), TextToSpeech.OnInitListener {
     private fun playTTS() {
         binding.playTTSBtn.startAnimation(AnimationUtils.loadAnimation(requireContext(),
             R.anim.speaker_pulse_anim))
-        tts.speak(lyricTranslationViewModel.getTranslationItem().value!!.translatedSentence,
+        tts?.speak(lyricTranslationViewModel.getTranslationItem().value!!.translatedSentence,
             TextToSpeech.QUEUE_FLUSH, null, null)
     }
 
@@ -76,12 +77,11 @@ class LyricTranslationFragment : Fragment(), TextToSpeech.OnInitListener {
     override fun onInit(status: Int) { configureTTS() }
 
     private fun configureTTS() {
-        tts = TextToSpeech(requireContext(), this)
         val languages = LyricLanguages(languageDao.getCurrentMainLanguage().id,
             languageDao.getCurrentTranslationLanguage().id)
         val locale = getLocale(getCurrentLang(languages))
         binding.ttsAvailable = locale != null
-        if(locale != null) tts.language = locale
+        if(locale != null) tts?.language = locale
     }
 
     private fun getCurrentLang(languages: LyricLanguages) =
