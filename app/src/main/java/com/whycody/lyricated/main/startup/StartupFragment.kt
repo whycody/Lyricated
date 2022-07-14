@@ -19,6 +19,7 @@ class StartupFragment : Fragment(), IOnBackPressed {
         binding = FragmentStartupBinding.inflate(inflater)
         binding.astronautImageView.startAnimation(AnimationUtils
             .loadAnimation(requireContext(), R.anim.pulse_anim))
+        binding.root.setOnClickListener { }
         binding.getStartedBtn.setOnClickListener { parentFragmentManager.popBackStack() }
         binding.getStartedBtn.startAnimation(AnimationUtils
             .loadAnimation(requireContext(), R.anim.enter_down_up_anim))
