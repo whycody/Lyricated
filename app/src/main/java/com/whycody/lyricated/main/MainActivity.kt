@@ -37,8 +37,12 @@ class MainActivity : AppCompatActivity(), MainNavigation {
     }
 
     private fun showChooseLanguageFragments() {
-        navigateTo(ChooseLanguageFragment.newInstance(false))
-        navigateTo(ChooseLanguageFragment.newInstance(true))
+        val translationLangId = searchConfigurationDao.getLyricLanguages().translationLangId
+        val mainLangId = searchConfigurationDao.getLyricLanguages().mainLangId
+        if(translationLangId == LanguageDaoImpl.UNSET)
+            navigateTo(ChooseLanguageFragment.newInstance(false))
+        if(mainLangId == LanguageDaoImpl.UNSET)
+            navigateTo(ChooseLanguageFragment.newInstance(true))
         navigateTo(StartupFragment())
     }
 
